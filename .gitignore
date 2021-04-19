@@ -1,0 +1,29 @@
+/target/
+pom.xml.versionsBackup
+
+# Eclipse and Maven
+.classpath
+.project
+# .settings : we need Eclipse settings for code formatter and clean-up rules
+target
+.cache
+dependency-reduced-pom.xml
+
+# Intellij
+.idea
+# Intellij recommends to share iml files, however, better don't share files which might be outdated
+*.iml
+
+# Scala
+.bloop
+.metals
+
+# Others
+.DS_Store
+*.swp
+local
+Scripts
+.dbeaver*
+**/*.log
+.directory
+venv/
