@@ -1,4 +1,4 @@
-# Parquet for Java 1.0.0, released 2021-??-??
+# Parquet for Java 0.1.0, released 2021-??-??
 
 ## Code name: 
 
@@ -13,7 +13,7 @@
 * Added `com.google.guava:guava:30.1.1-jre`
 * Added `org.apache.hadoop:hadoop-client:3.3.0`
 * Added `org.apache.parquet:parquet-hadoop:1.12.0`
-* Added `org.scala-lang:scala-library:2.12.12`
+* Added `org.scala-lang:scala-library:2.13.5`
 
 ### Test Dependency Updates
 
@@ -21,11 +21,11 @@
 * Added `org.junit.jupiter:junit-jupiter:5.7.1`
 * Added `org.mockito:mockito-core:3.9.0`
 * Added `org.mockito:mockito-junit-jupiter:3.9.0`
-* Added `org.scalatest:scalatest_2.12:3.2.7`
+* Added `org.scalatest:scalatest_2.13:3.2.7`
 
 ### Plugin Dependency Updates
 
-* Added `com.exasol:error-code-crawler-maven-plugin:0.2.0`
+* Added `com.exasol:error-code-crawler-maven-plugin:0.1.1`
 * Added `com.exasol:project-keeper-maven-plugin:0.6.0`
 * Added `io.github.zlika:reproducible-build-maven-plugin:0.13`
 * Added `net.alchim31.maven:scala-maven-plugin:4.4.1`
