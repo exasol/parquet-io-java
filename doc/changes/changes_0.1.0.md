@@ -1,10 +1,11 @@
 # Parquet for Java 0.1.0, released 2021-??-??
 
-## Code name: 
+## Code name: Initial Migration
 
 ## Features / Enhancements
 
-* ISSUE_NUMBER: description
+* #1: Added initial migration code
+* #2: Added requirements specification
 
 ## Dependency Updates
 

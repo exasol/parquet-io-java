@@ -57,6 +57,7 @@ trait ParquetConverter extends Converter {
  * }
  * }}}
  */
+// [impl->dsn~converting-primitive-column-types~1]
 final case class ParquetPrimitiveConverter(index: Int, holder: ValueHolder)
     extends PrimitiveConverter
     with ParquetConverter {
@@ -84,6 +85,7 @@ final case class ParquetPrimitiveConverter(index: Int, holder: ValueHolder)
  * }
  * }}}
  */
+// [impl->dsn~converting-primitive-column-types~1]
 final case class ParquetStringConverter(index: Int, holder: ValueHolder)
     extends PrimitiveConverter
     with ParquetConverter {
@@ -121,6 +123,7 @@ final case class ParquetStringConverter(index: Int, holder: ValueHolder)
  * }
  * }}}
  */
+// [impl->dsn~converting-logical-column-types~1]
 final case class ParquetDecimalConverter(primitiveType: PrimitiveType, index: Int, holder: ValueHolder)
     extends PrimitiveConverter
     with ParquetConverter {
@@ -178,6 +181,7 @@ final case class ParquetDecimalConverter(primitiveType: PrimitiveType, index: In
  * }
  * }}}
  */
+// [impl->dsn~converting-logical-column-types~1]
 final case class ParquetTimestampMillisConverter(index: Int, holder: ValueHolder)
     extends PrimitiveConverter
     with ParquetConverter {
@@ -197,6 +201,7 @@ final case class ParquetTimestampMillisConverter(index: Int, holder: ValueHolder
  * }
  * }}}
  */
+// [impl->dsn~converting-primitive-column-types~1]
 final case class ParquetTimestampInt96Converter(index: Int, holder: ValueHolder)
     extends PrimitiveConverter
     with ParquetConverter {
@@ -222,6 +227,7 @@ final case class ParquetTimestampInt96Converter(index: Int, holder: ValueHolder)
  * }
  * }}}
  */
+// [impl->dsn~converting-logical-column-types~1]
 final case class ParquetDateConverter(index: Int, holder: ValueHolder)
     extends PrimitiveConverter
     with ParquetConverter {
@@ -234,6 +240,7 @@ final case class ParquetDateConverter(index: Int, holder: ValueHolder)
 /**
  * A Parquet converter for the {@code LIST} annotated types.
  */
+// [impl->dsn~converting-nested-column-types~1]
 sealed trait ArrayConverter {
   val index: Int
   val parentDataHolder: ValueHolder
@@ -329,6 +336,7 @@ final case class ArrayGroupConverter(elementType: Type, val index: Int, val pare
  * }
  * }}}
  */
+// [impl->dsn~converting-nested-column-types~1]
 final case class MapConverter(groupType: GroupType, index: Int, parentDataHolder: ValueHolder)
     extends GroupConverter
     with ParquetConverter {
@@ -382,6 +390,7 @@ final case class MapConverter(groupType: GroupType, index: Int, parentDataHolder
 /**
  * An abstract base class for Parquet {@code STRUCT} converters.
  */
+// [impl->dsn~converting-nested-column-types~1]
 abstract class AbstractStructConverter(groupType: GroupType, index: Int, parentDataHolder: ValueHolder)
     extends GroupConverter {
   private[this] val size = groupType.getFieldCount()

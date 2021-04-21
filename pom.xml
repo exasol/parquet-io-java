@@ -41,6 +41,9 @@
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
+    <prerequisites>
+        <maven>3.6.3</maven>
+    </prerequisites>
     <dependencies>
         <dependency>
             <groupId>org.apache.parquet</groupId>
@@ -368,7 +371,7 @@
             <plugin>
                 <groupId>org.itsallcode</groupId>
                 <artifactId>openfasttrace-maven-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.1</version>
                 <executions>
                     <execution>
                         <id>trace-requirements</id>
@@ -379,6 +382,9 @@
                 </executions>
                 <configuration>
                     <reportOutputFormat>html</reportOutputFormat>
+                    <reportVerbosity>ALL</reportVerbosity>
+                    <reportShowOrigin>true</reportShowOrigin>
+                    <pathPattern>**.scala</pathPattern>
                 </configuration>
             </plugin>
             <plugin>

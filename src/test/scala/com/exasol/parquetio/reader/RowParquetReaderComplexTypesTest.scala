@@ -9,6 +9,7 @@ import com.exasol.parquetio.data.GenericRow
 import org.apache.parquet.example.data.simple.SimpleGroup
 import org.apache.parquet.schema.MessageTypeParser
 
+// [utest->dsn~converting-nested-column-types~1]
 class RowParquetReaderComplexTypesTest extends BaseParquetReaderTest {
 
   test("reads list of strings") {
