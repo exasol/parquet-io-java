@@ -4,7 +4,7 @@
 
 ## Features / Enhancements
 
-* ISSUE_NUMBER: description
+* #1: Extracted Parquet readers from cloud-storage-extension.
 
 ## Dependency Updates
 
@@ -26,7 +26,7 @@
 ### Plugin Dependency Updates
 
 * Added `com.exasol:error-code-crawler-maven-plugin:0.1.1`
-* Added `com.exasol:project-keeper-maven-plugin:0.6.0`
+* Added `com.exasol:project-keeper-maven-plugin:0.7.0`
 * Added `io.github.zlika:reproducible-build-maven-plugin:0.13`
 * Added `net.alchim31.maven:scala-maven-plugin:4.4.1`
 * Added `org.apache.maven.plugins:maven-assembly-plugin:3.3.0`

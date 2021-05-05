@@ -10,6 +10,7 @@
         <java.version>11</java.version>
         <scala.version>2.13.5</scala.version>
         <mockito.version>3.9.0</mockito.version>
+        <gpg.skip>true</gpg.skip>
     </properties>
     <licenses>
         <license>
@@ -51,7 +52,7 @@
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-client</artifactId>
             <version>3.3.0</version>
-            <!-- Excluding transitive dependencies with vulnerabilities -->
+            <!-- Excluding transitive dependencies with vulnerabilities. -->
             <exclusions>
                 <exclusion>
                     <groupId>junit</groupId>
@@ -83,6 +84,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- Adding updated version of guava without vulnerabilities. -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -128,11 +130,10 @@
     </dependencies>
     <build>
         <plugins>
-            <!--
             <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>project-keeper-maven-plugin</artifactId>
-                <version>0.6.0</version>
+                <version>0.7.0</version>
                 <executions>
                     <execution>
                         <goals>

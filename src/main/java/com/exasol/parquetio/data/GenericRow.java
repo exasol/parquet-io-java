@@ -50,23 +50,7 @@ public class GenericRow implements Row {
             return false;
         }
         GenericRow otherRow = (GenericRow) other;
-        if (this.size() != otherRow.size()) {
-            return false;
-        }
-        for (int i = 0; i < this.size(); i++) {
-            Object lhs = this.getObjectAt(i);
-            Object rhs = otherRow.getObjectAt(i);
-            if (lhs == null && rhs == null) {
-                continue;
-            }
-            if (lhs == null || rhs == null) {
-                return false;
-            }
-            if (!lhs.equals(rhs)) {
-                return false;
-            }
-        }
-        return true;
+        return this.values.equals(otherRow.values);
     }
 
     @Override
@@ -78,11 +62,11 @@ public class GenericRow implements Row {
     public String toString() {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("Row(values=[");
-        for (int i = 0; i < this.size(); i++) {
-            if (i > 0) {
+        for (int index = 0; index < this.size(); index++) {
+            if (index > 0) {
                 stringBuffer.append(",");
             }
-            stringBuffer.append(this.getObjectAt(i));
+            stringBuffer.append(this.getObjectAt(index));
         }
         stringBuffer.append("])");
         return stringBuffer.toString();
