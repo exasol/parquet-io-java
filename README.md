@@ -17,11 +17,44 @@ SonarCloud results:
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Aparquet-io-java&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=com.exasol%3Aparquet-io-java)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=com.exasol%3Aparquet-io-java&metric=ncloc)](https://sonarcloud.io/dashboard?id=com.exasol%3Aparquet-io-java)
 
-This project provides a library that reads [Parquet][parquet-link] files into
-Java objects.
+This project provides a library that reads [Parquet](https://parquet.apache.org/) files into Java objects.
 
 ## Installation
 
-## Example
+Add this library as a dependency to your project's `pom.xml` file.
 
-## Dependencies
+```xml
+<dependencies>
+    <dependency>
+        <groupId>com.exasol</groupId>
+        <artifactId>parquetio</artifactId>
+        <version>LATEST VERSION</version>
+    </dependency>
+</dependencies>
+```
+
+Please use the latest version of the library.
+
+## Usage
+
+Here is a small example code showing the usage of the library.
+
+```java
+final Path path = new Path("/data/parquet/part-0000.parquet");
+final Configuration conf = new Configuration();
+try (final ParquetReader<Row> reader = RowParquetReader
+        .builder(HadoopInputFile.fromPath(path, conf)).build()) {
+    Row row = reader.read();
+    while (row != null) {
+        List<Object> values = row.getValues();
+        System.out.println(values);
+        row = reader.read();
+    }
+} catch (final IOException exception) {
+    //
+}
+```
+
+## Information for Users
+
+- [Dependencies](dependencies.md)
