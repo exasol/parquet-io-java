@@ -130,6 +130,7 @@
     </dependencies>
     <build>
         <plugins>
+            <!--
             <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>project-keeper-maven-plugin</artifactId>
