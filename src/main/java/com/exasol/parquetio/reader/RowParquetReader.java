@@ -53,7 +53,9 @@ public class RowParquetReader {
      * @return Parquet file schema
      */
     public static MessageType getSchema(InputFile file) throws IOException {
-        return ParquetFileReader.open(file).getFileMetaData().getSchema();
+        try (final ParquetFileReader reader = ParquetFileReader.open(file)) {
+            return reader.getFileMetaData().getSchema();
+        }
     }
 
 }
