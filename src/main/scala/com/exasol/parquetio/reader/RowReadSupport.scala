@@ -38,8 +38,9 @@ final class RowReadSupport extends ReadSupport[Row] {
     messageType: MessageType,
     readContext: ReadContext
   ) extends RecordMaterializer[Row] {
-    override val getRootConverter: ParquetRootConverter = ParquetRootConverter(messageType)
-    override def skipCurrentRecord(): Unit = getRootConverter.start()
-    override def getCurrentRecord(): Row = new GenericRow(getRootConverter.getResult())
+    val rootConverter = ParquetRootConverter(messageType)
+    override def getRootConverter(): ParquetRootConverter = rootConverter
+    override def skipCurrentRecord(): Unit = getRootConverter().start()
+    override def getCurrentRecord(): Row = new GenericRow(getRootConverter().getResult())
   }
 }
