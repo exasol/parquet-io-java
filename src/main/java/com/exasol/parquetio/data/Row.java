@@ -1,6 +1,5 @@
 package com.exasol.parquetio.data;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +7,7 @@ import java.util.List;
  *
  * It is a similar to the database record where each value maps to a column in a table.
  */
-public interface Row extends Serializable {
+public interface Row {
 
     /**
      * Returns the list of values this Row represents.
@@ -18,12 +17,20 @@ public interface Row extends Serializable {
     public List<Object> getValues();
 
     /**
-     * Returns the value at the given position.
+     * Returns a value at the given position.
      *
-     * @param position position of value in the row
-     * @return Java Object
+     * @param position position of a value in the row
+     * @return Java object
      */
-    public Object getObjectAt(final int position);
+    public Object getValue(final int position);
+
+    /**
+     * Returns a value that corresponds to field name.
+     *
+     * @param fieldName field name of a value in the row
+     * @return Java object
+     */
+    public Object getValue(final String fieldName);
 
     /**
      * Checks whether a value at a position is null.
@@ -32,7 +39,7 @@ public interface Row extends Serializable {
      * @return {@code true} if value at position is null; otherwise {@code false}
      */
     default boolean isNullAt(final int position) {
-        return getObjectAt(position) == null;
+        return getValue(position) == null;
     }
 
     /**

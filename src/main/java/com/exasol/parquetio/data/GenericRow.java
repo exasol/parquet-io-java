@@ -5,12 +5,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.parquet.schema.MessageType;
+
 /**
  * An implementation of {@link Row} that uses unmodifiable list for storing values.
  */
 public class GenericRow implements Row {
-    private static final long serialVersionUID = -6175254671958738095L;
 
+    private final MessageType schema;
     private final List<Object> values;
 
     /**
@@ -19,6 +21,18 @@ public class GenericRow implements Row {
      * @param values list of values
      */
     public GenericRow(final List<Object> values) {
+        this.schema = null;
+        this.values = Collections.unmodifiableList(values);
+    }
+
+    /**
+     * A constructor to create a new instance with {@link MessageType} schema.
+     *
+     * @param schema schema of a row
+     * @param values list of values
+     */
+    public GenericRow(final MessageType schema, final List<Object> values) {
+        this.schema = schema;
         this.values = Collections.unmodifiableList(values);
     }
 
@@ -31,9 +45,27 @@ public class GenericRow implements Row {
         return new GenericRow(Arrays.asList(values));
     }
 
+    /**
+     * A factory method to create a new instance with {@link MessageType} schema.
+     *
+     * @param values list of values
+     */
+    public static GenericRow of(final MessageType schema, final Object... values) {
+        return new GenericRow(schema, Arrays.asList(values));
+    }
+
     @Override
-    public Object getObjectAt(final int position) {
+    public Object getValue(final int position) {
         return values.get(position);
+    }
+
+    @Override
+    public Object getValue(final String fieldName) {
+        if (schema == null) {
+            throw new IllegalArgumentException("Generic row does not have a schema. Please use positional access method.");
+        }
+        int fieldPosition = schema.getFieldIndex(fieldName);
+        return values.get(fieldPosition);
     }
 
     @Override
@@ -60,16 +92,16 @@ public class GenericRow implements Row {
 
     @Override
     public String toString() {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("Row(values=[");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Row(values=[");
         for (int index = 0; index < this.size(); index++) {
             if (index > 0) {
-                stringBuffer.append(",");
+                stringBuilder.append(",");
             }
-            stringBuffer.append(this.getObjectAt(index));
+            stringBuilder.append(this.getValue(index));
         }
-        stringBuffer.append("])");
-        return stringBuffer.toString();
+        stringBuilder.append("])");
+        return stringBuilder.toString();
     }
 
 }

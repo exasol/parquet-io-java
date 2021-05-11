@@ -5,6 +5,7 @@
 ## Features
 
 * #1: Extracted Parquet readers from cloud-storage-extension.
+* #4: Added Parquet field names to Row API.
 
 ## Dependency Updates
 
