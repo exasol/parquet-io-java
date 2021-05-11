@@ -3,7 +3,6 @@ package com.exasol.parquetio.reader;
 import java.io.IOException;
 
 import com.exasol.parquetio.data.Row;
-import com.exasol.parquetio.reader.RowReadSupport;
 
 import org.apache.parquet.hadoop.ParquetFileReader;
 import org.apache.parquet.hadoop.ParquetReader;

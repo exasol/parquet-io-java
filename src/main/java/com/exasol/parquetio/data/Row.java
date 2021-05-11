@@ -8,7 +8,7 @@ import java.util.List;
  *
  * It is a similar to the database record where each value maps to a column in a table.
  */
-public interface Row extends Serializable {
+public interface Row {
 
     /**
      * Returns the list of values this Row represents.

@@ -125,9 +125,10 @@ final case class SingleValueConverter(valueType: PrimitiveType, index: Int, pare
       valueType,
       index,
       new ValueHolder {
-        override def put(index: Int, value: Any): Unit =
-          currentValue = value
-        override def reset(): Unit = {}
+        override def put(index: Int, value: Any): Unit = currentValue = value
+        override def reset(): Unit = {
+          //
+        }
         override def getValues(): java.util.List[Any] = java.util.Collections.emptyList()
       }
     )

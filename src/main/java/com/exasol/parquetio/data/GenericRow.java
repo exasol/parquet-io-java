@@ -9,7 +9,6 @@ import java.util.Objects;
  * An implementation of {@link Row} that uses unmodifiable list for storing values.
  */
 public class GenericRow implements Row {
-    private static final long serialVersionUID = -6175254671958738095L;
 
     private final List<Object> values;
 
@@ -60,16 +59,16 @@ public class GenericRow implements Row {
 
     @Override
     public String toString() {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("Row(values=[");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Row(values=[");
         for (int index = 0; index < this.size(); index++) {
             if (index > 0) {
-                stringBuffer.append(",");
+                stringBuilder.append(",");
             }
-            stringBuffer.append(this.getObjectAt(index));
+            stringBuilder.append(this.getObjectAt(index));
         }
-        stringBuffer.append("])");
-        return stringBuffer.toString();
+        stringBuilder.append("])");
+        return stringBuilder.toString();
     }
 
 }

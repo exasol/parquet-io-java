@@ -30,5 +30,8 @@ final case class ParquetRootConverter(schema: GroupType) extends AbstractStructC
     result
   }
 
-  override def endOperation(): Unit = {}
+  override def endOperation(): Unit = {
+    // no end operation
+  }
+
 }
