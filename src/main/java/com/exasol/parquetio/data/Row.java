@@ -1,6 +1,5 @@
 package com.exasol.parquetio.data;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**

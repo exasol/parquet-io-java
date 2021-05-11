@@ -55,7 +55,7 @@ Covers:
 
 * `req~accessing-decoded-rows~1`
 
-Needs: impl, itest
+Needs: impl, utest
 
 ### Converting Primitive Column Types
 `dsn~converting-primitive-column-types~1`
