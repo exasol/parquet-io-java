@@ -8,8 +8,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
-        <scala.version>2.13.5</scala.version>
-        <mockito.version>3.9.0</mockito.version>
+        <scala.version>2.13.6</scala.version>
+        <mockito.version>3.10.0</mockito.version>
         <gpg.skip>true</gpg.skip>
     </properties>
     <licenses>
@@ -104,7 +104,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.7.1</version>
+            <version>5.7.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
