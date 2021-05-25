@@ -3,12 +3,12 @@
 
 ## Compile Dependencies
 
-| Dependency                                 | License                                       |
-| ------------------------------------------ | --------------------------------------------- |
-| [Apache Parquet Hadoop][0]                 | [The Apache Software License, Version 2.0][1] |
-| Apache Hadoop Client Aggregator            | [Apache License, Version 2.0][2]              |
-| [Guava: Google Core Libraries for Java][3] | [Apache License, Version 2.0][1]              |
-| [Scala Library][5]                         | [Apache-2.0][6]                               |
+| Dependency                                       | License                                       |
+| ------------------------------------------------ | --------------------------------------------- |
+| [Apache Parquet Hadoop][0]                       | [The Apache Software License, Version 2.0][1] |
+| [Apache Hadoop Client Aggregator][hadoop-client] | [Apache License, Version 2.0][2]              |
+| [Guava: Google Core Libraries for Java][3]       | [Apache License, Version 2.0][1]              |
+| [Scala Library][5]                               | [Apache-2.0][6]                               |
 
 ## Test Dependencies
 
@@ -89,3 +89,4 @@
 [51]: https://github.com/exasol/error-code-crawler-maven-plugin
 [57]: https://maven.apache.org/plugins/maven-jar-plugin/
 [25]: https://maven.apache.org/plugins/maven-assembly-plugin/
+[hadoop-client]: https://github.com/apache/hadoop/tree/trunk/hadoop-client-modules
