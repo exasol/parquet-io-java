@@ -3,7 +3,6 @@ package com.exasol.parquetio.reader;
 import java.io.IOException;
 
 import com.exasol.parquetio.data.Row;
-import com.exasol.parquetio.reader.RowReadSupport;
 
 import org.apache.parquet.hadoop.ParquetFileReader;
 import org.apache.parquet.hadoop.ParquetReader;
@@ -53,7 +52,7 @@ public class RowParquetReader {
      * @return Parquet file schema
      */
     public static MessageType getSchema(InputFile file) throws IOException {
-        try (final ParquetFileReader reader = ParquetFileReader.open(file)) {
+        try (final var reader = ParquetFileReader.open(file)) {
             return reader.getFileMetaData().getSchema();
         }
     }

@@ -92,9 +92,9 @@ public class GenericRow implements Row {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
+        var stringBuilder = new StringBuilder();
         stringBuilder.append("Row(values=[");
-        for (int index = 0; index < this.size(); index++) {
+        for (var index = 0; index < this.size(); index++) {
             if (index > 0) {
                 stringBuilder.append(",");
             }
