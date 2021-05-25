@@ -7,6 +7,10 @@
 * #1: Extracted Parquet readers from cloud-storage-extension.
 * #4: Added Parquet field names to Row API.
 
+## Refactoring
+
+* #6: Fixed dependency vulnerability and broken links.
+
 ## Dependency Updates
 
 ### Compile Dependency Updates
@@ -14,14 +18,14 @@
 * Added `com.google.guava:guava:30.1.1-jre`
 * Added `org.apache.hadoop:hadoop-client:3.3.0`
 * Added `org.apache.parquet:parquet-hadoop:1.12.0`
-* Added `org.scala-lang:scala-library:2.13.5`
+* Added `org.scala-lang:scala-library:2.13.6`
 
 ### Test Dependency Updates
 
 * Added `org.hamcrest:hamcrest:2.2`
-* Added `org.junit.jupiter:junit-jupiter:5.7.1`
-* Added `org.mockito:mockito-core:3.9.0`
-* Added `org.mockito:mockito-junit-jupiter:3.9.0`
+* Added `org.junit.jupiter:junit-jupiter:5.7.2`
+* Added `org.mockito:mockito-core:3.10.0`
+* Added `org.mockito:mockito-junit-jupiter:3.10.0`
 * Added `org.scalatest:scalatest_2.13:3.2.7`
 
 ### Plugin Dependency Updates

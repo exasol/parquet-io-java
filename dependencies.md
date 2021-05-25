@@ -74,11 +74,11 @@
 [36]: https://www.gnu.org/licenses/gpl-3.0.html
 [0]: https://parquet.apache.org
 [2]: https://www.apache.org/licenses/LICENSE-2.0.txt
-[23]: http://nexus.sonatype.org/oss-repository-hosting.html/scalatest-maven-plugin
+[23]: https://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin
 [33]: https://maven.apache.org/enforcer/maven-enforcer-plugin/
 [10]: https://github.com/mockito/mockito/blob/release/3.x/LICENSE
 [8]: https://www.eclipse.org/legal/epl-v20.html
-[3]: https://github.com/google/guava/guava
+[3]: https://github.com/google/guava
 [59]: http://maven.apache.org/plugins/maven-install-plugin/
 [7]: https://junit.org/junit5/
 [31]: https://sonatype.github.io/ossindex-maven/maven-plugin/
