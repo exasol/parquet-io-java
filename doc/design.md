@@ -2,12 +2,6 @@
 
 ## Introduction
 
-### Acknowledgments
-
-This document's section structure is derived from the
-"[arc42](https://arc42.org/)" architectural template by Dr. Gernot Starke, Dr.
-Peter Hruschka.
-
 ### Terms and Abbreviations
 
 <dl>
@@ -93,10 +87,8 @@ Covers:
 
 Needs: impl, utest
 
-## Cross-cutting Concerns
+## Acknowledgments
 
-## Design Decisions
-
-## Quality Scenarios
-
-## Risks
+This document's section structure is derived from the
+"[arc42](https://arc42.org/)" architectural template by Dr. Gernot Starke, Dr.
+Peter Hruschka.

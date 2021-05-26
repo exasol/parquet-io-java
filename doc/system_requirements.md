@@ -53,19 +53,10 @@ PIOJ efficiently reads Parquet formatted column data into memory.
 Rationale:
 
 Depending on the encoding of column data type, different deserialization
-mechanism should be used to improve the performance.
+mechanism should be used to improve the performance. For example, in-memory data
+structure should be utilized if data type is encoded using dictionary encoding.
 
 Needs: req
-
-### Column Pruning
-`feat~column-pruning~1`
-
-TODO.
-
-### Column Predicate Pushdown
-`feat~column-predicate-pushdown~1`
-
-TODO.
 
 ## Functional Requirements
 
