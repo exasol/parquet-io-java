@@ -3,12 +3,12 @@
 
 ## Compile Dependencies
 
-| Dependency                                 | License                                       |
-| ------------------------------------------ | --------------------------------------------- |
-| [Apache Parquet Hadoop][0]                 | [The Apache Software License, Version 2.0][1] |
-| Apache Hadoop Client Aggregator            | [Apache License, Version 2.0][2]              |
-| [Guava: Google Core Libraries for Java][3] | [Apache License, Version 2.0][1]              |
-| [Scala Library][5]                         | [Apache-2.0][6]                               |
+| Dependency                                       | License                                       |
+| ------------------------------------------------ | --------------------------------------------- |
+| [Apache Parquet Hadoop][0]                       | [The Apache Software License, Version 2.0][1] |
+| [Apache Hadoop Client Aggregator][hadoop-client] | [Apache License, Version 2.0][2]              |
+| [Guava: Google Core Libraries for Java][3]       | [Apache License, Version 2.0][1]              |
+| [Scala Library][5]                               | [Apache-2.0][6]                               |
 
 ## Test Dependencies
 
@@ -74,7 +74,7 @@
 [36]: https://www.gnu.org/licenses/gpl-3.0.html
 [0]: https://parquet.apache.org
 [2]: https://www.apache.org/licenses/LICENSE-2.0.txt
-[23]: https://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin
+[23]: https://github.com/scalatest/scalatest-maven-plugin
 [33]: https://maven.apache.org/enforcer/maven-enforcer-plugin/
 [10]: https://github.com/mockito/mockito/blob/release/3.x/LICENSE
 [8]: https://www.eclipse.org/legal/epl-v20.html
@@ -89,3 +89,4 @@
 [51]: https://github.com/exasol/error-code-crawler-maven-plugin
 [57]: https://maven.apache.org/plugins/maven-jar-plugin/
 [25]: https://maven.apache.org/plugins/maven-assembly-plugin/
+[hadoop-client]: https://github.com/apache/hadoop/tree/trunk/hadoop-client-modules

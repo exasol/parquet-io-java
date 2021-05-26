@@ -13,6 +13,8 @@ import org.apache.parquet.example.data.simple.SimpleGroup
 import org.apache.parquet.io.api.Binary
 import org.apache.parquet.schema.MessageTypeParser
 
+// [utest->dsn~converting-primitive-column-types~1]
+// [utest->dsn~converting-logical-column-types~1]
 class RowParquetReaderPrimitiveTypesTest extends BaseParquetReaderTest {
 
   test("reads INT64 (TIMESTAMP_MILLIS) as timestamp value") {
