@@ -8,6 +8,7 @@ import static org.apache.parquet.schema.PrimitiveType.PrimitiveTypeName.INT64;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.contains;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -51,6 +52,33 @@ class GenericRowTest {
         final GenericRow row = GenericRow.of(schema, 13, 14L);
         assertAll(() -> assertThat(row.getValue("col_int"), equalTo(13)), //
                 () -> assertThat(row.getValue("col_long"), equalTo(14L)));
+    }
+
+    @Test
+    void testGenericRowIsNullPositional() {
+        final GenericRow row = GenericRow.of(1L, null);
+        assertAll(() -> assertThat(row.isNull(0), equalTo(false)), //
+                () -> assertThat(row.isNull(1), equalTo(true)));
+    }
+
+    @Test
+    void testGenericRowIsNullFieldName() {
+        final GenericRow row = GenericRow.of(schema, 1L, null);
+        assertAll(() -> assertThat(row.isNull(0), equalTo(false)),
+                () -> assertThat(row.isNull(1), equalTo(true)));
+    }
+
+    @Test
+    void testGenericRowGetFieldNames() {
+        final GenericRow row = GenericRow.of(schema, 1L, 2L);
+        assertThat(row.getFieldNames(), contains("col_int", "col_long"));
+    }
+
+    @Test
+    void testGenericRowHasFieldName() {
+        final GenericRow row = GenericRow.of(schema, 1L, 2L);
+        assertAll(() -> assertThat(row.hasFieldName("col_int"), equalTo(true)), //
+                () -> assertThat(row.hasFieldName("dummy"), equalTo(false)));
     }
 
 }

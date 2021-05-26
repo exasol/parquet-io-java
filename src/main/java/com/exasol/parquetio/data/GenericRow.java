@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.apache.parquet.schema.MessageType;
 
@@ -48,10 +49,30 @@ public class GenericRow implements Row {
     /**
      * A factory method to create a new instance with {@link MessageType} schema.
      *
+     * @param schema schema of a row
      * @param values list of values
      */
     public static GenericRow of(final MessageType schema, final Object... values) {
         return new GenericRow(schema, Arrays.asList(values));
+    }
+
+    /**
+     * Checks if a column with a given name exists.
+     *
+     * @param fieldName field name in a row
+     * @return {@code true} if column with a name exists; otherwise {@code false}
+     */
+    public boolean hasFieldName(final String fieldName) {
+        return schema.containsField(fieldName);
+    }
+
+    /**
+     * Returns list of field names.
+     *
+     * @return list of field names
+     */
+    public List<String> getFieldNames() {
+        return schema.getFields().stream().map(type -> type.getName()).collect(Collectors.toList());
     }
 
     @Override
