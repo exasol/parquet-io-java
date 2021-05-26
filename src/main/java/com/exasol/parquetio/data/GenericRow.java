@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.apache.parquet.schema.MessageType;
+import org.apache.parquet.schema.Type;
 
 /**
  * An implementation of {@link Row} that uses unmodifiable list for storing values.
@@ -72,7 +73,7 @@ public class GenericRow implements Row {
      * @return list of field names
      */
     public List<String> getFieldNames() {
-        return schema.getFields().stream().map(type -> type.getName()).collect(Collectors.toList());
+        return schema.getFields().stream().map(Type::getName).collect(Collectors.toList());
     }
 
     @Override
