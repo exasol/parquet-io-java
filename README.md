@@ -57,4 +57,10 @@ try (final ParquetReader<Row> reader = RowParquetReader
 
 ## Information for Users
 
+- [Changelog](doc/changes/changelog.md)
 - [Dependencies](dependencies.md)
+
+## Information for Developers
+
+* [System Requirement Specification](doc/system_requirements.md)
+* [Design](doc/design.md)

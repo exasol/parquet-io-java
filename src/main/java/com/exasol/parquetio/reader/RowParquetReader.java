@@ -13,6 +13,7 @@ import org.apache.parquet.schema.MessageType;
 /**
  * A reader that creates Row from Parquet file records.
  */
+// [impl->dsn~read-parquet-file-contents~1]
 public class RowParquetReader {
 
     private RowParquetReader() {

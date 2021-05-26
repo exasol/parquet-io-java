@@ -5,6 +5,7 @@
 ## Features
 
 * #1: Extracted Parquet readers from cloud-storage-extension.
+* #2: Added requirements specification.
 * #4: Added Parquet field names to Row API.
 
 ## Refactoring
@@ -47,7 +48,7 @@
 * Added `org.apache.maven.plugins:maven-source-plugin:3.2.1`
 * Added `org.apache.maven.plugins:maven-surefire-plugin:3.0.0-M4`
 * Added `org.codehaus.mojo:versions-maven-plugin:2.8.1`
-* Added `org.itsallcode:openfasttrace-maven-plugin:1.0.0`
+* Added `org.itsallcode:openfasttrace-maven-plugin:1.1.0`
 * Added `org.jacoco:jacoco-maven-plugin:0.8.6`
 * Added `org.scalatest:scalatest-maven-plugin:2.0.2`
 * Added `org.sonatype.ossindex.maven:ossindex-maven-plugin:3.1.0`
