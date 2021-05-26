@@ -5,7 +5,8 @@
 ## Features
 
 * #1: Extracted Parquet readers from cloud-storage-extension.
-* #2: Added requirements specification
+* #2: Added requirements specification.
+* #4: Added Parquet field names to Row API.
 
 ## Refactoring
 

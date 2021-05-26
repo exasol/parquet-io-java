@@ -17,21 +17,39 @@ public interface Row {
     public List<Object> getValues();
 
     /**
-     * Returns the value at the given position.
+     * Returns a value at the given position.
      *
-     * @param position position of value in the row
-     * @return Java Object
+     * @param position position of a value in the row
+     * @return Java object
      */
-    public Object getObjectAt(final int position);
+    public Object getValue(final int position);
 
     /**
-     * Checks whether a value at a position is null.
+     * Returns a value that corresponds to field name.
+     *
+     * @param fieldName field name of a value in the row
+     * @return Java object
+     */
+    public Object getValue(final String fieldName);
+
+    /**
+     * Checks whether a value at a position is {@code null}.
      *
      * @param position position of a value in a row
      * @return {@code true} if value at position is null; otherwise {@code false}
      */
-    default boolean isNullAt(final int position) {
-        return getObjectAt(position) == null;
+    default boolean isNull(final int position) {
+        return getValue(position) == null;
+    }
+
+    /**
+     * Checks whether a value for field name is {@code null}.
+     *
+     * @param fieldName field name of a value in a row
+     * @return {@code true} if value for field name is null; otherwise {@code false}
+     */
+    default boolean isNull(final String fieldName) {
+        return getValue(fieldName) == null;
     }
 
     /**

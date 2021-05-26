@@ -43,6 +43,11 @@ main functionality of Parquet IO Java.
 
 PIOJ allows user to access Parquet rows as Java objects.
 
+Rationale:
+
+Users should be able to obtain all row values at once. Similarly, users should
+be able to access a single column value using column index or column name.
+
 Needs: req
 
 ### Column Data Reading
