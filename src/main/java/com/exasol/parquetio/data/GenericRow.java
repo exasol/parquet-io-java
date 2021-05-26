@@ -1,10 +1,6 @@
 package com.exasol.parquetio.data;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.*;
 
 import org.apache.parquet.schema.MessageType;
 import org.apache.parquet.schema.Type;
@@ -73,7 +69,11 @@ public class GenericRow implements Row {
      * @return list of field names
      */
     public List<String> getFieldNames() {
-        return schema.getFields().stream().map(Type::getName).collect(Collectors.toList());
+        final List<String> fieldNames = new ArrayList<>(size());
+        for (final Type type : schema.getFields()) {
+            fieldNames.add(type.getName());
+        }
+        return fieldNames;
     }
 
     @Override
