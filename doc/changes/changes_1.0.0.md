@@ -1,6 +1,10 @@
-# Parquet for Java 0.1.0, released 2021-??-??
+# Parquet for Java 1.0.0, released 2021-05-31
 
 ## Code name: Initial Implementation
+
+## Summary
+
+Extracted the Parquet readers into its own repository.
 
 ## Features
 
