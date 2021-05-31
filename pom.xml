@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.exasol</groupId>
     <artifactId>parquetio</artifactId>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
     <name>Parquet for Java</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
