@@ -1,4 +1,4 @@
-# Parquet for Java 1.0.0, released 2021-06-01
+# Parquet for Java 1.0.0, released 2021-06-02
 
 Code name: Initial Implementation
 
