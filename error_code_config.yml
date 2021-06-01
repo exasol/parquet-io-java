@@ -1,0 +1,5 @@
+error-tags:
+  PIOJ:
+    packages:
+      - com.exasol.parquetio
+    highest-index: 0

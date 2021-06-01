@@ -1,0 +1,9 @@
+community-tags:
+  - Parquet IO Java
+  - Parquet
+  - Exasol
+  - Open Source
+  - GitHub
+community-project-name: Parquet IO Java
+community-project-description: |
+  The [parquet-io-java](https://github.com/exasol/parquet-io-java) is a Java library to read Parquet files.
