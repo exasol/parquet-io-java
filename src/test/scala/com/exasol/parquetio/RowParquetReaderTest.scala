@@ -1,5 +1,7 @@
 package com.exasol.parquetio
 
+import java.lang.Integer
+
 import com.exasol.parquetio.data.GenericRow
 
 import org.apache.parquet.example.data.simple.SimpleGroup
@@ -15,21 +17,18 @@ class RowParquetReaderTest extends BaseParquetReaderTest {
          |}
          |""".stripMargin
     )
+    val input = Seq(1, 173, Int.MaxValue, Int.MinValue)
     withResource(getParquetWriter(schema, true)) { writer =>
-      Seq(1, 173, Int.MaxValue, Int.MinValue).foreach { value =>
+      input.foreach { value =>
         val record = new SimpleGroup(schema)
         record.append("col_int", value)
         writer.write(record)
       }
     }
     val records = getRecords()
+    val expected = input.map(v => GenericRow.of(Integer.valueOf(v)))
     assert(records.size === 4)
-    assert(records === Seq(
-      GenericRow.of(1),
-      GenericRow.of(173),
-      GenericRow.of(Int.MaxValue),
-      GenericRow.of(Int.MinValue)
-    ))
+    assert(records === expected)
   }
 
   test("read file row values using positional index and field names") {

@@ -15,6 +15,7 @@ A Java library to read Parquet files that we extracted into its own repository.
 ## Refactoring
 
 * #6: Fixed dependency vulnerability and broken links.
+* #11: Updated Scala library to `2.12.14` version.
 
 ## Dependency Updates
 
