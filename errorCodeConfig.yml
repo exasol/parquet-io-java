@@ -1,9 +1,0 @@
-error-tags:
-  EXM:
-    packages:
-      - com.exasol.example
-    highest-index: 3
-  EXM-MODEL:
-    packages:
-      - com.exasol.example.model
-    highest-index: 0
