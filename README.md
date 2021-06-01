@@ -1,6 +1,6 @@
 # parquet-io-java
 
-[![Build Status](https://api.travis-ci.com/exasol/parquet-io-java.svg?branch=master)](https://travis-ci.com/exasol/parquet-io-java)
+[![Build Status](https://travis-ci.com/exasol/parquet-io-java.svg?branch=main)](https://travis-ci.com/exasol/parquet-io-java)
 [![Maven Central](https://img.shields.io/maven-central/v/com.exasol/parquet-io-java)](https://search.maven.org/artifact/com.exasol/parquet-io-java)
 
 SonarCloud results:
