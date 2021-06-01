@@ -8,7 +8,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
-        <scala.version>2.13.6</scala.version>
+        <scala.version>2.12.14</scala.version>
         <mockito.version>3.10.0</mockito.version>
         <gpg.skip>true</gpg.skip>
     </properties>
@@ -129,7 +129,7 @@
         </dependency>
         <dependency>
             <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.13</artifactId>
+            <artifactId>scalatest_2.12</artifactId>
             <version>3.2.7</version>
             <scope>test</scope>
         </dependency>
