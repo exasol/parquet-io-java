@@ -23,6 +23,7 @@ public class RowParquetReader {
     /**
      * Creates a new builder for {@link RowParquetReader}.
      *
+     * @param file input file to read from
      * @return new {@link Builder}
      */
     public static Builder builder(final InputFile file) {
@@ -35,6 +36,8 @@ public class RowParquetReader {
     public static class Builder extends ParquetReader.Builder<Row> {
         /**
          * A constructor for the builder of {@link RowParquetReader}.
+         *
+         * @param file input file to read from
          */
         protected Builder(final InputFile file) {
             super(file);
@@ -51,6 +54,7 @@ public class RowParquetReader {
      *
      * @param file an input file
      * @return Parquet file schema
+     * @throws IOException if it cannot open the file for reading
      */
     public static MessageType getSchema(InputFile file) throws IOException {
         try (final var reader = ParquetFileReader.open(file)) {
