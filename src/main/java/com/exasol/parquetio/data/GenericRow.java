@@ -38,6 +38,7 @@ public class GenericRow implements Row {
      * A factory method to create a new instance.
      *
      * @param values list of values
+     * @return an instance of {@link GenericRow}
      */
     public static GenericRow of(final Object... values) {
         return new GenericRow(Arrays.asList(values));
@@ -48,6 +49,7 @@ public class GenericRow implements Row {
      *
      * @param schema schema of a row
      * @param values list of values
+     * @return an instance of {@link GenericRow}
      */
     public static GenericRow of(final MessageType schema, final Object... values) {
         return new GenericRow(schema, Arrays.asList(values));
