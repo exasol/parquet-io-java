@@ -9,7 +9,6 @@ import org.apache.parquet.schema.Type;
  * An implementation of {@link Row} that uses unmodifiable list for storing values.
  */
 public class GenericRow implements Row {
-
     private final MessageType schema;
     private final List<Object> values;
 
@@ -55,24 +54,15 @@ public class GenericRow implements Row {
         return new GenericRow(schema, Arrays.asList(values));
     }
 
-    /**
-     * Checks if a column with a given name exists.
-     *
-     * @param fieldName field name in a row
-     * @return {@code true} if column with a name exists; otherwise {@code false}
-     */
+    @Override
     public boolean hasFieldName(final String fieldName) {
-        return schema.containsField(fieldName);
+        return this.schema.containsField(fieldName);
     }
 
-    /**
-     * Returns list of field names.
-     *
-     * @return list of field names
-     */
+    @Override
     public List<String> getFieldNames() {
         final List<String> fieldNames = new ArrayList<>(size());
-        for (final Type type : schema.getFields()) {
+        for (final Type type : this.schema.getFields()) {
             fieldNames.add(type.getName());
         }
         return fieldNames;
@@ -80,32 +70,33 @@ public class GenericRow implements Row {
 
     @Override
     public Object getValue(final int position) {
-        return values.get(position);
+        return this.values.get(position);
     }
 
     @Override
     public Object getValue(final String fieldName) {
-        if (schema == null) {
-            throw new IllegalArgumentException("Generic row does not have a schema. Please use positional access method.");
+        if (this.schema == null) {
+            throw new IllegalArgumentException(
+                    "Generic row does not have a schema. Please use positional access method.");
         }
-        int fieldPosition = schema.getFieldIndex(fieldName);
-        return values.get(fieldPosition);
+        final int fieldPosition = this.schema.getFieldIndex(fieldName);
+        return this.values.get(fieldPosition);
     }
 
     @Override
     public List<Object> getValues() {
-        return values;
+        return this.values;
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (this == other) {
             return true;
         }
         if (!(other instanceof GenericRow)) {
             return false;
         }
-        GenericRow otherRow = (GenericRow) other;
+        final GenericRow otherRow = (GenericRow) other;
         return this.values.equals(otherRow.values);
     }
 
@@ -116,7 +107,7 @@ public class GenericRow implements Row {
 
     @Override
     public String toString() {
-        var stringBuilder = new StringBuilder();
+        final var stringBuilder = new StringBuilder();
         stringBuilder.append("Row(values=[");
         for (var index = 0; index < this.size(); index++) {
             if (index > 0) {
@@ -127,5 +118,4 @@ public class GenericRow implements Row {
         stringBuilder.append("])");
         return stringBuilder.toString();
     }
-
 }

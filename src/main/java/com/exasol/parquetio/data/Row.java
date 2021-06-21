@@ -70,4 +70,19 @@ public interface Row {
         return getValues().size();
     }
 
+    /**
+     * Checks if a column with a given name exists.
+     *
+     * @param fieldName field name in a row
+     * @return {@code true} if column with a name exists; otherwise {@code false}
+     */
+    public boolean hasFieldName(final String fieldName);
+
+    /**
+     * Returns list of field names.
+     *
+     * @return list of field names
+     */
+    public List<String> getFieldNames();
+
 }
