@@ -526,7 +526,7 @@
                     </modules>
                     <excludedPlugins>
                         <!-- does not work with scalar code yet -->
-                        <excludedPlugin>com.exasol:error-code-crawler</excludedPlugin>
+                        <excludedPlugin>com.exasol:error-code-crawler-maven-plugin</excludedPlugin>
                         <!-- excluded due to https://github.com/exasol/project-keeper-maven-plugin/issues/108 -->
                         <excludedPlugin>org.apache.maven.plugins:maven-javadoc-plugin</excludedPlugin>
                     </excludedPlugins>
@@ -540,18 +540,6 @@
                         </linkReplacement>
                     </linkReplacements>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.exasol</groupId>
-                <artifactId>error-code-crawler-maven-plugin</artifactId>
-                <version>0.1.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
         <pluginManagement>

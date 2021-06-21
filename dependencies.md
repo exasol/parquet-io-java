@@ -42,12 +42,11 @@
 | [Apache Maven Javadoc Plugin][47]                       | [Apache License, Version 2.0][2]          |
 | [Reproducible Build Maven Plugin][49]                   | [Apache 2.0][1]                           |
 | [Project keeper maven plugin][51]                       | [MIT][52]                                 |
-| [error-code-crawler-maven-plugin][53]                   | [MIT][52]                                 |
-| [Apache Maven Clean Plugin][55]                         | [Apache License, Version 2.0][2]          |
-| [Apache Maven Resources Plugin][57]                     | [Apache License, Version 2.0][2]          |
-| [Apache Maven JAR Plugin][59]                           | [Apache License, Version 2.0][2]          |
-| [Apache Maven Install Plugin][61]                       | [Apache License, Version 2.0][1]          |
-| [Apache Maven Site Plugin][63]                          | [Apache License, Version 2.0][2]          |
+| [Apache Maven Clean Plugin][53]                         | [Apache License, Version 2.0][2]          |
+| [Apache Maven Resources Plugin][55]                     | [Apache License, Version 2.0][2]          |
+| [Apache Maven JAR Plugin][57]                           | [Apache License, Version 2.0][2]          |
+| [Apache Maven Install Plugin][59]                       | [Apache License, Version 2.0][1]          |
+| [Apache Maven Site Plugin][61]                          | [Apache License, Version 2.0][2]          |
 
 [27]: https://www.eclemma.org/jacoco/index.html
 [51]: https://github.com/exasol/project-keeper-maven-plugin
@@ -65,9 +64,9 @@
 [14]: http://opensource.org/licenses/BSD-3-Clause
 [19]: https://maven.apache.org/plugins/maven-compiler-plugin/
 [39]: http://maven.apache.org/plugins/maven-gpg-plugin/
-[57]: https://maven.apache.org/plugins/maven-resources-plugin/
+[55]: https://maven.apache.org/plugins/maven-resources-plugin/
 [35]: https://github.com/itsallcode/openfasttrace-maven-plugin
-[55]: https://maven.apache.org/plugins/maven-clean-plugin/
+[53]: https://maven.apache.org/plugins/maven-clean-plugin/
 [28]: https://www.eclipse.org/legal/epl-2.0/
 [5]: https://www.scala-lang.org/
 [41]: https://maven.apache.org/plugins/maven-deploy-plugin/
@@ -75,20 +74,19 @@
 [18]: http://unlicense.org/
 [6]: https://www.apache.org/licenses/LICENSE-2.0
 [49]: http://zlika.github.io/reproducible-build-maven-plugin
-[63]: https://maven.apache.org/plugins/maven-site-plugin/
+[61]: https://maven.apache.org/plugins/maven-site-plugin/
 [36]: https://www.gnu.org/licenses/gpl-3.0.html
 [0]: https://parquet.apache.org
 [2]: https://www.apache.org/licenses/LICENSE-2.0.txt
 [33]: https://maven.apache.org/enforcer/maven-enforcer-plugin/
 [10]: https://github.com/mockito/mockito/blob/release/3.x/LICENSE
 [8]: https://www.eclipse.org/legal/epl-v20.html
-[61]: http://maven.apache.org/plugins/maven-install-plugin/
+[59]: http://maven.apache.org/plugins/maven-install-plugin/
 [7]: https://junit.org/junit5/
 [31]: https://sonatype.github.io/ossindex-maven/maven-plugin/
 [17]: http://github.com/davidB/scala-maven-plugin
 [45]: https://maven.apache.org/plugins/maven-source-plugin/
 [13]: http://hamcrest.org/JavaHamcrest/
 [47]: https://maven.apache.org/plugins/maven-javadoc-plugin/
-[53]: https://github.com/exasol/error-code-crawler-maven-plugin
-[59]: https://maven.apache.org/plugins/maven-jar-plugin/
+[57]: https://maven.apache.org/plugins/maven-jar-plugin/
 [25]: https://maven.apache.org/plugins/maven-assembly-plugin/

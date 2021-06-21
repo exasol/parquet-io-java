@@ -18,5 +18,4 @@ In this release we added missing methods to the Row interface.
 
 ### Plugin Dependency Updates
 
-* Added `com.exasol:error-code-crawler-maven-plugin:0.1.1`
 * Added `com.exasol:project-keeper-maven-plugin:0.7.3`
