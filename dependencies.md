@@ -52,7 +52,9 @@
 [27]: https://www.eclemma.org/jacoco/index.html
 [51]: https://github.com/exasol/project-keeper-maven-plugin
 [16]: http://www.apache.org/licenses/LICENSE-2.0
+[23]: http://nexus.sonatype.org/oss-repository-hosting.html
 [1]: http://www.apache.org/licenses/LICENSE-2.0.txt
+[3]: https://github.com/google/guava
 [21]: https://maven.apache.org/surefire/maven-surefire-plugin/
 [43]: http://www.sonatype.com/public-parent/nexus-maven-plugins/nexus-staging/nexus-staging-maven-plugin/
 [15]: http://www.scalatest.org
@@ -77,11 +79,9 @@
 [36]: https://www.gnu.org/licenses/gpl-3.0.html
 [0]: https://parquet.apache.org
 [2]: https://www.apache.org/licenses/LICENSE-2.0.txt
-[23]: http://nexus.sonatype.org/oss-repository-hosting.html/scalatest-maven-plugin
 [33]: https://maven.apache.org/enforcer/maven-enforcer-plugin/
 [10]: https://github.com/mockito/mockito/blob/release/3.x/LICENSE
 [8]: https://www.eclipse.org/legal/epl-v20.html
-[3]: https://github.com/google/guava/guava
 [61]: http://maven.apache.org/plugins/maven-install-plugin/
 [7]: https://junit.org/junit5/
 [31]: https://sonatype.github.io/ossindex-maven/maven-plugin/

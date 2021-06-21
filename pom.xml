@@ -491,6 +491,7 @@
                     <serialwarn>true</serialwarn>
                     <failOnError>true</failOnError>
                     <failOnWarnings>true</failOnWarnings>
+                    <sourcepath>${project.basedir}/src/main/java</sourcepath>
                 </configuration>
             </plugin>
             <plugin>
@@ -526,7 +527,18 @@
                     <excludedPlugins>
                         <!-- does not work with scalar code yet -->
                         <excludedPlugin>com.exasol:error-code-crawler</excludedPlugin>
+                        <!-- excluded due to https://github.com/exasol/project-keeper-maven-plugin/issues/108 -->
+                        <excludedPlugin>org.apache.maven.plugins:maven-javadoc-plugin</excludedPlugin>
                     </excludedPlugins>
+                    <linkReplacements>
+                        <linkReplacement>https://github.com/google/guava/guava|https://github.com/google/guava
+                        </linkReplacement>
+                        <linkReplacement>https://github.com/google/guava/guava|https://github.com/google/guava
+                        </linkReplacement>
+                        <linkReplacement>
+                            http://nexus.sonatype.org/oss-repository-hosting.html/scalatest-maven-plugin|http://nexus.sonatype.org/oss-repository-hosting.html
+                        </linkReplacement>
+                    </linkReplacements>
                 </configuration>
             </plugin>
             <plugin>
