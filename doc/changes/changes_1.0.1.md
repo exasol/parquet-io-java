@@ -8,7 +8,7 @@ In this release we added missing methods to the Row interface.
 
 ## Refactoring
 
-* #19: Add project-keeper
+* #19: Added project-keeper
 
 ## Bug Fixes
 
