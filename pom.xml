@@ -536,6 +536,9 @@
                         <linkReplacement>https://github.com/google/guava/guava|https://github.com/google/guava
                         </linkReplacement>
                         <linkReplacement>
+                            http://nexus.sonatype.org/oss-repository-hosting.html|https://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin
+                        </linkReplacement>
+                        <linkReplacement>
                             http://nexus.sonatype.org/oss-repository-hosting.html/scalatest-maven-plugin|http://nexus.sonatype.org/oss-repository-hosting.html
                         </linkReplacement>
                     </linkReplacements>
