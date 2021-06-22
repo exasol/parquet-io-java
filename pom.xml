@@ -511,7 +511,7 @@
             <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>project-keeper-maven-plugin</artifactId>
-                <version>0.7.3</version>
+                <version>0.8.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -527,8 +527,6 @@
                     <excludedPlugins>
                         <!-- does not work with scalar code yet -->
                         <excludedPlugin>com.exasol:error-code-crawler-maven-plugin</excludedPlugin>
-                        <!-- excluded due to https://github.com/exasol/project-keeper-maven-plugin/issues/108 -->
-                        <excludedPlugin>org.apache.maven.plugins:maven-javadoc-plugin</excludedPlugin>
                     </excludedPlugins>
                     <linkReplacements>
                         <linkReplacement>https://github.com/google/guava/guava|https://github.com/google/guava
@@ -539,7 +537,7 @@
                             http://nexus.sonatype.org/oss-repository-hosting.html|https://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin
                         </linkReplacement>
                         <linkReplacement>
-                            http://nexus.sonatype.org/oss-repository-hosting.html/scalatest-maven-plugin|http://nexus.sonatype.org/oss-repository-hosting.html
+                            http://nexus.sonatype.org/oss-repository-hosting.html/scalatest-maven-plugin|https://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin
                         </linkReplacement>
                     </linkReplacements>
                 </configuration>

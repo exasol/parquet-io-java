@@ -51,7 +51,6 @@
 [27]: https://www.eclemma.org/jacoco/index.html
 [51]: https://github.com/exasol/project-keeper-maven-plugin
 [16]: http://www.apache.org/licenses/LICENSE-2.0
-[23]: http://nexus.sonatype.org/oss-repository-hosting.html
 [1]: http://www.apache.org/licenses/LICENSE-2.0.txt
 [3]: https://github.com/google/guava
 [21]: https://maven.apache.org/surefire/maven-surefire-plugin/
@@ -73,6 +72,7 @@
 [44]: http://www.eclipse.org/legal/epl-v10.html
 [18]: http://unlicense.org/
 [6]: https://www.apache.org/licenses/LICENSE-2.0
+[23]: https://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin
 [49]: http://zlika.github.io/reproducible-build-maven-plugin
 [61]: https://maven.apache.org/plugins/maven-site-plugin/
 [36]: https://www.gnu.org/licenses/gpl-3.0.html

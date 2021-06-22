@@ -18,4 +18,4 @@ In this release we added missing methods to the Row interface.
 
 ### Plugin Dependency Updates
 
-* Added `com.exasol:project-keeper-maven-plugin:0.7.3`
+* Added `com.exasol:project-keeper-maven-plugin:0.8.0`
