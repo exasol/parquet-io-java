@@ -1,4 +1,4 @@
-# Parquet for Java 1.0.1, released 2021-06-21
+# Parquet for Java 1.0.1, released 2021-06-23
 
 Code name: API fix
 
