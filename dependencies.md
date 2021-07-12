@@ -35,7 +35,7 @@
 | [Apache Maven Enforcer Plugin][33]                      | [Apache License, Version 2.0][2]          |
 | [OpenFastTrace Maven Plugin][35]                        | [GNU General Public License v3.0][36]     |
 | [Maven Failsafe Plugin][37]                             | [Apache License, Version 2.0][2]          |
-| [Apache Maven GPG Plugin][39]                           | [Apache License, Version 2.0][1]          |
+| [Apache Maven GPG Plugin][39]                           | [Apache License, Version 2.0][2]          |
 | [Apache Maven Deploy Plugin][41]                        | [Apache License, Version 2.0][2]          |
 | [Nexus Staging Maven Plugin][43]                        | [Eclipse Public License][44]              |
 | [Apache Maven Source Plugin][45]                        | [Apache License, Version 2.0][2]          |
@@ -48,7 +48,6 @@
 | [Apache Maven Install Plugin][59]                       | [Apache License, Version 2.0][1]          |
 | [Apache Maven Site Plugin][61]                          | [Apache License, Version 2.0][2]          |
 
-[27]: https://www.eclemma.org/jacoco/index.html
 [51]: https://github.com/exasol/project-keeper-maven-plugin
 [16]: http://www.apache.org/licenses/LICENSE-2.0
 [1]: http://www.apache.org/licenses/LICENSE-2.0.txt
@@ -62,7 +61,6 @@
 [29]: http://www.mojohaus.org/versions-maven-plugin/
 [14]: http://opensource.org/licenses/BSD-3-Clause
 [19]: https://maven.apache.org/plugins/maven-compiler-plugin/
-[39]: http://maven.apache.org/plugins/maven-gpg-plugin/
 [55]: https://maven.apache.org/plugins/maven-resources-plugin/
 [35]: https://github.com/itsallcode/openfasttrace-maven-plugin
 [53]: https://maven.apache.org/plugins/maven-clean-plugin/
@@ -73,17 +71,19 @@
 [18]: http://unlicense.org/
 [6]: https://www.apache.org/licenses/LICENSE-2.0
 [23]: https://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin
+[27]: https://www.jacoco.org/jacoco/trunk/doc/maven.html
+[10]: https://github.com/mockito/mockito/blob/main/LICENSE
 [49]: http://zlika.github.io/reproducible-build-maven-plugin
 [61]: https://maven.apache.org/plugins/maven-site-plugin/
 [36]: https://www.gnu.org/licenses/gpl-3.0.html
 [0]: https://parquet.apache.org
 [2]: https://www.apache.org/licenses/LICENSE-2.0.txt
 [33]: https://maven.apache.org/enforcer/maven-enforcer-plugin/
-[10]: https://github.com/mockito/mockito/blob/release/3.x/LICENSE
 [8]: https://www.eclipse.org/legal/epl-v20.html
 [59]: http://maven.apache.org/plugins/maven-install-plugin/
 [7]: https://junit.org/junit5/
 [31]: https://sonatype.github.io/ossindex-maven/maven-plugin/
+[39]: https://maven.apache.org/plugins/maven-gpg-plugin/
 [17]: http://github.com/davidB/scala-maven-plugin
 [45]: https://maven.apache.org/plugins/maven-source-plugin/
 [13]: http://hamcrest.org/JavaHamcrest/
