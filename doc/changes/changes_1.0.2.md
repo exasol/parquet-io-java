@@ -1,4 +1,4 @@
-# Parquet for Java 1.0.2, released 2021-07-21
+# Parquet for Java 1.0.2, released 2021-07-12
 
 Code name: Fixed Transitive Dependency Vulnerability
 
