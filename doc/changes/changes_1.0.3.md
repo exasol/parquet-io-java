@@ -1,11 +1,10 @@
 # Parquet for Java 1.0.3, released 2021-08-05
 
-Code name: Removed vulnerable dependency
+Code name: Excluded vulnerable dependency
 
 ## Summary
 
-This releases excludes a vulnerable transitive dependency and adds updated
-version of it.
+This releases excludes a vulnerable transitive dependency and adds updated version of it.
 
 ## Refactoring
 
