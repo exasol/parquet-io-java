@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.exasol</groupId>
     <artifactId>parquet-io-java</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <name>Parquet for Java</name>
     <description>This project provides a library that reads Parquet files into Java objects.</description>
     <url>https://github.com/exasol/parquet-io-java</url>
