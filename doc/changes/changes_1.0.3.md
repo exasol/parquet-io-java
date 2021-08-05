@@ -4,7 +4,7 @@ Code name: Excluded vulnerable dependency
 
 ## Summary
 
-This releases excludes a vulnerable transitive dependency and adds updated version of it.
+This releases excludes a vulnerable (CVE-2021-35516, CVE-2021-35515, CVE-2021-35517, CVE-2021-36090) transitive dependency and adds updated version of it.
 
 ## Refactoring
 
