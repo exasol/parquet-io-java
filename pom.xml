@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.exasol</groupId>
     <artifactId>parquet-io-java</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <name>Parquet for Java</name>
     <description>This project provides a library that reads Parquet files into Java objects.</description>
     <url>https://github.com/exasol/parquet-io-java</url>
@@ -13,7 +13,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
         <scala.version>2.12.14</scala.version>
-        <mockito.version>3.11.2</mockito.version>
+        <mockito.version>3.12.4</mockito.version>
         <gpg.skip>true</gpg.skip>
     </properties>
     <licenses>

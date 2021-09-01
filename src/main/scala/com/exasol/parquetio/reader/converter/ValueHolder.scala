@@ -42,7 +42,10 @@ trait ValueHolder {
    */
   protected def getImmutableValues(array: Iterable[Any]): List[Any] = {
     var result = new ArrayList[Any]()
-    array.foreach(element => result.add(element))
+    val iterator = array.iterator
+    while (iterator.hasNext) {
+      result.add(iterator.next)
+    }
     Collections.unmodifiableList(result)
   }
 }

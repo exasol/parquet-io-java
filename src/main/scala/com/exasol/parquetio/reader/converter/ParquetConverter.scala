@@ -400,10 +400,18 @@ abstract class AbstractStructConverter(groupType: GroupType, index: Int, parentD
   override final def getConverter(fieldIndex: Int): ParquetConverter = converters(fieldIndex)
   override final def start(): Unit = {
     dataHolder.reset()
-    converters.foreach(_.parentStart())
+    var i = 0
+    while (i < size) {
+      converters(i).parentStart()
+      i += 1
+    }
   }
   override final def end(): Unit = {
-    converters.foreach(_.parentEnd())
+    var i = 0
+    while (i < size) {
+      converters(i).parentEnd()
+      i += 1
+    }
     endOperation()
   }
 
