@@ -27,10 +27,9 @@ class RowParquetChunkReaderTest {
         final Path path = tempDir.resolve("part-0000.parquet");
         final ParquetTestFileWriter writer = new ParquetTestFileWriter(path, PrimitiveType.PrimitiveTypeName.INT32);
         writer.write(ParquetTestFileWriter.getIntegerValues(10));
-        try (final var reader = new RowParquetChunkReader(ParquetTestFileWriter.getInputFile(path), 0, 1)) {
-            List<Integer> values = collectIterator(reader);
-            assertThat(values, containsInAnyOrder(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
-        }
+        final var reader = new RowParquetChunkReader(ParquetTestFileWriter.getInputFile(path), 0, 1);
+        List<Integer> values = collectValues(reader);
+        assertThat(values, containsInAnyOrder(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
     }
 
     @Test
@@ -39,13 +38,12 @@ class RowParquetChunkReaderTest {
         final ParquetTestFileWriter writer = new ParquetTestFileWriter(path, PrimitiveType.PrimitiveTypeName.INT32);
         writer.write(ParquetTestFileWriter.getIntegerValues(RECORD_COUNT));
         final List<Interval> chunks = List.of(new ChunkInterval(0, 2), new ChunkInterval(98, 100));
-        try (final var reader = new RowParquetChunkReader(ParquetTestFileWriter.getInputFile(path), chunks)) {
-            assertValues(reader);
-        }
+        final var reader = new RowParquetChunkReader(ParquetTestFileWriter.getInputFile(path), chunks);
+        assertValues(reader);
     }
 
     private void assertValues(final RowParquetChunkReader reader) {
-        List<Integer> values = collectIterator(reader);
+        List<Integer> values = collectValues(reader);
         for (int value = 0; value <= 4000; value++) {
             assertThat(values.contains(value), equalTo(true));
         }
@@ -57,11 +55,9 @@ class RowParquetChunkReaderTest {
         }
     }
 
-    private List<Integer> collectIterator(final RowParquetChunkReader reader) {
+    private List<Integer> collectValues(final RowParquetChunkReader reader) {
         List<Integer> values = new ArrayList<>();
-        for (final Row row : reader) {
-            values.add((Integer) row.getValue(0));
-        }
+        reader.read(row -> values.add((Integer) row.getValue(0)));
         return values;
     }
 }
