@@ -27,8 +27,10 @@ class RowParquetChunkReaderTest {
         final Path path = tempDir.resolve("part-0000.parquet");
         final ParquetTestFileWriter writer = new ParquetTestFileWriter(path, PrimitiveType.PrimitiveTypeName.INT32);
         writer.write(ParquetTestFileWriter.getIntegerValues(10));
-        List<Integer> values = collectIterator(new RowParquetChunkReader(ParquetTestFileWriter.getInputFile(path), 0, 1));
-        assertThat(values, containsInAnyOrder(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
+        try (final var reader = new RowParquetChunkReader(ParquetTestFileWriter.getInputFile(path), 0, 1)) {
+            List<Integer> values = collectIterator(reader);
+            assertThat(values, containsInAnyOrder(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
+        }
     }
 
     @Test
@@ -37,8 +39,9 @@ class RowParquetChunkReaderTest {
         final ParquetTestFileWriter writer = new ParquetTestFileWriter(path, PrimitiveType.PrimitiveTypeName.INT32);
         writer.write(ParquetTestFileWriter.getIntegerValues(RECORD_COUNT));
         final List<Interval> chunks = List.of(new ChunkInterval(0, 2), new ChunkInterval(98, 100));
-        final RowParquetChunkReader reader = new RowParquetChunkReader(ParquetTestFileWriter.getInputFile(path), chunks);
-        assertValues(reader);
+        try (final var reader = new RowParquetChunkReader(ParquetTestFileWriter.getInputFile(path), chunks)) {
+            assertValues(reader);
+        }
     }
 
     private void assertValues(final RowParquetChunkReader reader) {
