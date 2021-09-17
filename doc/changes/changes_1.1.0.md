@@ -4,8 +4,7 @@ Code name: New Chunk Based Reader
 
 ## Summary
 
-This release brings new Parquet reader that can read chunks of a file containing
-several row groups.
+This release brings new Parquet reader that can read chunks of a file containing several row groups.
 
 ## Features
 
