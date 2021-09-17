@@ -27,7 +27,7 @@ class RowParquetChunkReaderTest {
         final Path path = tempDir.resolve("part-0000.parquet");
         final ParquetTestFileWriter writer = new ParquetTestFileWriter(path, PrimitiveType.PrimitiveTypeName.INT32);
         writer.write(ParquetTestFileWriter.getIntegerValues(10));
-        final var reader = new RowParquetChunkReader(ParquetTestFileWriter.getInputFile(path), 0, 1);
+        final var reader = new RowParquetChunkReader(ParquetTestFileWriter.getInputFile(path));
         List<Integer> values = collectValues(reader);
         assertThat(values, containsInAnyOrder(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
     }

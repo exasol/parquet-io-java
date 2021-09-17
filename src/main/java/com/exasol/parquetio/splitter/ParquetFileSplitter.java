@@ -50,7 +50,7 @@ public class ParquetFileSplitter implements FileSplitter {
             return getRowGroupSplits(reader.getRowGroups());
         } catch (IOException exception) {
             throw new IllegalStateException(ExaError
-                .messageBuilder("E-PIOJ-2")
+                .messageBuilder("E-PIOJ-4")
                 .message("Failed to open a Parquet file {{FILE}} for splitting.", this.file.toString()).toString(),
                 exception
             );

@@ -2,4 +2,4 @@ error-tags:
   PIOJ:
     packages:
       - com.exasol.parquetio
-    highest-index: 0
+    highest-index: 4
