@@ -3,7 +3,7 @@ package com.exasol.parquetio.data;
 /**
  * An implementation of {@link Interval} that holds {@code start} and {@code end} position of row group chunks.
  */
-public class ChunkInterval implements Interval {
+public class ChunkIntervalImpl implements Interval {
 
     private final long start;
     private final long end;

@@ -33,7 +33,7 @@ The `RowParquetReader` reads Parquet formatted data into a `Row` object.
 ### `RowParquetChunkReader`
 `dsn~row-parquet-chunk-reader~1`
 
-The `RowParquetChunkReader` reads provided row group chunks' data into a `Row`
+The `RowParquetChunkReader` reads provided row group chunk's data into a `Row`
 object.
 
 ### `ParquetConverter`

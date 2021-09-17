@@ -3,7 +3,7 @@ package com.exasol.parquetio.data;
 /**
  * An interval interface that holds start and end positions {@code [...)} of each splitted chunk.
  */
-public interface Interval {
+public interface ChunkInterval {
 
     /**
      * Gets the start position of this interval.
