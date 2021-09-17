@@ -68,7 +68,7 @@ public class RowParquetChunkReader {
             this.recordMaterializer = readSupport.prepareForRead(conf, Collections.emptyMap(), schema, readContext);
             this.messageIO = new ColumnIOFactory(reader.getFooter().getFileMetaData().getCreatedBy())//
                 .getColumnIO(readContext.getRequestedSchema(), schema, true);
-        } catch (IOException exception) {
+        } catch (Exception exception) {
             throw new IllegalStateException(getFileReadingErrorMessage(), exception);
         }
     }
@@ -84,7 +84,7 @@ public class RowParquetChunkReader {
     private static long getRowGroupSize(final InputFile file) {
         try (final var reader = ParquetFileReader.open(file)) {
             return reader.getRowGroups().size();
-        } catch (IOException exception) {
+        } catch (Exception exception) {
             throw new IllegalStateException(ExaError
                 .messageBuilder("E-PIOJ-3")
                 .message("Error getting row group size from a Parquet {{FILE}} file.", file.toString())
