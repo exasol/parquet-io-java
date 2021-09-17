@@ -1,10 +1,8 @@
 package com.exasol.parquetio.splitter;
 
-import com.exasol.parquetio.data.Interval;
+import com.exasol.parquetio.data.ChunkInterval;
 import com.exasol.parquetio.writer.ParquetTestFileWriter;
-import org.apache.hadoop.conf.Configuration;
 import org.apache.parquet.hadoop.metadata.BlockMetaData;
-import org.apache.parquet.hadoop.util.HadoopInputFile;
 import org.apache.parquet.schema.PrimitiveType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -27,7 +25,7 @@ class ParquetFileSplitterTest {
         final Path path = tempDir.resolve("part-0000.parquet");
         final ParquetTestFileWriter writer = new ParquetTestFileWriter(path, PrimitiveType.PrimitiveTypeName.INT32);
         writer.write(ParquetTestFileWriter.getIntegerValues(200000)); // 200000 * 4 bytes
-        final List<Interval> intervals = new ParquetFileSplitter(ParquetTestFileWriter.getInputFile(path), 16 * 1024).getSplits();
+        final List<ChunkInterval> intervals = new ParquetFileSplitter(ParquetTestFileWriter.getInputFile(path), 16 * 1024).getSplits();
         assertAll(
             () -> assertThat(intervals.get(0).getStartPosition(), equalTo(0L)),
             () -> assertThat(intervals.get(0).getEndPosition(), equalTo(2L)),
@@ -39,7 +37,7 @@ class ParquetFileSplitterTest {
     @Test
     void testGetRowSplitsEmpty() {
         final List<BlockMetaData> rowGroups = new ArrayList<>();
-        final List<Interval> intervals = new ParquetFileSplitter(null, 10).getRowGroupSplits(rowGroups);
+        final List<ChunkInterval> intervals = new ParquetFileSplitter(null, 10).getRowGroupSplits(rowGroups);
         assertThat(intervals.isEmpty(), equalTo(true));
     }
 
@@ -51,7 +49,7 @@ class ParquetFileSplitterTest {
         for (int i = 0; i < 7; i++) {
             rowGroups.add(testBlock);
         }
-        final List<Interval> intervals = new ParquetFileSplitter(null, 100).getRowGroupSplits(rowGroups);
+        final List<ChunkInterval> intervals = new ParquetFileSplitter(null, 100).getRowGroupSplits(rowGroups);
         assertAll(//
             () -> assertThat(intervals.get(0).getStartPosition(), equalTo(0L)),
             () -> assertThat(intervals.get(0).getEndPosition(), equalTo(4L)),

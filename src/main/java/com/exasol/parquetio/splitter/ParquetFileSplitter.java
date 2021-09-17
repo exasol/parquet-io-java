@@ -1,12 +1,11 @@
 package com.exasol.parquetio.splitter;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.exasol.errorreporting.ExaError;
 import com.exasol.parquetio.data.ChunkInterval;
-import com.exasol.parquetio.data.Interval;
+import com.exasol.parquetio.data.ChunkIntervalImpl;
 import org.apache.parquet.hadoop.ParquetFileReader;
 import org.apache.parquet.hadoop.metadata.BlockMetaData;
 import org.apache.parquet.io.InputFile;
@@ -45,10 +44,10 @@ public class ParquetFileSplitter implements FileSplitter {
     }
 
     @Override
-    public List<Interval> getSplits() {
+    public List<ChunkInterval> getSplits() {
         try (final var reader = ParquetFileReader.open(file)) {
             return getRowGroupSplits(reader.getRowGroups());
-        } catch (IOException exception) {
+        } catch (Exception exception) {
             throw new IllegalStateException(ExaError
                 .messageBuilder("E-PIOJ-4")
                 .message("Failed to open a Parquet file {{FILE}} for splitting.", this.file.toString()).toString(),
@@ -57,21 +56,21 @@ public class ParquetFileSplitter implements FileSplitter {
         }
     }
 
-    protected List<Interval> getRowGroupSplits(final List<BlockMetaData> rowGroups) {
-        final List<Interval> chunks = new ArrayList<>();
+    protected List<ChunkInterval> getRowGroupSplits(final List<BlockMetaData> rowGroups) {
+        final List<ChunkInterval> chunks = new ArrayList<>();
         final long end = rowGroups.size();
         var startPosition = 0L;
         var currentSize = 0L;
         for (var endPosition = 0; endPosition < end; endPosition++) {
             currentSize += rowGroups.get(endPosition).getTotalByteSize();
             if (currentSize >= this.chunkSize) {
-                chunks.add(new ChunkInterval(startPosition, endPosition + 1L));
+                chunks.add(new ChunkIntervalImpl(startPosition, endPosition + 1L));
                 startPosition = endPosition + 1L;
                 currentSize = 0L;
             }
         }
         if (currentSize != 0) {
-            chunks.add(new ChunkInterval(startPosition, end));
+            chunks.add(new ChunkIntervalImpl(startPosition, end));
         }
         return chunks;
     }

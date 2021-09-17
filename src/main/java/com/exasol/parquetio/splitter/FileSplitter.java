@@ -2,7 +2,7 @@ package com.exasol.parquetio.splitter;
 
 import java.util.List;
 
-import com.exasol.parquetio.data.Interval;
+import com.exasol.parquetio.data.ChunkInterval;
 
 /**
  * An interface for splitting files into chunks.
@@ -14,6 +14,6 @@ public interface FileSplitter {
      *
      * @return an array of intervals
      */
-    List<Interval> getSplits();
+    List<ChunkInterval> getSplits();
 
 }

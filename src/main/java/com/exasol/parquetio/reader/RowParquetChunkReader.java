@@ -2,7 +2,7 @@ package com.exasol.parquetio.reader;
 
 import com.exasol.errorreporting.ExaError;
 import com.exasol.parquetio.data.ChunkInterval;
-import com.exasol.parquetio.data.Interval;
+import com.exasol.parquetio.data.ChunkIntervalImpl;
 import com.exasol.parquetio.data.Row;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.parquet.column.page.PageReadStore;
@@ -13,6 +13,7 @@ import org.apache.parquet.io.*;
 import org.apache.parquet.io.api.RecordMaterializer;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
@@ -25,7 +26,7 @@ public class RowParquetChunkReader {
     private static final String CHECK_FILE_MITIGATION = "Please make sure that the file is valid and not corrupted.";
 
     private final InputFile file;
-    private final List<Interval> chunks;
+    private final List<ChunkInterval> chunks;
     private final MessageColumnIO messageIO;
     private final RecordMaterializer<Row> recordMaterializer;
 
@@ -37,7 +38,7 @@ public class RowParquetChunkReader {
      * @param file  a Parquet file
      */
     public RowParquetChunkReader(final InputFile file) {
-        this(file, List.of(new ChunkInterval(0L, getRowGroupSize(file))));
+        this(file, List.of(new ChunkIntervalImpl(0L, getRowGroupSize(file))));
     }
 
     /**
@@ -48,7 +49,7 @@ public class RowParquetChunkReader {
      * @param end   an ending row group position (exclusive)
      */
     public RowParquetChunkReader(final InputFile file, final long start, final long end) {
-        this(file, List.of(new ChunkInterval(start, end)));
+        this(file, List.of(new ChunkIntervalImpl(start, end)));
     }
 
     /**
@@ -57,7 +58,7 @@ public class RowParquetChunkReader {
      * @param file   a Parquet file
      * @param chunks a list of row group chunks
      */
-    public RowParquetChunkReader(final InputFile file, final List<Interval> chunks) {
+    public RowParquetChunkReader(final InputFile file, final List<ChunkInterval> chunks) {
         this.file = file;
         this.chunks = chunks;
         final var readSupport = new RowReadSupport();
@@ -68,8 +69,10 @@ public class RowParquetChunkReader {
             this.recordMaterializer = readSupport.prepareForRead(conf, Collections.emptyMap(), schema, readContext);
             this.messageIO = new ColumnIOFactory(reader.getFooter().getFileMetaData().getCreatedBy())//
                 .getColumnIO(readContext.getRequestedSchema(), schema, true);
-        } catch (Exception exception) {
-            throw new IllegalStateException(getFileReadingErrorMessage(), exception);
+        } catch (IOException exception) {
+            throw new UncheckedIOException(getFileReadingErrorMessage(file), exception);
+        } catch (RuntimeException exception) {
+            throw new IllegalStateException(getFileReadingErrorMessage(file), exception);
         }
     }
 
@@ -84,7 +87,9 @@ public class RowParquetChunkReader {
     private static long getRowGroupSize(final InputFile file) {
         try (final var reader = ParquetFileReader.open(file)) {
             return reader.getRowGroups().size();
-        } catch (Exception exception) {
+        } catch (IOException exception) {
+            throw new UncheckedIOException(getFileReadingErrorMessage(file), exception);
+        } catch (RuntimeException exception) {
             throw new IllegalStateException(ExaError
                 .messageBuilder("E-PIOJ-3")
                 .message("Error getting row group size from a Parquet {{FILE}} file.", file.toString())
@@ -103,7 +108,7 @@ public class RowParquetChunkReader {
     public void read(final Consumer<Row> rowConsumer) {
         try (var reader = ParquetFileReader.open(this.file)) {
             long currentRowGroup = 0;
-            for (final Interval chunk : chunks) {
+            for (final ChunkInterval chunk : chunks) {
                 currentRowGroup = moveToRowGroupPosition(reader, currentRowGroup, chunk.getStartPosition());
                 final long endPosition = chunk.getEndPosition();
                 while (currentRowGroup < endPosition) {
@@ -113,7 +118,7 @@ public class RowParquetChunkReader {
                 }
             }
         } catch (IOException exception) {
-            throw new IllegalStateException(getFileReadingErrorMessage(), exception);
+            throw new UncheckedIOException(getFileReadingErrorMessage(this.file), exception);
         }
     }
 
@@ -133,7 +138,7 @@ public class RowParquetChunkReader {
 
     // This similar how Parquet reads records underneath,
     // https://github.com/apache/parquet-mr/blob/master/parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordReader.java#L217
-    private void consumeRecords(final RecordReader<Row> recordReader, final long totalRows, final Consumer<Row> rowConsumer) {
+    protected void consumeRecords(final RecordReader<Row> recordReader, final long totalRows, final Consumer<Row> rowConsumer) {
         long currentRow = 0;
         Row row;
         while (currentRow < totalRows) {
@@ -158,10 +163,10 @@ public class RowParquetChunkReader {
         }
     }
 
-    private String getFileReadingErrorMessage() {
+    private static String getFileReadingErrorMessage(final InputFile file) {
         return ExaError
             .messageBuilder("E-PIOJ-1")
-            .message("Failed to read Parquet file {{FILE}}.", this.file.toString())
+            .message("Failed to read Parquet file {{FILE}}.", file.toString())
             .mitigation(CHECK_FILE_MITIGATION)
             .toString();
     }

@@ -1,32 +1,22 @@
 package com.exasol.parquetio.data;
 
 /**
- * An implementation of {@link Interval} that holds {@code start} and {@code end} position of row group chunks.
+ * An interval interface that holds start and end positions {@code [...)} of each splitted chunk.
  */
-public class ChunkIntervalImpl implements Interval {
-
-    private final long start;
-    private final long end;
+public interface ChunkInterval {
 
     /**
-     * Creates a new instance of {@link ChunkInterval}.
+     * Gets the start position of this interval.
      *
-     * @param start a starting row group position
-     * @param end an ending row group position
+     * @return a start position
      */
-    public ChunkInterval(final long start, final long end) {
-        this.start = start;
-        this.end = end;
-    }
+    long getStartPosition();
 
-    @Override
-    public long getStartPosition() {
-        return start;
-    }
-
-    @Override
-    public long getEndPosition() {
-        return end;
-    }
+    /**
+     * Gets the end position of this interval that is not inclusive.
+     *
+     * @return an end position
+     */
+    long getEndPosition();
 
 }

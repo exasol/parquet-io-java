@@ -21,8 +21,8 @@ import java.util.List;
 
 public class ParquetTestFileWriter {
 
-    private static final int DEFAULT_PAGE_SIZE = 1 * 1024; // 1K
-    private static final int DEFAULT_ROW_GROUP_SIZE = 8 * 1024; // 8K
+    private static final int DEFAULT_PAGE_SIZE = 1024; // 1K
+    private static final long DEFAULT_ROW_GROUP_SIZE = 8L * 1024; // 8K
     private static final String MESSAGE_TYPE_NAME = "test";
     private static final String FIELD_TYPE_NAME = "field";
 
@@ -62,7 +62,7 @@ public class ParquetTestFileWriter {
         write(values, DEFAULT_ROW_GROUP_SIZE);
     }
 
-    public void write(final List<?> values, final int rowGroupSize) {
+    public void write(final List<?> values, final long rowGroupSize) {
         final Configuration conf = new Configuration();
         GroupWriteSupport.setSchema(this.schema, conf);
         try (final ParquetWriter<Group> writer = ExampleParquetWriter
