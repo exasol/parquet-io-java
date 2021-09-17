@@ -70,7 +70,8 @@ class RowParquetChunkReaderTest {
         final RecordReader<Row> recordReader = mock(RecordReader.class);
         when(recordReader.read()).thenThrow(RecordMaterializer.RecordMaterializationException.class);
         final ParquetDecodingException exception = assertThrows(ParquetDecodingException.class,
-            () -> new RowParquetChunkReader(writeSimpleFile(tempDir), 0L, 1L).consumeRecords(recordReader, 1L, row -> { }));
+            () -> new RowParquetChunkReader(writeSimpleFile(tempDir), 0L, 1L).consumeRecords(recordReader, 1L, row -> {
+            }));
         assertThat(exception.getMessage(), startsWith("F-PIOJ-2: Failed to materialize a record"));
     }
 
