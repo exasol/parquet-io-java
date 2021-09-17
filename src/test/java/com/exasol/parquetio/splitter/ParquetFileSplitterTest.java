@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ParquetFileSplitterTest {
+class ParquetFileSplitterTest {
 
     @Test
     void testGetSplits(@TempDir final Path tempDir) throws IOException {

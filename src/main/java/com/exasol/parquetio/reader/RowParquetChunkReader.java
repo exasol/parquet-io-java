@@ -101,7 +101,6 @@ public class RowParquetChunkReader {
      */
     // [impl->dsn~read-parquet-file-chunks-contents~1]
     public void read(final Consumer<Row> rowConsumer) {
-        // TODO: sort and merge chunk intervals to be safe
         try (var reader = ParquetFileReader.open(this.file)) {
             long currentRowGroup = 0;
             for (final Interval chunk : chunks) {
