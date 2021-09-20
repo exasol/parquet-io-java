@@ -31,6 +31,7 @@ used in PIOJ documents.
 <dt>Parquet</dt><dd>A columnar storage format.</dd>
 <dt>Parquet File</dt><dd>A file that contains Parquet formatted data.</dd>
 <dt>Row</dt><dd>A abstraction over list of columns in Parquet formatted data.</dd>
+<dt>Row Group</dt><dd>A logical horizontal partitioning of the data into rows.</dd>
 </dl>
 
 ## Features
@@ -60,6 +61,13 @@ Rationale:
 Depending on the encoding of column data type, different deserialization
 mechanism should be used to improve the performance. For example, in-memory data
 structure should be utilized if data type is encoded using dictionary encoding.
+
+Needs: req
+
+### Row Group Intervals Reading
+`feat~row-group-intervals-reading~1`
+
+PIOJ allows reading certain interval of row groups from a Parquet file.
 
 Needs: req
 
@@ -119,5 +127,22 @@ around repeated fields.
 Covers:
 
 - [`feat~column-data-reading~1`](#column-data-reading)
+
+Needs: dsn
+
+### Reading Row Group Intervals
+`req~reading-row-group-intervals~1`
+
+PIOJ only reads data of provided row group intervals that contain starting and
+ending indexes.
+
+Rationale:
+
+This allows to skip reading certain row groups of Parquet file. Therefore, users
+can virtually split and read in parallel Parquet files.
+
+Covers:
+
+- [`feat~row-group-intervals-reading~1`](#row-group-intervals-reading)
 
 Needs: dsn

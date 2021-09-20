@@ -30,6 +30,12 @@ A `Row` is class that contains list of Parquet columns.
 
 The `RowParquetReader` reads Parquet formatted data into a `Row` object.
 
+### `RowParquetChunkReader`
+`dsn~row-parquet-chunk-reader~1`
+
+The `RowParquetChunkReader` reads provided row group chunk's data into a `Row`
+object.
+
 ### `ParquetConverter`
 `dsn~parquet-converter~1`
 
@@ -48,6 +54,18 @@ The `RowParquetReader` reads contents of a Parquet file.
 Covers:
 
 * `req~accessing-decoded-rows~1`
+
+Needs: impl, utest
+
+### Reading Parquet File Row Group Chunks Contents
+`dsn~read-parquet-file-chunks-contents~1`
+
+The `RowParquetChunkReader` only reads certain row group contents of a Parquet
+file.
+
+Covers:
+
+* `req~reading-row-group-intervals~1`
 
 Needs: impl, utest
 
