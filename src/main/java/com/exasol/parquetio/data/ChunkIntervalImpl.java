@@ -1,5 +1,7 @@
 package com.exasol.parquetio.data;
 
+import java.util.Objects;
+
 /**
  * An implementation of {@link ChunkInterval} that holds {@code start} and {@code end} position of row group chunks.
  */
@@ -27,6 +29,35 @@ public class ChunkIntervalImpl implements ChunkInterval {
     @Override
     public long getEndPosition() {
         return end;
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (!(other instanceof ChunkIntervalImpl)) {
+            return false;
+        }
+        final ChunkIntervalImpl otherChunk = (ChunkIntervalImpl) other;
+        return this.start == otherChunk.start && this.end == otherChunk.end;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.start, this.end);
+    }
+
+    @Override
+    public String toString() {
+        final var stringBuilder = new StringBuilder();
+        stringBuilder//
+                .append("ChunkInterval(start = ")//
+                .append(this.start)//
+                .append(", end = ")//
+                .append(this.end)//
+                .append(")");
+        return stringBuilder.toString();
     }
 
 }

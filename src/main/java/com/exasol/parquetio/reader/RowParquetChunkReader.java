@@ -4,6 +4,8 @@ import com.exasol.errorreporting.ExaError;
 import com.exasol.parquetio.data.ChunkInterval;
 import com.exasol.parquetio.data.ChunkIntervalImpl;
 import com.exasol.parquetio.data.Row;
+import com.exasol.parquetio.merger.ChunkIntervalMerger;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.parquet.column.page.PageReadStore;
 import org.apache.parquet.filter2.compat.FilterCompat;
@@ -60,7 +62,7 @@ public class RowParquetChunkReader {
      */
     public RowParquetChunkReader(final InputFile file, final List<ChunkInterval> chunks) {
         this.file = file;
-        this.chunks = chunks;
+        this.chunks = new ChunkIntervalMerger().sortAndMerge(chunks);
         final var readSupport = new RowReadSupport();
         try (final var reader = ParquetFileReader.open(file)) {
             final var conf = getConfiguration(file);
