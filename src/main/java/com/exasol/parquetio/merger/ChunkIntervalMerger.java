@@ -23,7 +23,7 @@ public class ChunkIntervalMerger {
         if (chunks == null || chunks.isEmpty()) {
             throw new IllegalArgumentException(
                     ExaError.messageBuilder("E-PIOJ-5").message("Chunk intervals list is empty.")
-                            .mitigation("Please provide valid list of Parquet file chunks.").toString());
+                            .mitigation("Please provide a valid list of Parquet file chunks.").toString());
         }
         if (chunks.size() == 1) {
             return chunks;
