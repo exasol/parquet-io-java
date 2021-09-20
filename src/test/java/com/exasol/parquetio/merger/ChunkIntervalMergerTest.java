@@ -32,15 +32,18 @@ class ChunkIntervalMergerTest {
 
     @Test
     void testSortAndMergeNullThrows() {
+        final var merger = new ChunkIntervalMerger();
         final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> new ChunkIntervalMerger().sortAndMerge(null));
+                () -> merger.sortAndMerge(null));
         assertThat(exception.getMessage(), startsWith("E-PIOJ-5"));
     }
 
     @Test
     void testSortAndMergeEmptyThrows() {
+        final var merger = new ChunkIntervalMerger();
+        final List<ChunkInterval> emptyList = Collections.emptyList();
         final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> new ChunkIntervalMerger().sortAndMerge(Collections.emptyList()));
+                () -> merger.sortAndMerge(emptyList));
         assertThat(exception.getMessage(), startsWith("E-PIOJ-5"));
     }
 

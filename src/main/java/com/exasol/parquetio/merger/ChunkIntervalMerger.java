@@ -34,9 +34,7 @@ public class ChunkIntervalMerger {
     }
 
     private void sortByStartPosition(final List<ChunkInterval> chunks) {
-        Collections.sort(chunks, (a, b) -> {
-            return Long.compare(a.getStartPosition(), b.getStartPosition());
-        });
+        Collections.sort(chunks, (a, b) -> Long.compare(a.getStartPosition(), b.getStartPosition()));
     }
 
     private List<ChunkInterval> mergeOverlaps(final List<ChunkInterval> chunks) {
