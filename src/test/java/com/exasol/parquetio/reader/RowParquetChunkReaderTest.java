@@ -49,7 +49,7 @@ class RowParquetChunkReaderTest {
         Files.writeString(path, "abc");
         final var inputFile = ParquetTestFileWriter.getInputFile(path);
         final IllegalStateException exception = assertThrows(IllegalStateException.class,
-            () -> new RowParquetChunkReader(inputFile, 0L, 1L));
+                () -> new RowParquetChunkReader(inputFile, 0L, 1L));
         assertThat(exception.getMessage(), startsWith("E-PIOJ-1:"));
         assertThat(exception.getMessage(), containsString("part-0000-corrupted.parquet"));
     }
@@ -60,7 +60,7 @@ class RowParquetChunkReaderTest {
         Files.writeString(path, "abcdef");
         final var inputFile = ParquetTestFileWriter.getInputFile(path);
         final IllegalStateException exception = assertThrows(IllegalStateException.class,
-            () -> new RowParquetChunkReader(inputFile));
+                () -> new RowParquetChunkReader(inputFile));
         assertThat(exception.getMessage(), startsWith("E-PIOJ-3:"));
         assertThat(exception.getMessage(), containsString("part-0000-row-groups-missing.parquet"));
     }
@@ -71,8 +71,8 @@ class RowParquetChunkReaderTest {
         when(recordReader.read()).thenThrow(RecordMaterializer.RecordMaterializationException.class);
         final var reader = new RowParquetChunkReader(writeSimpleFile(tempDir), 0L, 1L);
         final ParquetDecodingException exception = assertThrows(ParquetDecodingException.class,
-            () -> reader.consumeRecords(recordReader, 1L, row -> {
-            }));
+                () -> reader.consumeRecords(recordReader, 1L, row -> {
+                }));
         assertThat(exception.getMessage(), startsWith("F-PIOJ-2: Failed to materialize a record"));
     }
 

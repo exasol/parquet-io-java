@@ -57,7 +57,6 @@ public class ParquetTestFileWriter {
         return values;
     }
 
-
     public void write(final List<?> values) {
         write(values, DEFAULT_ROW_GROUP_SIZE);
     }
@@ -65,14 +64,14 @@ public class ParquetTestFileWriter {
     public void write(final List<?> values, final long rowGroupSize) {
         final Configuration conf = new Configuration();
         GroupWriteSupport.setSchema(this.schema, conf);
-        try (final ParquetWriter<Group> writer = ExampleParquetWriter
-            .builder(new org.apache.hadoop.fs.Path(this.path.toString()))
-            .withCompressionCodec(CompressionCodecName.UNCOMPRESSED)
-            .withRowGroupSize(rowGroupSize)
-            .withPageSize(DEFAULT_PAGE_SIZE)
-            .withDictionaryEncoding(false)
-            .withConf(conf)
-            .build()) {
+        try (final ParquetWriter<Group> writer = ExampleParquetWriter//
+                .builder(new org.apache.hadoop.fs.Path(this.path.toString()))//
+                .withCompressionCodec(CompressionCodecName.UNCOMPRESSED)//
+                .withRowGroupSize(rowGroupSize)//
+                .withPageSize(DEFAULT_PAGE_SIZE)//
+                .withDictionaryEncoding(false)//
+                .withConf(conf)//
+                .build()) {
             writeValues(writer, values);
         } catch (IOException e) {
             e.printStackTrace();
@@ -84,28 +83,28 @@ public class ParquetTestFileWriter {
         final SimpleGroupFactory groupFactory = new SimpleGroupFactory(this.schema);
         for (Object o : values) {
             switch (type) {
-                case BOOLEAN:
-                    writer.write(groupFactory.newGroup().append(FIELD_TYPE_NAME, (Boolean) o));
-                    break;
-                case INT32:
-                    writer.write(groupFactory.newGroup().append(FIELD_TYPE_NAME, (Integer) o));
-                    break;
-                case INT64:
-                    writer.write(groupFactory.newGroup().append(FIELD_TYPE_NAME, (Long) o));
-                    break;
-                case FLOAT:
-                    writer.write(groupFactory.newGroup().append(FIELD_TYPE_NAME, (Float) o));
-                    break;
-                case DOUBLE:
-                    writer.write(groupFactory.newGroup().append(FIELD_TYPE_NAME, (Double) o));
-                    break;
-                case INT96:
-                case BINARY:
-                case FIXED_LEN_BYTE_ARRAY:
-                    writer.write(groupFactory.newGroup().append(FIELD_TYPE_NAME, (Binary) o));
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown type name: " + type);
+            case BOOLEAN:
+                writer.write(groupFactory.newGroup().append(FIELD_TYPE_NAME, (Boolean) o));
+                break;
+            case INT32:
+                writer.write(groupFactory.newGroup().append(FIELD_TYPE_NAME, (Integer) o));
+                break;
+            case INT64:
+                writer.write(groupFactory.newGroup().append(FIELD_TYPE_NAME, (Long) o));
+                break;
+            case FLOAT:
+                writer.write(groupFactory.newGroup().append(FIELD_TYPE_NAME, (Float) o));
+                break;
+            case DOUBLE:
+                writer.write(groupFactory.newGroup().append(FIELD_TYPE_NAME, (Double) o));
+                break;
+            case INT96:
+            case BINARY:
+            case FIXED_LEN_BYTE_ARRAY:
+                writer.write(groupFactory.newGroup().append(FIELD_TYPE_NAME, (Binary) o));
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown type name: " + type);
             }
         }
     }

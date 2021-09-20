@@ -35,7 +35,7 @@ public class RowParquetChunkReader {
      *
      * Since no chunks are provided it reads all row groups of given file.
      *
-     * @param file  a Parquet file
+     * @param file a Parquet file
      */
     public RowParquetChunkReader(final InputFile file) {
         this(file, List.of(new ChunkIntervalImpl(0L, getRowGroupSize(file))));
@@ -68,7 +68,7 @@ public class RowParquetChunkReader {
             final var readContext = readSupport.init(conf, Collections.emptyMap(), schema);
             this.recordMaterializer = readSupport.prepareForRead(conf, Collections.emptyMap(), schema, readContext);
             this.messageIO = new ColumnIOFactory(reader.getFooter().getFileMetaData().getCreatedBy())//
-                .getColumnIO(readContext.getRequestedSchema(), schema, true);
+                    .getColumnIO(readContext.getRequestedSchema(), schema, true);
         } catch (IOException exception) {
             throw new UncheckedIOException(getFileReadingErrorMessage(file), exception);
         } catch (RuntimeException exception) {
@@ -90,12 +90,9 @@ public class RowParquetChunkReader {
         } catch (IOException exception) {
             throw new UncheckedIOException(getFileReadingErrorMessage(file), exception);
         } catch (RuntimeException exception) {
-            throw new IllegalStateException(ExaError
-                .messageBuilder("E-PIOJ-3")
-                .message("Error getting row group size from a Parquet {{FILE}} file.", file.toString())
-                .mitigation(CHECK_FILE_MITIGATION).toString(),
-                exception
-            );
+            throw new IllegalStateException(ExaError.messageBuilder("E-PIOJ-3")
+                    .message("Error getting row group size from a Parquet {{FILE}} file.", file.toString())
+                    .mitigation(CHECK_FILE_MITIGATION).toString(), exception);
         }
     }
 
@@ -122,7 +119,8 @@ public class RowParquetChunkReader {
         }
     }
 
-    private long moveToRowGroupPosition(final ParquetFileReader reader, final long currentPosition, final long startPosition) {
+    private long moveToRowGroupPosition(final ParquetFileReader reader, final long currentPosition,
+            final long startPosition) {
         long position = currentPosition;
         while (position < startPosition) {
             reader.skipNextRowGroup();
@@ -132,13 +130,15 @@ public class RowParquetChunkReader {
     }
 
     private void consumeRows(final PageReadStore pageStore, final Consumer<Row> rowConsumer) {
-        final RecordReader<Row> recordReader = messageIO.getRecordReader(pageStore, recordMaterializer, FilterCompat.NOOP);
+        final RecordReader<Row> recordReader = messageIO.getRecordReader(pageStore, recordMaterializer,
+                FilterCompat.NOOP);
         consumeRecords(recordReader, pageStore.getRowCount(), rowConsumer);
     }
 
     // This similar how Parquet reads records underneath,
     // https://github.com/apache/parquet-mr/blob/master/parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordReader.java#L217
-    protected void consumeRecords(final RecordReader<Row> recordReader, final long totalRows, final Consumer<Row> rowConsumer) {
+    protected void consumeRecords(final RecordReader<Row> recordReader, final long totalRows,
+            final Consumer<Row> rowConsumer) {
         long currentRow = 0;
         Row row;
         while (currentRow < totalRows) {
@@ -146,13 +146,9 @@ public class RowParquetChunkReader {
             try {
                 row = recordReader.read();
             } catch (RecordMaterializer.RecordMaterializationException exception) {
-                throw new ParquetDecodingException(ExaError
-                    .messageBuilder("F-PIOJ-2")
-                    .message("Failed to materialize a record from the Parquet file {{FILE}}.", this.file.toString())
-                    .mitigation(CHECK_FILE_MITIGATION)
-                    .toString(),
-                    exception
-                );
+                throw new ParquetDecodingException(ExaError.messageBuilder("F-PIOJ-2")
+                        .message("Failed to materialize a record from the Parquet file {{FILE}}.", this.file.toString())
+                        .mitigation(CHECK_FILE_MITIGATION).toString(), exception);
             }
             if (row == null) { // Only happens with FilteredRecordReader at end of block
                 break;
@@ -164,11 +160,8 @@ public class RowParquetChunkReader {
     }
 
     private static String getFileReadingErrorMessage(final InputFile file) {
-        return ExaError
-            .messageBuilder("E-PIOJ-1")
-            .message("Failed to read Parquet file {{FILE}}.", file.toString())
-            .mitigation(CHECK_FILE_MITIGATION)
-            .toString();
+        return ExaError.messageBuilder("E-PIOJ-1").message("Failed to read Parquet file {{FILE}}.", file.toString())
+                .mitigation(CHECK_FILE_MITIGATION).toString();
     }
 
 }
