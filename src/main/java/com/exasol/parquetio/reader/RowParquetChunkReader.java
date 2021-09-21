@@ -1,5 +1,11 @@
 package com.exasol.parquetio.reader;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Consumer;
+
 import com.exasol.errorreporting.ExaError;
 import com.exasol.parquetio.data.ChunkInterval;
 import com.exasol.parquetio.data.ChunkIntervalImpl;
@@ -11,14 +17,12 @@ import org.apache.parquet.column.page.PageReadStore;
 import org.apache.parquet.filter2.compat.FilterCompat;
 import org.apache.parquet.hadoop.ParquetFileReader;
 import org.apache.parquet.hadoop.util.HadoopInputFile;
-import org.apache.parquet.io.*;
+import org.apache.parquet.io.ColumnIOFactory;
+import org.apache.parquet.io.InputFile;
+import org.apache.parquet.io.MessageColumnIO;
+import org.apache.parquet.io.ParquetDecodingException;
+import org.apache.parquet.io.RecordReader;
 import org.apache.parquet.io.api.RecordMaterializer;
-
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * A Parquet file reader that reads only provided row groups.
@@ -62,6 +66,11 @@ public class RowParquetChunkReader {
      */
     public RowParquetChunkReader(final InputFile file, final List<ChunkInterval> chunks) {
         this.file = file;
+        if (chunks == null || chunks.isEmpty()) {
+            throw new IllegalArgumentException(
+                    ExaError.messageBuilder("E-PIOJ-5").message("Chunk intervals list is empty.")
+                            .mitigation("Please provide a valid list of Parquet file chunks.").toString());
+        }
         this.chunks = new ChunkIntervalMerger().sortAndMerge(chunks);
         final var readSupport = new RowReadSupport();
         try (final var reader = ParquetFileReader.open(file)) {

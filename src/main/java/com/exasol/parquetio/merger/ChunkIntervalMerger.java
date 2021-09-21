@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.exasol.errorreporting.ExaError;
 import com.exasol.parquetio.data.ChunkInterval;
 import com.exasol.parquetio.data.ChunkIntervalImpl;
 
@@ -20,12 +19,7 @@ public class ChunkIntervalMerger {
      * @return a list of sorted and merged chunks
      */
     public List<ChunkInterval> sortAndMerge(final List<ChunkInterval> chunks) {
-        if (chunks == null || chunks.isEmpty()) {
-            throw new IllegalArgumentException(
-                    ExaError.messageBuilder("E-PIOJ-5").message("Chunk intervals list is empty.")
-                            .mitigation("Please provide a valid list of Parquet file chunks.").toString());
-        }
-        if (chunks.size() == 1) {
+        if (chunks == null || chunks.size() <= 1) {
             return chunks;
         }
         final List<ChunkInterval> modifiableChunks = new ArrayList<>(chunks);
