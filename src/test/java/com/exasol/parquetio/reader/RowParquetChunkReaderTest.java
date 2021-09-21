@@ -31,28 +31,20 @@ import org.apache.parquet.io.api.RecordMaterializer;
 import org.apache.parquet.schema.PrimitiveType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 // [utest->dsn~read-parquet-file-chunks-contents~1]
 class RowParquetChunkReaderTest {
 
     private static final int RECORD_COUNT = 200000;
 
-    @Test
-    void testReadChunksNullThrows() {
+    @ParameterizedTest
+    @NullAndEmptySource
+    void testReadChunksNullAndEmptyThrows(final List<ChunkInterval> list) {
+        final var inputFile = new SimpleInputFile("dummy");
         final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> new RowParquetChunkReader(new SimpleInputFile("dummy"), null));
-        assertIllegalArgumentExceptionErrorCode(exception);
-    }
-
-    @Test
-    void testReadEmptyChunksThrows() {
-        final List<ChunkInterval> emptyList = Collections.emptyList();
-        final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> new RowParquetChunkReader(new SimpleInputFile("dummy"), emptyList));
-        assertIllegalArgumentExceptionErrorCode(exception);
-    }
-
-    private void assertIllegalArgumentExceptionErrorCode(final IllegalArgumentException exception) {
+                () -> new RowParquetChunkReader(inputFile, list));
         assertThat(exception.getMessage(), startsWith("E-PIOJ-5"));
     }
 
