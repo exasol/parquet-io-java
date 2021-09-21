@@ -17,7 +17,7 @@ public class ChunkIntervalMerger {
      * Sorts and merges overlapping chunks.
      *
      * @param chunks a list {@link ChunkInterval} chunks
-     * @return a sorted and merged chunks
+     * @return a list of sorted and merged chunks
      */
     public List<ChunkInterval> sortAndMerge(final List<ChunkInterval> chunks) {
         if (chunks == null || chunks.isEmpty()) {
