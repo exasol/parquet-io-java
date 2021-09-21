@@ -1,4 +1,4 @@
-# Parquet for Java 1.1.0, released 2021-09-17
+# Parquet for Java 1.1.0, released 2021-09-21
 
 Code name: New Chunk Based Reader
 
@@ -13,6 +13,7 @@ This release brings new Parquet reader that can read chunks of a file containing
 ## Refactoring
 
 * #26: Replaced foreach iterations with loops
+* #30: Added sorting and merging of overlapping chunks to be safe.
 
 ## Dependency Updates
 

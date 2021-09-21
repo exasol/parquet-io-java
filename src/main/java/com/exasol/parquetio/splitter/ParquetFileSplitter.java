@@ -35,7 +35,7 @@ public class ParquetFileSplitter implements FileSplitter {
     /**
      * Creates a new instance of {@link ParquetFileSplitter}.
      *
-     * @param file a Parquet file
+     * @param file      a Parquet file
      * @param chunkSize a chunk size in bytes
      */
     public ParquetFileSplitter(final InputFile file, final long chunkSize) {
@@ -48,11 +48,9 @@ public class ParquetFileSplitter implements FileSplitter {
         try (final var reader = ParquetFileReader.open(file)) {
             return getRowGroupSplits(reader.getRowGroups());
         } catch (Exception exception) {
-            throw new IllegalStateException(ExaError
-                .messageBuilder("E-PIOJ-4")
-                .message("Failed to open a Parquet file {{FILE}} for splitting.", this.file.toString()).toString(),
-                exception
-            );
+            throw new IllegalStateException(ExaError.messageBuilder("E-PIOJ-4")
+                    .message("Failed to open a Parquet file {{FILE}} for splitting.", this.file.toString()).toString(),
+                    exception);
         }
     }
 

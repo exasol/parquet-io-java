@@ -25,13 +25,13 @@ class ParquetFileSplitterTest {
         final Path path = tempDir.resolve("part-0000.parquet");
         final ParquetTestFileWriter writer = new ParquetTestFileWriter(path, PrimitiveType.PrimitiveTypeName.INT32);
         writer.write(ParquetTestFileWriter.getIntegerValues(200000)); // 200000 * 4 bytes
-        final List<ChunkInterval> intervals = new ParquetFileSplitter(ParquetTestFileWriter.getInputFile(path), 16 * 1024).getSplits();
-        assertAll(
-            () -> assertThat(intervals.get(0).getStartPosition(), equalTo(0L)),
-            () -> assertThat(intervals.get(0).getEndPosition(), equalTo(2L)),
-            () -> assertThat(intervals.get(49).getStartPosition(), equalTo(98L)),
-            () -> assertThat(intervals.get(49).getEndPosition(), equalTo(100L)),
-            () -> assertThat(intervals.size(), equalTo(50)));
+        final List<ChunkInterval> intervals = new ParquetFileSplitter(ParquetTestFileWriter.getInputFile(path),
+                16 * 1024).getSplits();
+        assertAll(() -> assertThat(intervals.get(0).getStartPosition(), equalTo(0L)),
+                () -> assertThat(intervals.get(0).getEndPosition(), equalTo(2L)),
+                () -> assertThat(intervals.get(49).getStartPosition(), equalTo(98L)),
+                () -> assertThat(intervals.get(49).getEndPosition(), equalTo(100L)),
+                () -> assertThat(intervals.size(), equalTo(50)));
     }
 
     @Test
@@ -51,12 +51,11 @@ class ParquetFileSplitterTest {
         }
         final List<ChunkInterval> intervals = new ParquetFileSplitter(null, 100).getRowGroupSplits(rowGroups);
         assertAll(//
-            () -> assertThat(intervals.get(0).getStartPosition(), equalTo(0L)),
-            () -> assertThat(intervals.get(0).getEndPosition(), equalTo(4L)),
-            () -> assertThat(intervals.get(1).getStartPosition(), equalTo(4L)),
-            () -> assertThat(intervals.get(1).getEndPosition(), equalTo(7L)),
-            () -> assertThat(intervals.size(), equalTo(2))
-        );
+                () -> assertThat(intervals.get(0).getStartPosition(), equalTo(0L)),
+                () -> assertThat(intervals.get(0).getEndPosition(), equalTo(4L)),
+                () -> assertThat(intervals.get(1).getStartPosition(), equalTo(4L)),
+                () -> assertThat(intervals.get(1).getEndPosition(), equalTo(7L)),
+                () -> assertThat(intervals.size(), equalTo(2)));
     }
 
 }
