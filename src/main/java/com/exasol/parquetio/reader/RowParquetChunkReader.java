@@ -146,8 +146,18 @@ public class RowParquetChunkReader {
         consumeRecords(recordReader, pageStore.getRowCount(), rowConsumer);
     }
 
-    // This similar how Parquet reads records underneath,
-    // https://github.com/apache/parquet-mr/blob/master/parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordReader.java#L217
+    /**
+     * Consumes rows from record reader.
+     *
+     * This similar how Parquet reads records internally, you can check it out in detail.
+     *
+     * @see <a href=
+     *      "https://github.com/apache/parquet-mr/blob/master/parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordReader.java#L217">InternalParquetRecordReader.java#L217</a>
+     *
+     * @param recordReader a Parquet record reader
+     * @param totalRows    a total number rows to consume
+     * @param rowConsumer  a {@link Consumer} that accept {@link Row}s
+     */
     protected void consumeRecords(final RecordReader<Row> recordReader, final long totalRows,
             final Consumer<Row> rowConsumer) {
         long currentRow = 0;

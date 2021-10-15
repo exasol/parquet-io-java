@@ -25,7 +25,7 @@ Code name:
 
 ### Plugin Dependency Updates
 
-* Updated `com.exasol:project-keeper-maven-plugin:1.2.0` to `1.3.0`
+* Updated `com.exasol:project-keeper-maven-plugin:1.2.0` to `1.3.1`
 * Updated `net.alchim31.maven:scala-maven-plugin:4.5.3` to `4.5.4`
 * Updated `org.apache.maven.plugins:maven-enforcer-plugin:3.0.0-M3` to `3.0.0`
 * Updated `org.apache.maven.plugins:maven-javadoc-plugin:3.3.0` to `3.3.1`

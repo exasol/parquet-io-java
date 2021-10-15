@@ -54,6 +54,12 @@ public class ParquetFileSplitter implements FileSplitter {
         }
     }
 
+    /**
+     * Returns row group splits given the file row groups.
+     *
+     * @param rowGroups a list of file row groups
+     * @return a list of {@link ChunkInterval}s
+     */
     protected List<ChunkInterval> getRowGroupSplits(final List<BlockMetaData> rowGroups) {
         final List<ChunkInterval> chunks = new ArrayList<>();
         final long end = rowGroups.size();
