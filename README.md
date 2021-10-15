@@ -53,6 +53,74 @@ try (final ParquetReader<Row> reader = RowParquetReader
 }
 ```
 
+## Data Type Mapping
+
+The following table shows how each Parquet data type is mapped into Java data
+types.
+
+| Parquet Data Type    | Parquet Logical Type | Java Data Type |
+|:---------------------|:---------------------|:---------------|
+| boolean              |                      | Boolean        |
+| int32                |                      | Integer        |
+| int32                | date                 | Date           |
+| int32                | decimal(p, s)        | BigDecimal     |
+| int64                |                      | Long           |
+| int64                | timestamp_millis     | Timestamp      |
+| int64                | decimal(p, s)        | BigDecimal     |
+| float                |                      | Float          |
+| double               |                      | Double         |
+| binary               |                      | String         |
+| binary               | utf8                 | String         |
+| binary               | decimal(p, s)        | BigDecimal     |
+| fixed_len_byte_array |                      | String         |
+| fixed_len_byte_array | decimal(p, s)        | BigDecimal     |
+| int96                |                      | Timestamp      |
+| group                |                      | Map            |
+| group                | LIST                 | List           |
+| group                | MAP                  | Map            |
+| group                | REPEATED             | List           |
+
+### Parquet Repeated Types
+
+Parquet data type can repeat a single field or the group of fields. The
+parquet-io-java (PIOJ) reads these data types into Java `List` type.
+
+For example, given the following Parquet schemas:
+
+```
+message parquet_schema {
+  repeated binary name (UTF8);
+}
+```
+
+```
+message parquet_schema {
+  repeated group person {
+    required binary name (UTF8);
+  }
+}
+```
+
+The PIOJ reads both of these Parquet types into Java list of `["John", "Jane"]`.
+
+On the other hand, you can import a repeated group with multiple fields as a
+list of maps.
+
+```
+message parquet_schema {
+  repeated group person {
+    required binary name (UTF8);
+    optional int32 age;
+  }
+}
+```
+
+The PIOJ reads it into a list of person maps:
+
+```
+[ Map("name" -> "John", "age" -> 24), Map("name" -> "Jane", "age" -> 22) ]
+```
+
 ## Information for Users
 
 - [Changelog](doc/changes/changelog.md)

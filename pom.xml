@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.exasol</groupId>
     <artifactId>parquet-io-java</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <name>Parquet for Java</name>
     <description>This project provides a library that reads Parquet files into Java objects.</description>
     <url>https://github.com/exasol/parquet-io-java</url>
@@ -12,8 +12,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
-        <scala.version>2.12.14</scala.version>
-        <mockito.version>3.12.4</mockito.version>
+        <scala.version>2.12.15</scala.version>
+        <mockito.version>4.0.0</mockito.version>
         <gpg.skip>true</gpg.skip>
     </properties>
     <licenses>
@@ -53,7 +53,7 @@
         <dependency>
             <groupId>org.apache.parquet</groupId>
             <artifactId>parquet-hadoop</artifactId>
-            <version>1.12.1</version>
+            <version>1.12.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
@@ -103,7 +103,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>30.1.1-jre</version>
+            <version>31.0.1-jre</version>
         </dependency>
         <!-- Adding updated version of commons-compress without vulnerabilities. -->
         <dependency>
@@ -125,7 +125,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.8.0</version>
+            <version>5.8.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -158,7 +158,7 @@
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <version>4.5.3</version>
+                <version>4.5.4</version>
                 <executions>
                     <execution>
                         <id>scala-compile-first</id>
@@ -368,7 +368,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0-M3</version>
+                <version>3.0.0</version>
                 <executions>
                     <execution>
                         <id>enforce-maven</id>
@@ -491,7 +491,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -526,7 +526,7 @@
             <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>project-keeper-maven-plugin</artifactId>
-                <version>1.2.0</version>
+                <version>1.3.1</version>
                 <executions>
                     <execution>
                         <goals>
