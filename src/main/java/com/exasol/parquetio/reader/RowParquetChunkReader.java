@@ -2,33 +2,26 @@ package com.exasol.parquetio.reader;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
-
-import com.exasol.errorreporting.ExaError;
-import com.exasol.parquetio.data.ChunkInterval;
-import com.exasol.parquetio.data.ChunkIntervalImpl;
-import com.exasol.parquetio.data.Row;
-import com.exasol.parquetio.merger.ChunkIntervalMerger;
+import java.util.stream.LongStream;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.parquet.column.page.PageReadStore;
 import org.apache.parquet.filter2.compat.FilterCompat;
 import org.apache.parquet.hadoop.ParquetFileReader;
 import org.apache.parquet.hadoop.util.HadoopInputFile;
-import org.apache.parquet.io.ColumnIOFactory;
-import org.apache.parquet.io.InputFile;
-import org.apache.parquet.io.MessageColumnIO;
-import org.apache.parquet.io.ParquetDecodingException;
-import org.apache.parquet.io.RecordReader;
+import org.apache.parquet.io.*;
 import org.apache.parquet.io.api.RecordMaterializer;
+
+import com.exasol.errorreporting.ExaError;
+import com.exasol.parquetio.data.*;
+import com.exasol.parquetio.merger.ChunkIntervalMerger;
 
 /**
  * A Parquet file reader that reads only provided row groups.
  */
 public class RowParquetChunkReader {
-
     private static final String CHECK_FILE_MITIGATION = "Please make sure that the file is valid and not corrupted.";
 
     private final InputFile file;
@@ -80,9 +73,9 @@ public class RowParquetChunkReader {
             this.recordMaterializer = readSupport.prepareForRead(conf, Collections.emptyMap(), schema, readContext);
             this.messageIO = new ColumnIOFactory(reader.getFooter().getFileMetaData().getCreatedBy())//
                     .getColumnIO(readContext.getRequestedSchema(), schema, true);
-        } catch (IOException exception) {
+        } catch (final IOException exception) {
             throw new UncheckedIOException(getFileReadingErrorMessage(file), exception);
-        } catch (RuntimeException exception) {
+        } catch (final RuntimeException exception) {
             throw new IllegalStateException(getFileReadingErrorMessage(file), exception);
         }
     }
@@ -98,12 +91,24 @@ public class RowParquetChunkReader {
     private static long getRowGroupSize(final InputFile file) {
         try (final var reader = ParquetFileReader.open(file)) {
             return reader.getRowGroups().size();
-        } catch (IOException exception) {
+        } catch (final IOException exception) {
             throw new UncheckedIOException(getFileReadingErrorMessage(file), exception);
-        } catch (RuntimeException exception) {
+        } catch (final RuntimeException exception) {
             throw new IllegalStateException(ExaError.messageBuilder("E-PIOJ-3")
                     .message("Error getting row group size from a Parquet {{FILE}} file.", file.toString())
                     .mitigation(CHECK_FILE_MITIGATION).toString(), exception);
+        }
+    }
+
+    public RowIterator iterator() {
+        return new RowIterator(getReader(), this.file, this.messageIO, this.recordMaterializer, this.chunks);
+    }
+
+    private PositionAwareReader getReader() {
+        try {
+            return new PositionAwareReader(ParquetFileReader.open(this.file));
+        } catch (final IOException exception) {
+            throw new UncheckedIOException(getFileReadingErrorMessage(this.file), exception);
         }
     }
 
@@ -114,69 +119,170 @@ public class RowParquetChunkReader {
      */
     // [impl->dsn~read-parquet-file-chunks-contents~1]
     public void read(final Consumer<Row> rowConsumer) {
-        try (var reader = ParquetFileReader.open(this.file)) {
-            long currentRowGroup = 0;
-            for (final ChunkInterval chunk : chunks) {
-                currentRowGroup = moveToRowGroupPosition(reader, currentRowGroup, chunk.getStartPosition());
-                final long endPosition = chunk.getEndPosition();
-                while (currentRowGroup < endPosition) {
-                    final PageReadStore pageStore = reader.readNextRowGroup();
-                    currentRowGroup += 1;
-                    consumeRows(pageStore, rowConsumer);
-                }
+        try (final RowIterator iterator = iterator()) {
+            iterator.forEachRemaining(rowConsumer);
+        } catch (final IOException exception) {
+            throw new UncheckedIOException(
+                    ExaError.messageBuilder("E-PIOJ-6").message("Failed to close reader.").toString(), exception);
+        }
+    }
+
+    public static class RowIterator implements Iterator<Row>, AutoCloseable {
+        private final PositionAwareReader reader;
+        private final InputFile file;
+        private final MessageColumnIO messageIO;
+        private final RecordMaterializer<Row> recordMaterializer;
+        private final Iterator<ChunkInterval> chunkIterator;
+        private ChunkInterval chunk;
+        private Iterator<Long> rowGroupIterator;
+        private Iterator<Row> rowIterator;
+        private Row next;
+        private boolean hasNext = true;
+
+        public RowIterator(final PositionAwareReader reader, final InputFile file, final MessageColumnIO messageIO,
+                final RecordMaterializer<Row> recordMaterializer, final List<ChunkInterval> chunks) {
+            this.reader = reader;
+            this.file = file;
+            this.messageIO = messageIO;
+            this.recordMaterializer = recordMaterializer;
+            this.chunkIterator = chunks.iterator();
+            loadNext();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return this.hasNext;
+        }
+
+        @Override
+        public Row next() {
+            if (!this.hasNext) {
+                throw new NoSuchElementException();
             }
-        } catch (IOException exception) {
-            throw new UncheckedIOException(getFileReadingErrorMessage(this.file), exception);
+            final Row nextCache = this.next;
+            loadNext();
+            return nextCache;
         }
-    }
 
-    private long moveToRowGroupPosition(final ParquetFileReader reader, final long currentPosition,
-            final long startPosition) {
-        long position = currentPosition;
-        while (position < startPosition) {
-            reader.skipNextRowGroup();
-            position += 1;
-        }
-        return position;
-    }
-
-    private void consumeRows(final PageReadStore pageStore, final Consumer<Row> rowConsumer) {
-        final RecordReader<Row> recordReader = messageIO.getRecordReader(pageStore, recordMaterializer,
-                FilterCompat.NOOP);
-        consumeRecords(recordReader, pageStore.getRowCount(), rowConsumer);
-    }
-
-    /**
-     * Consumes rows from record reader.
-     *
-     * This similar how Parquet reads records internally, you can check it out in detail.
-     *
-     * @see <a href=
-     *      "https://github.com/apache/parquet-mr/blob/master/parquet-hadoop/src/main/java/org/apache/parquet/hadoop/InternalParquetRecordReader.java#L217">InternalParquetRecordReader.java#L217</a>
-     *
-     * @param recordReader a Parquet record reader
-     * @param totalRows    a total number rows to consume
-     * @param rowConsumer  a {@link Consumer} that accept {@link Row}s
-     */
-    protected void consumeRecords(final RecordReader<Row> recordReader, final long totalRows,
-            final Consumer<Row> rowConsumer) {
-        long currentRow = 0;
-        Row row;
-        while (currentRow < totalRows) {
-            currentRow += 1;
+        private void loadNext() {
             try {
-                row = recordReader.read();
-            } catch (RecordMaterializer.RecordMaterializationException exception) {
-                throw new ParquetDecodingException(ExaError.messageBuilder("F-PIOJ-2")
-                        .message("Failed to materialize a record from the Parquet file {{FILE}}.", this.file.toString())
-                        .mitigation(CHECK_FILE_MITIGATION).toString(), exception);
+                while (this.rowIterator == null || !this.rowIterator.hasNext()) {
+                    while (this.rowGroupIterator == null || !this.rowGroupIterator.hasNext()) {
+                        if (!this.chunkIterator.hasNext()) {
+                            this.hasNext = false;
+                            return;
+                        }
+                        this.chunk = this.chunkIterator.next();
+                        this.reader.moveToRowGroupPosition(this.chunk.getStartPosition());
+                        final long endPosition = this.chunk.getEndPosition();
+                        this.rowGroupIterator = LongStream.range(this.reader.getCurrentRowGroup(), endPosition)
+                                .iterator();
+                    }
+                    this.rowGroupIterator.next();
+                    final PageReadStore pageStore = this.reader.readNextRowGroup();
+                    final RecordReader<Row> recordReader = this.messageIO.getRecordReader(pageStore,
+                            this.recordMaterializer, FilterCompat.NOOP);
+                    this.rowIterator = new RecordIterator(recordReader, pageStore.getRowCount(), this.file.toString());
+                }
+                this.next = this.rowIterator.next();
+            } catch (final IOException exception) {
+                throw new UncheckedIOException(getFileReadingErrorMessage(this.file), exception);
             }
-            if (row == null) { // Only happens with FilteredRecordReader at end of block
-                break;
+        }
+
+        @Override
+        public void close() throws IOException {
+            this.reader.close();
+        }
+    }
+
+    private static class PositionAwareReader implements AutoCloseable {
+        private final ParquetFileReader reader;
+        private long currentRowGroup;
+
+        public PositionAwareReader(final ParquetFileReader reader) {
+            this.reader = reader;
+            this.currentRowGroup = 0;
+        }
+
+        public void moveToRowGroupPosition(final long startPosition) {
+            long position = this.currentRowGroup;
+            while (position < startPosition) {
+                this.reader.skipNextRowGroup();
+                position += 1;
             }
-            if (!recordReader.shouldSkipCurrentRecord()) {
-                rowConsumer.accept(row);
+            this.currentRowGroup = position;
+        }
+
+        public PageReadStore readNextRowGroup() throws IOException {
+            this.currentRowGroup++;
+            return this.reader.readNextRowGroup();
+        }
+
+        public long getCurrentRowGroup() {
+            return this.currentRowGroup;
+        }
+
+        @Override
+        public void close() throws IOException {
+            this.reader.close();
+        }
+    }
+
+    protected static class RecordIterator implements Iterator<Row> {
+        private final RecordReader<Row> recordReader;
+        private final long totalRows;
+        private final String fileNameForLogging;
+        boolean hasNext;
+        private long currentRow = 0;
+        private Row next;
+
+        public RecordIterator(final RecordReader<Row> recordReader, final long totalRows,
+                final String fileNameForLogging) {
+            this.recordReader = recordReader;
+            this.totalRows = totalRows;
+            this.fileNameForLogging = fileNameForLogging;
+            loadNext();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return this.hasNext;
+        }
+
+        @Override
+        public Row next() {
+            if (!this.hasNext) {
+                throw new NoSuchElementException();
             }
+            final Row result = this.next;
+            loadNext();
+            return result;
+        }
+
+        private void loadNext() {
+            do {
+                if (this.currentRow >= this.totalRows) {
+                    this.hasNext = false;
+                    return;
+                }
+                this.currentRow += 1;
+                try {
+                    this.next = this.recordReader.read();
+                } catch (final RecordMaterializer.RecordMaterializationException exception) {
+                    throw new ParquetDecodingException(
+                            ExaError.messageBuilder("F-PIOJ-2")
+                                    .message("Failed to materialize a record from the Parquet file {{FILE}}.",
+                                            this.fileNameForLogging)
+                                    .mitigation(CHECK_FILE_MITIGATION).toString(),
+                            exception);
+                }
+                if (this.next == null) { // Only happens with FilteredRecordReader at end of block
+                    this.hasNext = false;
+                    return;
+                }
+            } while (this.recordReader.shouldSkipCurrentRecord());
+            this.hasNext = true;
         }
     }
 

@@ -1,9 +1,12 @@
-# Parquet for Java 1.1.1, released 2021-??-??
+# Parquet for Java 1.2.0, released 2021-??-??
 
 Code name:
 
 ## Summary
 
+## Features
+
+* #35: Added iterator interface to RowParquetChunkReader
 
 ## Documentation
 
@@ -13,6 +16,7 @@ Code name:
 
 ### Compile Dependency Updates
 
+* Updated `com.exasol:error-reporting-java:0.4.0` to `0.4.1`
 * Updated `com.google.guava:guava:30.1.1-jre` to `31.0.1-jre`
 * Updated `org.apache.parquet:parquet-hadoop:1.12.1` to `1.12.2`
 * Updated `org.scala-lang:scala-library:2.12.14` to `2.12.15`
