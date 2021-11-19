@@ -100,6 +100,11 @@ public class RowParquetChunkReader {
         }
     }
 
+    /**
+     * Get an iterator that reads the rows.
+     * 
+     * @return iterator
+     */
     public RowIterator iterator() {
         return new RowIterator(getReader(), this.file, this.messageIO, this.recordMaterializer, this.chunks);
     }
@@ -127,6 +132,9 @@ public class RowParquetChunkReader {
         }
     }
 
+    /**
+     * Iterator that reads the rows of a given list of chunks.
+     */
     public static class RowIterator implements Iterator<Row>, AutoCloseable {
         private final PositionAwareReader reader;
         private final InputFile file;
@@ -139,6 +147,15 @@ public class RowParquetChunkReader {
         private Row next;
         private boolean hasNext = true;
 
+        /**
+         * Create a new instance of {@link RowIterator}.
+         * 
+         * @param reader             reader
+         * @param file               file
+         * @param messageIO          message io
+         * @param recordMaterializer record materializer
+         * @param chunks             chunks to read
+         */
         public RowIterator(final PositionAwareReader reader, final InputFile file, final MessageColumnIO messageIO,
                 final RecordMaterializer<Row> recordMaterializer, final List<ChunkInterval> chunks) {
             this.reader = reader;
@@ -200,11 +217,24 @@ public class RowParquetChunkReader {
         private final ParquetFileReader reader;
         private long currentRowGroup;
 
+        /**
+         * Create a new instance of {@link PositionAwareReader}.
+         * 
+         * @param reader reader to wrap
+         */
         public PositionAwareReader(final ParquetFileReader reader) {
             this.reader = reader;
             this.currentRowGroup = 0;
         }
 
+        /**
+         * Move to a given position.
+         * <p>
+         * Can only move forward.
+         * </p>
+         * 
+         * @param startPosition position to move to
+         */
         public void moveToRowGroupPosition(final long startPosition) {
             long position = this.currentRowGroup;
             while (position < startPosition) {
@@ -214,11 +244,22 @@ public class RowParquetChunkReader {
             this.currentRowGroup = position;
         }
 
+        /**
+         * Read the next row group.
+         * 
+         * @return read row group
+         * @throws IOException if read fails
+         */
         public PageReadStore readNextRowGroup() throws IOException {
             this.currentRowGroup++;
             return this.reader.readNextRowGroup();
         }
 
+        /**
+         * Get the current row group number.
+         * 
+         * @return current row group number
+         */
         public long getCurrentRowGroup() {
             return this.currentRowGroup;
         }
@@ -229,6 +270,9 @@ public class RowParquetChunkReader {
         }
     }
 
+    /**
+     * Iterator that reads the rows of a row group.
+     */
     protected static class RecordIterator implements Iterator<Row> {
         private final RecordReader<Row> recordReader;
         private final long totalRows;
@@ -237,6 +281,13 @@ public class RowParquetChunkReader {
         private long currentRow = 0;
         private Row next;
 
+        /**
+         * Create a new instance of {@link RecordIterator}.
+         * 
+         * @param recordReader       reader
+         * @param totalRows          total rows
+         * @param fileNameForLogging file name, used in exception message
+         */
         public RecordIterator(final RecordReader<Row> recordReader, final long totalRows,
                 final String fileNameForLogging) {
             this.recordReader = recordReader;
@@ -290,5 +341,4 @@ public class RowParquetChunkReader {
         return ExaError.messageBuilder("E-PIOJ-1").message("Failed to read Parquet file {{FILE}}.", file.toString())
                 .mitigation(CHECK_FILE_MITIGATION).toString();
     }
-
 }
