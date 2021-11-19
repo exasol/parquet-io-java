@@ -1,8 +1,10 @@
-# Parquet for Java 1.2.0, released 2021-??-??
+# Parquet for Java 1.2.0, released 2021-11-22
 
-Code name:
+Code name: Iterator for RowParquetChunkReader
 
 ## Summary
+
+In this release we added an iterator interface to `RowParquetChunkReader`. That allows you to also pull the rows instead of the previous push implementation.
 
 ## Features
 

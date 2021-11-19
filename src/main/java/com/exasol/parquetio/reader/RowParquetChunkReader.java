@@ -141,9 +141,8 @@ public class RowParquetChunkReader {
         private final MessageColumnIO messageIO;
         private final RecordMaterializer<Row> recordMaterializer;
         private final Iterator<ChunkInterval> chunkIterator;
-        private ChunkInterval chunk;
         private Iterator<Long> rowGroupIterator;
-        private Iterator<Row> rowIterator;
+        private Iterator<Row> rowInRowGroupIterator;
         private Row next;
         private boolean hasNext = true;
 
@@ -183,15 +182,15 @@ public class RowParquetChunkReader {
 
         private void loadNext() {
             try {
-                while (this.rowIterator == null || !this.rowIterator.hasNext()) {
+                while (this.rowInRowGroupIterator == null || !this.rowInRowGroupIterator.hasNext()) {
                     while (this.rowGroupIterator == null || !this.rowGroupIterator.hasNext()) {
                         if (!this.chunkIterator.hasNext()) {
                             this.hasNext = false;
                             return;
                         }
-                        this.chunk = this.chunkIterator.next();
-                        this.reader.moveToRowGroupPosition(this.chunk.getStartPosition());
-                        final long endPosition = this.chunk.getEndPosition();
+                        final ChunkInterval chunk = this.chunkIterator.next();
+                        this.reader.moveToRowGroupPosition(chunk.getStartPosition());
+                        final long endPosition = chunk.getEndPosition();
                         this.rowGroupIterator = LongStream.range(this.reader.getCurrentRowGroup(), endPosition)
                                 .iterator();
                     }
@@ -199,9 +198,10 @@ public class RowParquetChunkReader {
                     final PageReadStore pageStore = this.reader.readNextRowGroup();
                     final RecordReader<Row> recordReader = this.messageIO.getRecordReader(pageStore,
                             this.recordMaterializer, FilterCompat.NOOP);
-                    this.rowIterator = new RecordIterator(recordReader, pageStore.getRowCount(), this.file.toString());
+                    this.rowInRowGroupIterator = new RecordIterator(recordReader, pageStore.getRowCount(),
+                            this.file.toString());
                 }
-                this.next = this.rowIterator.next();
+                this.next = this.rowInRowGroupIterator.next();
             } catch (final IOException exception) {
                 throw new UncheckedIOException(getFileReadingErrorMessage(this.file), exception);
             }
