@@ -141,9 +141,9 @@ public class RowParquetChunkReader {
         private final MessageColumnIO messageIO;
         private final RecordMaterializer<Row> recordMaterializer;
         private final Iterator<ChunkInterval> chunkIterator;
-        private Iterator<Long> rowGroupIterator;
-        private Iterator<Row> rowInRowGroupIterator;
-        private Row next;
+        private Iterator<Long> rowGroupIterator = null;
+        private Iterator<Row> rowInRowGroupIterator = null;
+        private Row next = null;
         private boolean hasNext = true;
 
         /**
@@ -277,9 +277,9 @@ public class RowParquetChunkReader {
         private final RecordReader<Row> recordReader;
         private final long totalRows;
         private final String fileNameForLogging;
-        boolean hasNext;
+        boolean hasNext = true;
         private long currentRow = 0;
-        private Row next;
+        private Row next = null;
 
         /**
          * Create a new instance of {@link RecordIterator}.
@@ -333,7 +333,6 @@ public class RowParquetChunkReader {
                     return;
                 }
             } while (this.recordReader.shouldSkipCurrentRecord());
-            this.hasNext = true;
         }
     }
 
