@@ -1,9 +1,6 @@
 package com.exasol.parquetio.reader.converter
 
-import java.util.ArrayList
-import java.util.Collections
-import java.util.List
-
+import java.util.{ArrayList, Collections, List}
 import scala.collection.mutable.ArrayBuffer
 
 /**
@@ -30,7 +27,7 @@ trait ValueHolder {
    * Inserts a value to the given position.
    *
    * @param position position to insert value
-   * @param value value to insert
+   * @param value    value to insert
    */
   def put(index: Int, value: Any): Unit
 
@@ -44,7 +41,7 @@ trait ValueHolder {
     var result = new ArrayList[Any]()
     val iterator = array.iterator
     while (iterator.hasNext) {
-      result.add(iterator.next)
+      result.add(iterator.next())
     }
     Collections.unmodifiableList(result)
   }
@@ -61,7 +58,9 @@ final case class IndexedValueHolder(size: Int) extends ValueHolder {
   private[this] var array = Array.ofDim[Any](size)
 
   override def reset(): Unit = array = Array.ofDim[Any](size)
+
   override def getValues(): List[Any] = getImmutableValues(array)
+
   override def put(index: Int, value: Any): Unit = array.update(index, value)
 }
 
@@ -74,7 +73,9 @@ final case class AppendedValueHolder() extends ValueHolder {
   private[this] var array = ArrayBuffer.empty[Any]
 
   override def reset(): Unit = array.clear()
+
   override def getValues(): List[Any] = getImmutableValues(array)
+
   override def put(index: Int, value: Any): Unit = array.append(value)
 }
 
@@ -83,6 +84,8 @@ final case class AppendedValueHolder() extends ValueHolder {
  */
 object EmptyValueHolder extends ValueHolder {
   override def reset(): Unit = ()
+
   override def getValues(): List[Any] = Collections.emptyList()
+
   override def put(index: Int, value: Any): Unit = ()
 }

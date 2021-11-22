@@ -1,8 +1,6 @@
 package com.exasol.parquetio.reader;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -12,27 +10,19 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.exasol.parquetio.data.ChunkInterval;
-import com.exasol.parquetio.data.ChunkIntervalImpl;
-import com.exasol.parquetio.data.GenericRow;
-import com.exasol.parquetio.data.Row;
-import com.exasol.parquetio.writer.ParquetTestFileWriter;
-
-import org.apache.parquet.io.InputFile;
-import org.apache.parquet.io.ParquetDecodingException;
-import org.apache.parquet.io.RecordReader;
-import org.apache.parquet.io.SeekableInputStream;
+import org.apache.parquet.io.*;
 import org.apache.parquet.io.api.RecordMaterializer;
 import org.apache.parquet.schema.PrimitiveType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+
+import com.exasol.parquetio.data.*;
+import com.exasol.parquetio.writer.ParquetTestFileWriter;
 
 // [utest->dsn~read-parquet-file-chunks-contents~1]
 class RowParquetChunkReaderTest {
@@ -51,7 +41,7 @@ class RowParquetChunkReaderTest {
     @Test
     void testReadAll(@TempDir final Path tempDir) throws IOException {
         final var reader = new RowParquetChunkReader(writeSimpleFile(tempDir));
-        List<Integer> values = collectValues(reader);
+        final List<Integer> values = collectValues(reader);
         assertThat(values, containsInAnyOrder(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
     }
 
@@ -78,36 +68,34 @@ class RowParquetChunkReaderTest {
     }
 
     @Test
-    void testConsumeRecordsThrows(@TempDir final Path tempDir) throws IOException {
+    void testConsumeRecordsThrows() {
         final RecordReader<Row> recordReader = mock(RecordReader.class);
         when(recordReader.read()).thenThrow(RecordMaterializer.RecordMaterializationException.class);
-        final var reader = new RowParquetChunkReader(writeSimpleFile(tempDir), 0L, 1L);
         final ParquetDecodingException exception = assertThrows(ParquetDecodingException.class,
-                () -> reader.consumeRecords(recordReader, 1L, row -> {
-                }));
+                () -> new RowParquetChunkReader.RecordIterator(recordReader, 1L, ""));
         assertThat(exception.getMessage(), startsWith("F-PIOJ-2: Failed to materialize a record"));
     }
 
     @Test
-    void testConsumeRecordsSkips(@TempDir final Path tempDir) throws IOException {
+    void testConsumeRecordsSkips() {
         final RecordReader<Row> recordReader = mock(RecordReader.class);
         when(recordReader.read()).thenReturn(new GenericRow(Collections.emptyList()), GenericRow.of("a"));
         when(recordReader.shouldSkipCurrentRecord()).thenReturn(true, false);
-        AtomicInteger count = new AtomicInteger();
-        new RowParquetChunkReader(writeSimpleFile(tempDir), 0L, 1L).consumeRecords(recordReader, 2L, row -> {
-            count.addAndGet(1);
-        });
+        final AtomicInteger count = new AtomicInteger();
+        final RowParquetChunkReader.RecordIterator iterator = new RowParquetChunkReader.RecordIterator(recordReader, 2L,
+                "");
+        iterator.forEachRemaining(row -> count.addAndGet(1));
         assertThat(count.get(), equalTo(1));
     }
 
     @Test
-    void testConsumeRecordsStopsOnNull(@TempDir final Path tempDir) throws IOException {
+    void testConsumeRecordsStopsOnNull() {
         final RecordReader<Row> recordReader = mock(RecordReader.class);
         when(recordReader.read()).thenReturn(new GenericRow(Collections.emptyList()), null, GenericRow.of(1));
-        AtomicInteger count = new AtomicInteger();
-        new RowParquetChunkReader(writeSimpleFile(tempDir), 0L, 1L).consumeRecords(recordReader, 3L, row -> {
-            count.addAndGet(1);
-        });
+        final AtomicInteger count = new AtomicInteger();
+        final RowParquetChunkReader.RecordIterator iterator = new RowParquetChunkReader.RecordIterator(recordReader, 3L,
+                "");
+        iterator.forEachRemaining(row -> count.addAndGet(1));
         assertThat(count.get(), equalTo(1));
     }
 
@@ -129,7 +117,7 @@ class RowParquetChunkReaderTest {
     }
 
     private void assertValues(final RowParquetChunkReader reader) {
-        List<Integer> values = collectValues(reader);
+        final List<Integer> values = collectValues(reader);
         for (int value = 0; value <= 4033; value++) {
             assertThat(values.contains(value), equalTo(true));
         }
@@ -142,7 +130,7 @@ class RowParquetChunkReaderTest {
     }
 
     private List<Integer> collectValues(final RowParquetChunkReader reader) {
-        List<Integer> values = new ArrayList<>();
+        final List<Integer> values = new ArrayList<>();
         reader.read(row -> values.add((Integer) row.getValue(0)));
         return values;
     }
@@ -160,7 +148,7 @@ class RowParquetChunkReaderTest {
         }
 
         @Override
-        public SeekableInputStream newStream() throws IOException {
+        public SeekableInputStream newStream() {
             return null;
         }
 

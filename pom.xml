@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.exasol</groupId>
     <artifactId>parquet-io-java</artifactId>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
     <name>Parquet for Java</name>
     <description>This project provides a library that reads Parquet files into Java objects.</description>
     <url>https://github.com/exasol/parquet-io-java</url>
@@ -97,6 +97,10 @@
                     <groupId>com.google.guava</groupId>
                     <artifactId>guava</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>net.minidev</groupId>
+                    <artifactId>json-smart</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <!-- Adding updated version of guava without vulnerabilities. -->
@@ -119,7 +123,7 @@
         <dependency>
             <groupId>com.exasol</groupId>
             <artifactId>error-reporting-java</artifactId>
-            <version>0.4.0</version>
+            <version>0.4.1</version>
         </dependency>
         <!-- Unit test dependencies -->
         <dependency>
