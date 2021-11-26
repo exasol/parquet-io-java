@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.exasol</groupId>
     <artifactId>parquet-io-java</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <name>Parquet for Java</name>
     <description>This project provides a library that reads Parquet files into Java objects.</description>
     <url>https://github.com/exasol/parquet-io-java</url>
@@ -12,8 +11,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
-        <scala.version>2.12.15</scala.version>
-        <mockito.version>4.0.0</mockito.version>
+        <scala.version>2.13.7</scala.version>
+        <scala.compat.version>2.13</scala.compat.version>
+        <mockito.version>4.1.0</mockito.version>
         <gpg.skip>true</gpg.skip>
     </properties>
     <licenses>
@@ -152,7 +152,7 @@
         </dependency>
         <dependency>
             <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_2.12</artifactId>
+            <artifactId>scalatest_${scala.compat.version}</artifactId>
             <version>3.2.7</version>
             <scope>test</scope>
         </dependency>
@@ -208,8 +208,7 @@
                         <javacArg>${java.version}</javacArg>
                         <javacArg>-Xlint:all,-serial,-path,-try</javacArg>
                     </javacArgs>
-                    <compilerPlugins>
-                    </compilerPlugins>
+                    <compilerPlugins />
                 </configuration>
             </plugin>
             <plugin>
@@ -382,7 +381,7 @@
                         <configuration>
                             <rules>
                                 <requireMavenVersion>
-                                    <version>3.3.9</version>
+                                    <version>3.6.3</version>
                                 </requireMavenVersion>
                             </rules>
                         </configuration>
@@ -420,8 +419,7 @@
                     <includes>
                         <include>**IT.java</include>
                     </includes>
-                    <systemPropertyVariables>
-                    </systemPropertyVariables>
+                    <systemPropertyVariables />
                 </configuration>
                 <executions>
                     <execution>
@@ -506,7 +504,7 @@
                 </executions>
                 <configuration>
                     <charset>UTF-8</charset>
-                    <doclint/>
+                    <doclint />
                     <serialwarn>true</serialwarn>
                     <failOnError>true</failOnError>
                     <failOnWarnings>true</failOnWarnings>
@@ -516,7 +514,7 @@
             <plugin>
                 <groupId>io.github.zlika</groupId>
                 <artifactId>reproducible-build-maven-plugin</artifactId>
-                <version>0.13</version>
+                <version>0.14</version>
                 <executions>
                     <execution>
                         <id>strip-jar</id>
@@ -530,7 +528,7 @@
             <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>project-keeper-maven-plugin</artifactId>
-                <version>1.3.1</version>
+                <version>1.3.4</version>
                 <executions>
                     <execution>
                         <goals>
