@@ -1,12 +1,15 @@
-# Parquet for Java 1.3.0, released 2022-01-??
+# Parquet for Java 1.3.0, released 2022-01-12
 
-Code name:
+Code name: Support UUID and TIMESTAMP_MICROS Logical Types
 
 ## Summary
 
+In this release, we added support for reading `FIXED_LEN_BYTE_ARRAY (UUID)` and `INT64 (TIMESTAMP_MICROS)` logical types.
+
 ## Features
 
-* #38: Added support for reading Parquet `TIMESTMAP_MICROS` logical type as timestamp
+* #33: Added support for reading `UUID` logical type as Java UUID
+* #38: Added support for reading `TIMESTAMP_MICROS` logical type as Java timestamp
 
 ## Dependency Updates
 

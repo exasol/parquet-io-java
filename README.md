@@ -75,6 +75,7 @@ types.
 | binary               | decimal(p, s)        | BigDecimal     |
 | fixed_len_byte_array |                      | String         |
 | fixed_len_byte_array | decimal(p, s)        | BigDecimal     |
+| fixed_len_byte_array | uuid                 | UUID           |
 | int96                |                      | Timestamp      |
 | group                |                      | Map            |
 | group                | LIST                 | List           |
