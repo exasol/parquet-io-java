@@ -1,5 +1,6 @@
 package com.exasol.parquetio.reader.converter
 
+import org.apache.parquet.schema.LogicalTypeAnnotation
 import org.apache.parquet.schema.OriginalType
 import org.apache.parquet.schema.PrimitiveType
 import org.apache.parquet.schema.PrimitiveType.PrimitiveTypeName._
@@ -82,10 +83,15 @@ object ParquetConverterFactory {
     primitiveType: PrimitiveType,
     index: Int,
     holder: ValueHolder
-  ): ParquetConverter = primitiveType.getOriginalType() match {
-    case OriginalType.DECIMAL => ParquetDecimalConverter(primitiveType, index, holder)
-    case _                    => ParquetPrimitiveConverter(index, holder)
-  }
+  ): ParquetConverter =
+    if (primitiveType.getLogicalTypeAnnotation == LogicalTypeAnnotation.uuidType()) {
+      ParquetUUIDConverter(index, holder)
+    } else {
+      primitiveType.getOriginalType() match {
+        case OriginalType.DECIMAL => ParquetDecimalConverter(primitiveType, index, holder)
+        case _                    => ParquetPrimitiveConverter(index, holder)
+      }
+    }
 
   private[this] def createIntegerConverter(
     primitiveType: PrimitiveType,

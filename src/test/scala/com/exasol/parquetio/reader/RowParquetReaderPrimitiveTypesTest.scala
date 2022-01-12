@@ -3,8 +3,11 @@ package com.exasol.parquetio.reader
 import java.math.BigDecimal
 import java.math.BigInteger
 import java.math.MathContext
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 import java.nio.charset.StandardCharsets.UTF_8
 import java.sql.Timestamp
+import java.util.UUID
 
 import com.exasol.parquetio.data.GenericRow
 import com.exasol.parquetio.BaseParquetReaderTest
@@ -66,6 +69,32 @@ class RowParquetReaderPrimitiveTypesTest extends BaseParquetReaderTest {
       writer.write(record)
     }
     assert(getRecords() === Seq(GenericRow.of("hello")))
+  }
+
+  test("reads FIXED_LEN_BYTE_ARRAY (UUID) as uuid value") {
+    val schema = MessageTypeParser.parseMessageType(
+      """|message test {
+         |  required fixed_len_byte_array(16) col_uuid (UUID);
+         |}
+         |""".stripMargin
+    )
+    val uuid = UUID.randomUUID()
+    withResource(getParquetWriter(schema, false)) { writer =>
+      val record = new SimpleGroup(schema)
+      record.append("col_uuid", getByteBufferFromUUID(uuid))
+      writer.write(record)
+    }
+    assert(getRecords() === Seq(GenericRow.of(uuid)))
+  }
+
+  private[this] def getByteBufferFromUUID(uuid: UUID): Binary = {
+    val bytes = ByteBuffer
+      .allocate(16)
+      .order(ByteOrder.BIG_ENDIAN)
+      .putLong(uuid.getMostSignificantBits())
+      .putLong(uuid.getLeastSignificantBits())
+      .array()
+    Binary.fromConstantByteArray(bytes)
   }
 
   test("reads BINARY as string value") {

@@ -2,9 +2,11 @@ package com.exasol.parquetio.reader.converter
 
 import java.math.BigDecimal
 import java.math.BigInteger
+import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.charset.StandardCharsets.UTF_8
 import java.util.HashMap
+import java.util.UUID
 
 import com.exasol.parquetio.helper.DateTimeHelper
 
@@ -105,6 +107,34 @@ final case class ParquetStringConverter(index: Int, holder: ValueHolder)
 
   override def addValueFromDictionary(dictionaryId: Int): Unit =
     holder.put(index, decodedDictionary(dictionaryId))
+}
+
+/**
+ * A converter for {@code UUID} annotated Parquet type.
+ *
+ * The decimal annotation can be used only with the following Parquet type:
+ * {@code FIXED_LEN_BYTE_ARRAY} with length {@code 16}.
+ *
+ * An example schema that this converter applies:
+ * {{{
+ * message parquet_file_schema {
+ *   required fixed_len_byte_array(16) uuid (UUID);
+ * }
+ * }}}
+ */
+// [impl->dsn~converting-logical-column-types~1]
+final case class ParquetUUIDConverter(index: Int, holder: ValueHolder)
+    extends PrimitiveConverter
+    with ParquetConverter {
+
+  override def addBinary(value: Binary): Unit = holder.put(index, getUUIDFromBytes(value.getBytes()))
+
+  private[this] def getUUIDFromBytes(bytes: Array[Byte]): UUID = {
+    val byteBuffer = ByteBuffer.wrap(bytes)
+    val mostSignificantiBits = byteBuffer.getLong()
+    val leastSignificantBits = byteBuffer.getLong()
+    new UUID(mostSignificantiBits, leastSignificantBits)
+  }
 }
 
 /**
