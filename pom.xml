@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.exasol</groupId>
     <artifactId>parquet-io-java</artifactId>
-    <version>1.2.1</version>
+    <version>1.3.0</version>
     <name>Parquet for Java</name>
     <description>This project provides a library that reads Parquet files into Java objects.</description>
     <url>https://github.com/exasol/parquet-io-java</url>
@@ -11,9 +11,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
-        <scala.version>2.13.7</scala.version>
+        <scala.version>2.13.8</scala.version>
         <scala.compat.version>2.13</scala.compat.version>
-        <mockito.version>4.1.0</mockito.version>
+        <mockito.version>4.2.0</mockito.version>
         <gpg.skip>true</gpg.skip>
     </properties>
     <licenses>
@@ -129,7 +129,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.8.1</version>
+            <version>5.8.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -162,7 +162,7 @@
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <version>4.5.4</version>
+                <version>4.5.6</version>
                 <executions>
                     <execution>
                         <id>scala-compile-first</id>
@@ -391,7 +391,7 @@
             <plugin>
                 <groupId>org.itsallcode</groupId>
                 <artifactId>openfasttrace-maven-plugin</artifactId>
-                <version>1.2.0</version>
+                <version>1.3.0</version>
                 <executions>
                     <execution>
                         <id>trace-requirements</id>
@@ -514,7 +514,7 @@
             <plugin>
                 <groupId>io.github.zlika</groupId>
                 <artifactId>reproducible-build-maven-plugin</artifactId>
-                <version>0.14</version>
+                <version>0.15</version>
                 <executions>
                     <execution>
                         <id>strip-jar</id>
@@ -576,7 +576,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.2.0</version>
+                    <version>3.2.2</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
@@ -584,7 +584,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.9.1</version>
+                    <version>3.10.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>

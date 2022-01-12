@@ -23,11 +23,7 @@ object ParquetConverterFactory {
    * @param parentDataHolder a parent data holder for this field
    * @return specific data converter for the field type
    */
-  def apply(
-    parquetType: Type,
-    fieldIndex: Int,
-    parentDataHolder: ValueHolder
-  ): ParquetConverter =
+  def apply(parquetType: Type, fieldIndex: Int, parentDataHolder: ValueHolder): ParquetConverter =
     if (parquetType.isPrimitive()) {
       if (parquetType.isRepetition(Repetition.REPEATED)) {
         RepeatedPrimitiveConverter(parquetType.asPrimitiveType(), fieldIndex, parentDataHolder)
@@ -107,6 +103,7 @@ object ParquetConverterFactory {
     holder: ValueHolder
   ): ParquetConverter = primitiveType.getOriginalType() match {
     case OriginalType.TIMESTAMP_MILLIS => ParquetTimestampMillisConverter(index, holder)
+    case OriginalType.TIMESTAMP_MICROS => ParquetTimestampMicrosConverter(index, holder)
     case OriginalType.DECIMAL          => ParquetDecimalConverter(primitiveType, index, holder)
     case _                             => ParquetPrimitiveConverter(index, holder)
   }
