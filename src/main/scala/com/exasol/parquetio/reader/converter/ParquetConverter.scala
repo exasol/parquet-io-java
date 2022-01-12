@@ -112,10 +112,10 @@ final case class ParquetStringConverter(index: Int, holder: ValueHolder)
 /**
  * A converter for {@code UUID} annotated Parquet type.
  *
- * The decimal annotation can be used for the following Parquet types: {@code
- * FIXED_LEN_BYTE_ARRAY} with length {@code 16}.
+ * The decimal annotation can be used only with the following Parquet type:
+ * {@code FIXED_LEN_BYTE_ARRAY} with length {@code 16}.
  *
- * The following schema fits this converter:
+ * An example schema that this converter applies:
  * {{{
  * message parquet_file_schema {
  *   required fixed_len_byte_array(16) uuid (UUID);
