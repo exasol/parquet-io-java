@@ -171,8 +171,7 @@ final case class ParquetDecimalConverter(primitiveType: PrimitiveType, index: In
 }
 
 /**
- * A converter for Parquet {@code INT64} with {@code TIMESTAMP_MILLIS}
- * annotation.
+ * A converter for Parquet {@code INT64} with {@code TIMESTAMP_MILLIS} annotation.
  *
  * The following schema fits this converter:
  * {{{
@@ -187,6 +186,24 @@ final case class ParquetTimestampMillisConverter(index: Int, holder: ValueHolder
     with ParquetConverter {
   override def addLong(value: Long): Unit =
     holder.put(index, DateTimeHelper.getTimestampFromMillis(value))
+}
+
+/**
+ * A converter for Parquet {@code INT64} with {@code TIMESTAMP_MICROS} annotation.
+ *
+ * The following schema fits this converter:
+ * {{{
+ * message parquet_file_schema {
+ *   required int64 timestamp (TIMESTAMP_MICROS);
+ * }
+ * }}}
+ */
+// [impl->dsn~converting-logical-column-types~1]
+final case class ParquetTimestampMicrosConverter(index: Int, holder: ValueHolder)
+    extends PrimitiveConverter
+    with ParquetConverter {
+  override def addLong(value: Long): Unit =
+    holder.put(index, DateTimeHelper.getTimestampFromMicros(value))
 }
 
 /**
