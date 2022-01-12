@@ -66,6 +66,7 @@ types.
 | int32                | decimal(p, s)        | BigDecimal     |
 | int64                |                      | Long           |
 | int64                | timestamp_millis     | Timestamp      |
+| int64                | timestamp_micros     | Timestamp      |
 | int64                | decimal(p, s)        | BigDecimal     |
 | float                |                      | Float          |
 | double               |                      | Double         |
