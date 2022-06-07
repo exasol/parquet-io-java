@@ -61,7 +61,6 @@
 [29]: https://www.mojohaus.org/flatten-maven-plugin/
 [5]: https://commons.apache.org/proper/commons-compress/
 [37]: http://www.mojohaus.org/versions-maven-plugin/
-[53]: https://mvnrepository.com/artifact/org.scalatest/scalatest-maven-plugin
 [61]: https://github.com/exasol/project-keeper/
 [18]: http://opensource.org/licenses/BSD-3-Clause
 [25]: https://maven.apache.org/plugins/maven-compiler-plugin/
@@ -99,6 +98,7 @@
 [31]: https://sonatype.github.io/ossindex-maven/maven-plugin/
 [45]: https://maven.apache.org/plugins/maven-gpg-plugin/
 [23]: http://github.com/davidB/scala-maven-plugin
+[53]: https://github.com/scalatest/scalatest-maven-plugin
 [49]: https://maven.apache.org/plugins/maven-javadoc-plugin/
 [59]: https://github.com/exasol/error-code-crawler-maven-plugin
 [55]: https://maven.apache.org/plugins/maven-assembly-plugin/
