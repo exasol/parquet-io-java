@@ -61,6 +61,7 @@
 [29]: https://www.mojohaus.org/flatten-maven-plugin/
 [5]: https://commons.apache.org/proper/commons-compress/
 [37]: http://www.mojohaus.org/versions-maven-plugin/
+[53]: https://mvnrepository.com/artifact/org.scalatest/scalatest-maven-plugin
 [61]: https://github.com/exasol/project-keeper/
 [18]: http://opensource.org/licenses/BSD-3-Clause
 [25]: https://maven.apache.org/plugins/maven-compiler-plugin/
@@ -92,7 +93,6 @@
 [71]: https://maven.apache.org/plugins/maven-site-plugin/
 [42]: https://www.gnu.org/licenses/gpl-3.0.html
 [2]: https://www.apache.org/licenses/LICENSE-2.0.txt
-[53]: http://nexus.sonatype.org/oss-repository-hosting.html/scalatest-maven-plugin
 [27]: https://maven.apache.org/enforcer/maven-enforcer-plugin/
 [12]: https://www.eclipse.org/legal/epl-v20.html
 [69]: http://maven.apache.org/plugins/maven-install-plugin/

@@ -3,3 +3,5 @@ sources:
     path: pom.xml
     modules:
       - maven_central
+linkReplacements:
+  - "http://nexus.sonatype.org/oss-repository-hosting.html/scalatest-maven-plugin|https://mvnrepository.com/artifact/org.scalatest/scalatest-maven-plugin"
