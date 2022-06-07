@@ -1,4 +1,4 @@
-# Parquet for Java 1.3.1, released 2022-??-??
+# Parquet for Java 1.3.1, released 2022-06-07
 
 Code name: Dependency updates / CVE fixes
 
