@@ -4,4 +4,4 @@ sources:
     modules:
       - maven_central
 linkReplacements:
-  - "http://nexus.sonatype.org/oss-repository-hosting.html/scalatest-maven-plugin|https://mvnrepository.com/artifact/org.scalatest/scalatest-maven-plugin"
+  - "http://nexus.sonatype.org/oss-repository-hosting.html/scalatest-maven-plugin|https://github.com/scalatest/scalatest-maven-plugin"
