@@ -1,0 +1,8 @@
+sources:
+  - type: maven
+    path: pom.xml
+    modules:
+      - integration_tests
+      - maven_central
+linkReplacements:
+  - "http://nexus.sonatype.org/oss-repository-hosting.html/scalatest-maven-plugin|https://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin"
