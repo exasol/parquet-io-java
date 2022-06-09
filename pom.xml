@@ -74,6 +74,17 @@
                     <groupId>net.minidev</groupId>
                     <artifactId>json-smart</artifactId>
                 </exclusion>
+                <exclusion>
+                    <!-- Excluded because of https://ossindex.sonatype.org/vulnerability/CVE-2021-22569 -->
+                    <groupId>com.google.protobuf</groupId>
+                    <artifactId>protobuf-java</artifactId>
+                </exclusion>
+                <exclusion>
+                    <!-- Excluded because of https://ossindex.sonatype.org/vulnerability/CVE-2021-0341
+                        and https://ossindex.sonatype.org/vulnerability/sonatype-2018-0035 -->
+                    <groupId>com.squareup.okhttp</groupId>
+                    <artifactId>okhttp</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <!-- Adding updated version of guava without vulnerabilities. -->
@@ -255,6 +266,17 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.ossindex.maven</groupId>
+                <artifactId>ossindex-maven-plugin</artifactId>
+                <configuration>
+                    <excludeVulnerabilityIds>
+                        <!-- com.google.guava:guava: https://ossindex.sonatype.org/vulnerability/sonatype-2020-0926
+                        Excluded because we assume that the attacker does not have access to the machine. -->
+                        <exclude>sonatype-2020-0926</exclude>
+                    </excludeVulnerabilityIds>
+                </configuration>
             </plugin>
         </plugins>
     </build>
