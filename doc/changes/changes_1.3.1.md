@@ -4,7 +4,7 @@ Code name: 1.3.1: Fix vulnerabilities
 
 ## Summary
 
-This release fixes vulnerabilities in dependencies
+This release fixes vulnerabilities in dependencies by updating compile dependency guava, hadoop-client and parquet-hadoop, along with test and plugin dependencies.
 
 ## Features
 
