@@ -278,6 +278,18 @@
                     </excludeVulnerabilityIds>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.exasol</groupId>
+                <artifactId>error-code-crawler-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <!-- Prevent the crawler from running as it does not support Scala. -->
+                        <id>verify</id>
+                        <goals/>
+                        <phase/>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <parent>
