@@ -5,8 +5,4 @@ sources:
       - integration_tests
       - maven_central
 linkReplacements:
-  - "https://github.com/google/guava/guava|https://github.com/google/guava"
-  - "https://github.com/google/guava/guava|https://github.com/google/guava"
-  - "http://nexus.sonatype.org/oss-repository-hosting.html|https://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin"
   - "http://nexus.sonatype.org/oss-repository-hosting.html/scalatest-maven-plugin|https://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin"
-excludes:
