@@ -1,3 +1,4 @@
 release-platforms:
   - GitHub
   - Maven
+language: Java

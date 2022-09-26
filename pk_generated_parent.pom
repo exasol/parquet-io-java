@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.exasol</groupId>
     <artifactId>parquet-io-java-generated-parent</artifactId>
-    <version>1.3.2</version>
+    <version>1.3.3</version>
     <packaging>pom</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -52,7 +52,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <id>enforce-maven</id>
@@ -104,20 +104,6 @@
                         <phase>package</phase>
                         <goals>
                             <goal>audit</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>io.github.zlika</groupId>
-                <artifactId>reproducible-build-maven-plugin</artifactId>
-                <version>0.15</version>
-                <executions>
-                    <execution>
-                        <id>strip-jar</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>strip-jar</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -296,12 +282,26 @@
             <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>error-code-crawler-maven-plugin</artifactId>
-                <version>1.1.1</version>
+                <version>1.1.2</version>
                 <executions>
                     <execution>
                         <id>verify</id>
                         <goals>
                             <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.github.zlika</groupId>
+                <artifactId>reproducible-build-maven-plugin</artifactId>
+                <version>0.15</version>
+                <executions>
+                    <execution>
+                        <id>strip-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>strip-jar</goal>
                         </goals>
                     </execution>
                 </executions>
