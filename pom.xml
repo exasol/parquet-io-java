@@ -252,6 +252,12 @@
                     <excludeVulnerabilityIds>
                         <!-- com.google.guava:guava: Excluded because we assume that the attacker does not have access to the machine. -->
                         <exclude>sonatype-2020-0926</exclude>
+                        <!-- org.apache.hadoop:hadoop-common:jar:3.3.4: CWE-611: Improper Restriction of XML External Entity Reference ('XXE') (8.6); https://ossindex.sonatype.org/vulnerability/sonatype-2022-5820
+                        No update available -->
+                        <exclude>sonatype-2022-5820</exclude>
+                        <!-- org.apache.hadoop:hadoop-hdfs-client:jar:3.3.4: CWE-611: Improper Restriction of XML External Entity Reference ('XXE') (8.6); https://ossindex.sonatype.org/vulnerability/sonatype-2022-5732
+                        No update available -->
+                        <exclude>sonatype-2022-5732</exclude>
                     </excludeVulnerabilityIds>
                 </configuration>
             </plugin>
