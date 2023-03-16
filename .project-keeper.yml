@@ -6,3 +6,5 @@ sources:
       - maven_central
 linkReplacements:
   - "http://nexus.sonatype.org/oss-repository-hosting.html/scalatest-maven-plugin|https://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin"
+excludes:
+  - regex: "E-PK-CORE-53: The dependencies.md file has outdated content.*"
