@@ -88,6 +88,16 @@
                     <groupId>com.squareup.okhttp</groupId>
                     <artifactId>okhttp</artifactId>
                 </exclusion>
+                <exclusion>
+                    <!-- Excluded because of CVE-2021-37533 -->
+                    <groupId>commons-net</groupId>
+                    <artifactId>commons-net</artifactId>
+                </exclusion>
+                <exclusion>
+                    <!-- Excluded because of https://ossindex.sonatype.org/vulnerability/sonatype-2022-6438 -->
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <!-- Adding updated version to avoid some vulnerabilities. -->
@@ -101,6 +111,12 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
             <version>1.22</version>
+        </dependency>
+        <!-- Explicitly upgrade to fix CVE-2022-40152 -->
+        <dependency>
+            <groupId>com.fasterxml.woodstox</groupId>
+            <artifactId>woodstox-core</artifactId>
+            <version>6.5.0</version>
         </dependency>
         <dependency>
             <groupId>org.scala-lang</groupId>

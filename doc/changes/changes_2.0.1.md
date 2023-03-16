@@ -6,6 +6,9 @@ Code name: Update Dependencies
 
 This release fixes vulnerabilities by updating dependencies:
 
+* `com.fasterxml.woodstox:woodstox-core:jar:5.3.0:compile`: CVE-2022-40152
+* `com.fasterxml.jackson.core:jackson-core:jar:2.12.7:compile`: [sonatype-2022-6438](https://ossindex.sonatype.org/vulnerability/sonatype-2022-6438)
+* `commons-net:commons-net:jar:3.6:compile`: CVE-2021-37533
 
 ## Features
 
@@ -16,6 +19,7 @@ This release fixes vulnerabilities by updating dependencies:
 ### Compile Dependency Updates
 
 * Updated `com.exasol:error-reporting-java:1.0.0` to `1.0.1`
+* Added `com.fasterxml.woodstox:woodstox-core:6.5.0`
 * Updated `org.apache.commons:commons-compress:1.21` to `1.22`
 
 ### Test Dependency Updates
