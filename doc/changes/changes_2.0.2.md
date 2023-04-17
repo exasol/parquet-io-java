@@ -12,6 +12,19 @@ This release removes duplicate classes from dependencies.
 
 ## Dependency Updates
 
+### Compile Dependency Updates
+
+* Removed `com.fasterxml.woodstox:woodstox-core:6.5.0`
+* Removed `com.google.guava:guava:31.1-jre`
+* Removed `org.apache.commons:commons-compress:1.22`
+* Updated `org.apache.hadoop:hadoop-client:3.3.4` to `3.3.5`
+* Updated `org.apache.parquet:parquet-hadoop:1.12.3` to `1.13.0`
+
+### Test Dependency Updates
+
+* Updated `org.mockito:mockito-core:5.2.0` to `5.3.0`
+* Updated `org.mockito:mockito-junit-jupiter:5.2.0` to `5.3.0`
+
 ### Plugin Dependency Updates
 
 * Updated `com.exasol:error-code-crawler-maven-plugin:1.2.2` to `1.2.3`
