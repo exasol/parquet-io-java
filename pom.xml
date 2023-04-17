@@ -3,14 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.exasol</groupId>
     <artifactId>parquet-io-java</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
     <name>Parquet for Java</name>
     <description>This project provides a library that reads Parquet files into Java objects.</description>
     <url>https://github.com/exasol/parquet-io-java/</url>
     <properties>
         <scala.version>2.13.10</scala.version>
         <scala.compat.version>2.13</scala.compat.version>
-        <mockito.version>5.2.0</mockito.version>
+        <mockito.version>5.3.0</mockito.version>
     </properties>
     <distributionManagement>
         <snapshotRepository>
@@ -26,12 +26,12 @@
         <dependency>
             <groupId>org.apache.parquet</groupId>
             <artifactId>parquet-hadoop</artifactId>
-            <version>1.12.3</version>
+            <version>1.13.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-client</artifactId>
-            <version>3.3.4</version>
+            <version>3.3.5</version>
             <!-- Excluding transitive dependencies with vulnerabilities. -->
             <exclusions>
                 <exclusion>
@@ -49,10 +49,6 @@
                 <exclusion>
                     <groupId>org.apache.httpcomponents</groupId>
                     <artifactId>httpclient</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>commons-compress</artifactId>
                 </exclusion>
                 <exclusion>
                     <groupId>com.fasterxml.jackson.core</groupId>
@@ -89,34 +85,16 @@
                     <artifactId>okhttp</artifactId>
                 </exclusion>
                 <exclusion>
-                    <!-- Excluded because of CVE-2021-37533 -->
-                    <groupId>commons-net</groupId>
-                    <artifactId>commons-net</artifactId>
-                </exclusion>
-                <exclusion>
                     <!-- Excluded because of https://ossindex.sonatype.org/vulnerability/sonatype-2022-6438 -->
                     <groupId>com.fasterxml.jackson.core</groupId>
                     <artifactId>jackson-core</artifactId>
                 </exclusion>
+                <exclusion>
+                    <!-- Excluded because it contains the same duplicate classes as jakarta.xml.bind:jakarta.xml.bind-api -->
+                    <groupId>javax.xml.bind</groupId>
+                    <artifactId>jaxb-api</artifactId>
+                </exclusion>
             </exclusions>
-        </dependency>
-        <!-- Adding updated version to avoid some vulnerabilities. -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>31.1-jre</version>
-        </dependency>
-        <!-- Adding updated version of commons-compress without vulnerabilities. -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-compress</artifactId>
-            <version>1.22</version>
-        </dependency>
-        <!-- Explicitly upgrade to fix CVE-2022-40152 -->
-        <dependency>
-            <groupId>com.fasterxml.woodstox</groupId>
-            <artifactId>woodstox-core</artifactId>
-            <version>6.5.0</version>
         </dependency>
         <dependency>
             <groupId>org.scala-lang</groupId>
@@ -252,7 +230,7 @@
             <plugin>
                 <groupId>com.exasol</groupId>
                 <artifactId>project-keeper-maven-plugin</artifactId>
-                <version>2.9.4</version>
+                <version>2.9.7</version>
                 <executions>
                     <execution>
                         <goals>
@@ -266,15 +244,24 @@
                 <artifactId>ossindex-maven-plugin</artifactId>
                 <configuration>
                     <excludeVulnerabilityIds>
-                        <!-- com.google.guava:guava: Excluded because we assume that the attacker does not have access to the machine. -->
-                        <exclude>sonatype-2020-0926</exclude>
-                        <!-- org.apache.hadoop:hadoop-common:jar:3.3.4: CWE-611: Improper Restriction of XML External Entity Reference ('XXE') (8.6); https://ossindex.sonatype.org/vulnerability/sonatype-2022-5820
-                        No update available -->
-                        <exclude>sonatype-2022-5820</exclude>
                         <!-- org.apache.hadoop:hadoop-hdfs-client:jar:3.3.4: CWE-611: Improper Restriction of XML External Entity Reference ('XXE') (8.6); https://ossindex.sonatype.org/vulnerability/sonatype-2022-5732
                         No update available -->
                         <exclude>sonatype-2022-5732</exclude>
                     </excludeVulnerabilityIds>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.basepom.maven</groupId>
+                <artifactId>duplicate-finder-maven-plugin</artifactId>
+                <configuration>
+                    <!-- org.apache.parquet:parquet-column and org.apache.parquet:parquet-hadoop both contain classes shaded.parquet.it.unimi.dsi.fastutil.** -->
+                    <failBuildInCaseOfEqualContentConflict>false</failBuildInCaseOfEqualContentConflict>
+                    <failBuildInCaseOfConflict>false</failBuildInCaseOfConflict>
+                    <printEqualFiles>false</printEqualFiles>
+                    <ignoredResourcePatterns>
+                        <ignoredResourcePattern>yarn-default.xml</ignoredResourcePattern>
+                        <ignoredResourcePattern>about.html</ignoredResourcePattern>
+                    </ignoredResourcePatterns>
                 </configuration>
             </plugin>
             <plugin>
@@ -294,7 +281,7 @@
     <parent>
         <artifactId>parquet-io-java-generated-parent</artifactId>
         <groupId>com.exasol</groupId>
-        <version>2.0.1</version>
+        <version>2.0.2</version>
         <relativePath>pk_generated_parent.pom</relativePath>
     </parent>
 </project>
