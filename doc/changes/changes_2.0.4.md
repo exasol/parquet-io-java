@@ -1,12 +1,14 @@
-# Parquet for Java 2.0.4, released 2023-??-??
+# Parquet for Java 2.0.4, released 2023-06-28
 
-Code name:
+Code name: Updated dependencies to fix CVE vulnerabilities
 
 ## Summary
 
-## Features
+This release updates `Hadoop` dependency to fix CVE vulnerabilities.
 
-* ISSUE_NUMBER: description
+## Security
+
+* #50: Upgraded Hadoop dependency to fix CVE vulnerabilities
 
 ## Dependency Updates
 
