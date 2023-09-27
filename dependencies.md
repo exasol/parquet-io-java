@@ -6,8 +6,8 @@
 | Dependency                      | License                                       |
 | ------------------------------- | --------------------------------------------- |
 | [Apache Parquet Hadoop][0]      | [The Apache Software License, Version 2.0][1] |
-| Apache Hadoop Client Aggregator | [Apache License, Version 2.0][2]              |
-| [snappy-java][3]                | [Apache-2.0][4]                               |
+| [snappy-java][2]                | [Apache-2.0][3]                               |
+| Apache Hadoop Client Aggregator | [Apache License, Version 2.0][4]              |
 | [Scala Library][5]              | [Apache-2.0][6]                               |
 | [error-reporting-java][7]       | [MIT License][8]                              |
 
@@ -26,23 +26,23 @@
 | Dependency                                              | License                                       |
 | ------------------------------------------------------- | --------------------------------------------- |
 | [SonarQube Scanner for Maven][17]                       | [GNU LGPL 3][18]                              |
-| [Apache Maven Compiler Plugin][19]                      | [Apache-2.0][2]                               |
-| [Apache Maven Enforcer Plugin][20]                      | [Apache-2.0][2]                               |
-| [Maven Flatten Plugin][21]                              | [Apache Software Licenese][2]                 |
+| [Apache Maven Compiler Plugin][19]                      | [Apache-2.0][4]                               |
+| [Apache Maven Enforcer Plugin][20]                      | [Apache-2.0][4]                               |
+| [Maven Flatten Plugin][21]                              | [Apache Software Licenese][4]                 |
 | [org.sonatype.ossindex.maven:ossindex-maven-plugin][22] | [ASL2][1]                                     |
-| [Maven Surefire Plugin][23]                             | [Apache-2.0][2]                               |
-| [Versions Maven Plugin][24]                             | [Apache License, Version 2.0][2]              |
+| [Maven Surefire Plugin][23]                             | [Apache-2.0][4]                               |
+| [Versions Maven Plugin][24]                             | [Apache License, Version 2.0][4]              |
 | [scala-maven-plugin][25]                                | [Public domain (Unlicense)][26]               |
 | [ScalaTest Maven Plugin][27]                            | [the Apache License, ASL Version 2.0][16]     |
 | [OpenFastTrace Maven Plugin][28]                        | [GNU General Public License v3.0][29]         |
 | [Project keeper maven plugin][30]                       | [The MIT License][31]                         |
 | [duplicate-finder-maven-plugin Maven Mojo][32]          | [Apache License 2.0][33]                      |
-| [Apache Maven Deploy Plugin][34]                        | [Apache-2.0][2]                               |
-| [Apache Maven GPG Plugin][35]                           | [Apache License, Version 2.0][2]              |
-| [Apache Maven Source Plugin][36]                        | [Apache License, Version 2.0][2]              |
-| [Apache Maven Javadoc Plugin][37]                       | [Apache-2.0][2]                               |
+| [Apache Maven Deploy Plugin][34]                        | [Apache-2.0][4]                               |
+| [Apache Maven GPG Plugin][35]                           | [Apache-2.0][4]                               |
+| [Apache Maven Source Plugin][36]                        | [Apache License, Version 2.0][4]              |
+| [Apache Maven Javadoc Plugin][37]                       | [Apache-2.0][4]                               |
 | [Nexus Staging Maven Plugin][38]                        | [Eclipse Public License][39]                  |
-| [Maven Failsafe Plugin][40]                             | [Apache-2.0][2]                               |
+| [Maven Failsafe Plugin][40]                             | [Apache-2.0][4]                               |
 | [JaCoCo :: Maven Plugin][41]                            | [Eclipse Public License 2.0][42]              |
 | [error-code-crawler-maven-plugin][43]                   | [MIT License][44]                             |
 | [Reproducible Build Maven Plugin][45]                   | [Apache 2.0][1]                               |
@@ -54,9 +54,9 @@
 
 [0]: https://parquet.apache.org
 [1]: http://www.apache.org/licenses/LICENSE-2.0.txt
-[2]: https://www.apache.org/licenses/LICENSE-2.0.txt
-[3]: https://github.com/xerial/snappy-java
-[4]: https://www.apache.org/licenses/LICENSE-2.0.html
+[2]: https://github.com/xerial/snappy-java
+[3]: https://www.apache.org/licenses/LICENSE-2.0.html
+[4]: https://www.apache.org/licenses/LICENSE-2.0.txt
 [5]: https://www.scala-lang.org/
 [6]: https://www.apache.org/licenses/LICENSE-2.0
 [7]: https://github.com/exasol/error-reporting-java/
@@ -84,7 +84,7 @@
 [29]: https://www.gnu.org/licenses/gpl-3.0.html
 [30]: https://github.com/exasol/project-keeper/
 [31]: https://github.com/exasol/project-keeper/blob/main/LICENSE
-[32]: https://github.com/basepom/duplicate-finder-maven-plugin
+[32]: https://basepom.github.io/duplicate-finder-maven-plugin
 [33]: http://www.apache.org/licenses/LICENSE-2.0.html
 [34]: https://maven.apache.org/plugins/maven-deploy-plugin/
 [35]: https://maven.apache.org/plugins/maven-gpg-plugin/
