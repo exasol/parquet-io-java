@@ -12,6 +12,10 @@ This release fixes CVE-2023-39410 in compile dependency `org.apache.avro:avro`.
 
 ## Dependency Updates
 
+### Compile Dependency Updates
+
+* Added `org.apache.avro:avro:1.11.3`
+
 ### Test Dependency Updates
 
 * Added `nl.jqno.equalsverifier:equalsverifier:3.15.2`

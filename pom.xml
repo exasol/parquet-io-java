@@ -104,6 +104,12 @@
             </exclusions>
         </dependency>
         <dependency>
+            <!-- Upgrade transitive dependency of org.apache.hadoop:hadoop-client to fix CVE-2023-39410 -->
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>1.11.3</version>
+        </dependency>
+        <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
             <version>${scala.version}</version>
