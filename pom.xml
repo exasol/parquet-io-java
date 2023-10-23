@@ -110,6 +110,12 @@
             <version>1.11.3</version>
         </dependency>
         <dependency>
+            <!-- Upgrade transitive dependency of org.apache.avro:avro to fix CVE-2023-42503 -->
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.24.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
             <version>${scala.version}</version>
