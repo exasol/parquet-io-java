@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * An implementation of {@link ChunkInterval} that holds {@code start} and {@code end} position of row group chunks.
  */
-public class ChunkIntervalImpl implements ChunkInterval {
+public final class ChunkIntervalImpl implements ChunkInterval {
 
     private final long start;
     private final long end;
