@@ -3,20 +3,20 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.exasol</groupId>
     <artifactId>parquet-io-java</artifactId>
-    <version>2.0.5</version>
+    <version>2.0.6</version>
     <name>Parquet for Java</name>
     <description>This project provides a library that reads Parquet files into Java objects.</description>
     <url>https://github.com/exasol/parquet-io-java/</url>
     <parent>
         <artifactId>parquet-io-java-generated-parent</artifactId>
         <groupId>com.exasol</groupId>
-        <version>2.0.5</version>
+        <version>2.0.6</version>
         <relativePath>pk_generated_parent.pom</relativePath>
     </parent>
     <properties>
         <scala.version>2.13.12</scala.version>
         <scala.compat.version>2.13</scala.compat.version>
-        <mockito.version>5.5.0</mockito.version>
+        <mockito.version>5.6.0</mockito.version>
     </properties>
     <dependencies>
         <dependency>
@@ -104,6 +104,18 @@
             </exclusions>
         </dependency>
         <dependency>
+            <!-- Upgrade transitive dependency of org.apache.hadoop:hadoop-client to fix CVE-2023-39410 -->
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>1.11.3</version>
+        </dependency>
+        <dependency>
+            <!-- Upgrade transitive dependency of org.apache.avro:avro to fix CVE-2023-42503 -->
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.24.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
             <version>${scala.version}</version>
@@ -142,6 +154,12 @@
             <groupId>org.scalatest</groupId>
             <artifactId>scalatest_${scala.compat.version}</artifactId>
             <version>3.3.0-SNAP4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>nl.jqno.equalsverifier</groupId>
+            <artifactId>equalsverifier</artifactId>
+            <version>3.15.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
