@@ -69,6 +69,7 @@ class RowParquetChunkReaderTest {
 
     @Test
     void testConsumeRecordsThrows() {
+        @SuppressWarnings("unchecked") // unchecked conversion
         final RecordReader<Row> recordReader = mock(RecordReader.class);
         when(recordReader.read()).thenThrow(RecordMaterializer.RecordMaterializationException.class);
         final ParquetDecodingException exception = assertThrows(ParquetDecodingException.class,
@@ -78,6 +79,7 @@ class RowParquetChunkReaderTest {
 
     @Test
     void testConsumeRecordsSkips() {
+        @SuppressWarnings("unchecked") // unchecked conversion
         final RecordReader<Row> recordReader = mock(RecordReader.class);
         when(recordReader.read()).thenReturn(new GenericRow(Collections.emptyList()), GenericRow.of("a"));
         when(recordReader.shouldSkipCurrentRecord()).thenReturn(true, false);
@@ -90,6 +92,7 @@ class RowParquetChunkReaderTest {
 
     @Test
     void testConsumeRecordsStopsOnNull() {
+        @SuppressWarnings("unchecked") // unchecked conversion
         final RecordReader<Row> recordReader = mock(RecordReader.class);
         when(recordReader.read()).thenReturn(new GenericRow(Collections.emptyList()), null, GenericRow.of(1));
         final AtomicInteger count = new AtomicInteger();
