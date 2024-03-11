@@ -1,4 +1,4 @@
-# Parquet for Java 2.0.7, released 2024-04-11
+# Parquet for Java 2.0.7, released 2024-03-11
 
 Code name: Fix vulnerabilities CVE-2024-25710, CVE-2024-26308 and CVE-2023-52428 in compile dependencies
 
@@ -14,7 +14,7 @@ This release fixes vulnerabilities in the following compile dependencies:
 
 ## Security
 
-#66: Fixed vulnerabilities
+* #66: Fixed vulnerabilities
 
 ## Dependency Updates
 
