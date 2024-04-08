@@ -1,4 +1,4 @@
-# Parquet for Java 2.0.8, released 2024-04-08
+# Parquet for Java 2.0.8, released 2024-04-09
 
 Code name: Fix CVE-2024-29131 & CVE-2024-29133 in `org.apache.commons:commons-configuration2:jar:2.8.0:compile`
 
