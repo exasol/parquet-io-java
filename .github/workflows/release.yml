@@ -110,6 +110,11 @@ jobs:
         run: mvn --batch-mode -DskipTests clean verify
       }
       - {
+        name: Generate dummy error code report,
+        id: generate-dummy-error-code-report,
+        run: 'echo ''{"$schema":"https://schemas.exasol.com/error_code_report-1.0.0.json","errorCodes":[]}'' > target/error_code_report.json'
+      }
+      - {
         name: List secret GPG keys,
         id: list-secret-gpg-keys,
         if: '${{ true && (! inputs.skip-maven-central) }}',

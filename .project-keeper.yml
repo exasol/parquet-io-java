@@ -6,3 +6,23 @@ sources:
       - maven_central
 linkReplacements:
   - "http://nexus.sonatype.org/oss-repository-hosting.html/scalatest-maven-plugin|https://www.scalatest.org/user_guide/using_the_scalatest_maven_plugin"
+build:
+  # Generate dummy error code reports to avoid failing builds.
+  # Error code crawler does not support hybrid Scala and Java projects.
+  workflows:
+    - name: "ci-build.yml"
+      stepCustomizations:
+        - action: INSERT_AFTER
+          stepId: build-pk-verify
+          content:
+            name: Generate dummy error code report
+            id: generate-dummy-error-code-report
+            run: echo '{"$schema":"https://schemas.exasol.com/error_code_report-1.0.0.json","errorCodes":[]}' > target/error_code_report.json
+    - name: "release.yml"
+      stepCustomizations:
+        - action: INSERT_AFTER
+          stepId: build
+          content:
+            name: Generate dummy error code report
+            id: generate-dummy-error-code-report
+            run: echo '{"$schema":"https://schemas.exasol.com/error_code_report-1.0.0.json","errorCodes":[]}' > target/error_code_report.json

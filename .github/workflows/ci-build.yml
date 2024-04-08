@@ -68,6 +68,11 @@ jobs:
           mvn --batch-mode clean verify \
               -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
               -DtrimStackTrace=false
+      - {
+        name: Generate dummy error code report,
+        id: generate-dummy-error-code-report,
+        run: 'echo ''{"$schema":"https://schemas.exasol.com/error_code_report-1.0.0.json","errorCodes":[]}'' > target/error_code_report.json'
+      }
       - name: Sonar analysis
         id: sonar-analysis
         if: ${{ env.SONAR_TOKEN != null }}
