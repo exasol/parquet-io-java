@@ -26,3 +26,6 @@ build:
             name: Generate dummy error code report
             id: generate-dummy-error-code-report
             run: echo '{"$schema":"https://schemas.exasol.com/error_code_report-1.0.0.json","errorCodes":[]}' > target/error_code_report.json
+
+excludes:
+  - "E-PK-CORE-17: Missing required file: 'release_config.yml'"
