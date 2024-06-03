@@ -17,7 +17,6 @@ jobs:
       }
     permissions: {
       contents: read,
-      checks: write,
       issues: read
     }
     concurrency: {

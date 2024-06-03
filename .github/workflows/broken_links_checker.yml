@@ -13,6 +13,8 @@ on:
 jobs:
   linkChecker:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     defaults:
       run:
         shell: "bash"
