@@ -15,7 +15,6 @@ jobs:
         shell: "bash"
     permissions:
       contents: read
-      checks: write # Allow scacap/action-surefire-report
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
@@ -35,9 +34,3 @@ jobs:
           mvn --batch-mode --update-snapshots clean package -DtrimStackTrace=false  \
               -Djava.version=17 \
               -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-      - name: Publish Test Report for Java 17
-        uses: scacap/action-surefire-report@v1
-        if: ${{ always() && github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]' }}
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          fail_if_no_tests: false

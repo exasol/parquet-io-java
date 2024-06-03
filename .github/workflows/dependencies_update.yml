@@ -61,14 +61,6 @@ jobs:
         env: {
           CREATED_ISSUES: '${{ inputs.vulnerability_issues }}'
         }
-      - name: Project Keeper Fix
-        id: project-keeper-fix
-        run: |
-          mvn --batch-mode com.exasol:project-keeper-maven-plugin:fix --projects .
-      - name: Project Keeper Fix for updated Project Keeper version
-        id: project-keeper-fix-2
-        run: |
-          mvn --batch-mode com.exasol:project-keeper-maven-plugin:fix --projects .
       - name: Generate Pull Request comment
         id: pr-comment
         run: |
@@ -81,7 +73,11 @@ jobs:
             echo 'It updates dependencies.' >> "$GITHUB_OUTPUT"
           fi
           echo >> "$GITHUB_OUTPUT"
-          echo '# ⚠️ This PR does not trigger CI workflows by default ⚠️' >> "$GITHUB_OUTPUT"
+          echo '# ⚠️ Notes ⚠️' >> "$GITHUB_OUTPUT"
+          echo '## Run PK fix manually' >> "$GITHUB_OUTPUT"
+          echo 'Due to restrictions workflow `dependencies_update.yml` can't update other workflows, see https://github.com/exasol/project-keeper/issues/578 for details.' >> "$GITHUB_OUTPUT"
+          echo 'Please checkout this PR locally and run `mvn com.exasol:project-keeper-maven-plugin:fix --projects .`' >> "$GITHUB_OUTPUT"
+          echo '## This PR does not trigger CI workflows' >> "$GITHUB_OUTPUT"
           echo 'Please click the **Close pull request** button and then **Reopen pull request** to trigger running checks.' >> "$GITHUB_OUTPUT"
           echo 'See https://github.com/exasol/project-keeper/issues/534 for details.' >> "$GITHUB_OUTPUT"
           echo 'EOF' >> "$GITHUB_OUTPUT"
