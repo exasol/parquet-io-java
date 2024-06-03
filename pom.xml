@@ -24,7 +24,7 @@
             <artifactId>parquet-hadoop</artifactId>
             <version>1.13.1</version>
         </dependency>
-        <!-- Override version 0.26 of transitive dependency  https://mvnrepository.com/artifact/io.airlift/aircompressor -->
+        <!-- Update transitive dependency of org.apache.parquet:parquet-hadoop to fix CVE-2024-36114 -->
         <dependency>
             <groupId>io.airlift</groupId>
             <artifactId>aircompressor</artifactId>

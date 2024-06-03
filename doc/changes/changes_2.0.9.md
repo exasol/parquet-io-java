@@ -2,11 +2,14 @@
 
 Code name:
 
+Security update - fix for CVE-2024-36114 (https://github.com/advisories/GHSA-973x-65j7-xcf4)
+
 ## Summary
+Fixes CVE-2024-36114  https://github.com/advisories/GHSA-973x-65j7-xcf4 via transitive version update.
+Update dependencies.
+## Security
 
-## Features
-
-* ISSUE_NUMBER: description
+* CVE-2024-36114: io.airlift:aircompressor:jar:0.21:compile
 
 ## Dependency Updates
 
@@ -14,7 +17,6 @@ Code name:
 
 * Added `io.airlift:aircompressor:0.27`
 * Updated `org.apache.commons:commons-compress:1.26.1` to `1.26.2`
-* Updated `org.apache.parquet:parquet-hadoop:1.13.1` to `1.14.0`
 
 ### Test Dependency Updates
 
