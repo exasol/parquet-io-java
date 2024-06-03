@@ -5,8 +5,10 @@ Code name:
 Security update - fix for CVE-2024-36114 (https://github.com/advisories/GHSA-973x-65j7-xcf4)
 
 ## Summary
+
 Fixes CVE-2024-36114  https://github.com/advisories/GHSA-973x-65j7-xcf4 via transitive version update.
-Update dependencies.
+Updated dependencies.
+
 ## Security
 
 * CVE-2024-36114: io.airlift:aircompressor:jar:0.21:compile
