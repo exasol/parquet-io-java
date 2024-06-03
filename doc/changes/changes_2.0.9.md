@@ -9,7 +9,7 @@ Updated dependencies.
 
 ## Security
 
-* CVE-2024-36114: io.airlift:aircompressor:jar:0.21:compile
+* #72: CVE-2024-36114: io.airlift:aircompressor:jar:0.21:compile
 
 ## Dependency Updates
 
