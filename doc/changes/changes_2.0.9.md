@@ -1,4 +1,4 @@
-# Parquet for Java 2.0.9, released 2024-??-??
+# Parquet for Java 2.0.9, released 2024-06-03
 
 Code name:
 
