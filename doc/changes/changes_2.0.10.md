@@ -1,6 +1,6 @@
 # Parquet for Java 2.0.10, released 2024-07-29
 
-Code name:
+Code name: Fix CVE-2024-25638 in dependency
 
 ## Summary
 
@@ -9,6 +9,7 @@ This release fixes vulnerability CVE-2024-25638 by updating transitive dependenc
 ## Security Issues
 
 * #74: Fixed vulnerability CVE-2024-25638 by updating dependency `dnsjava:dnsjava:jar:3.4.0`.
+
 ## Dependency Updates
 
 ### Compile Dependency Updates
