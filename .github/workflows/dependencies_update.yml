@@ -75,7 +75,7 @@ jobs:
           echo >> "$GITHUB_OUTPUT"
           echo '# ⚠️ Notes ⚠️' >> "$GITHUB_OUTPUT"
           echo '## Run PK fix manually' >> "$GITHUB_OUTPUT"
-          echo 'Due to restrictions workflow `dependencies_update.yml` can't update other workflows, see https://github.com/exasol/project-keeper/issues/578 for details.' >> "$GITHUB_OUTPUT"
+          echo 'Due to restrictions workflow `dependencies_update.yml` cannot update other workflows, see https://github.com/exasol/project-keeper/issues/578 for details.' >> "$GITHUB_OUTPUT"
           echo 'Please checkout this PR locally and run `mvn com.exasol:project-keeper-maven-plugin:fix --projects .`' >> "$GITHUB_OUTPUT"
           echo '## This PR does not trigger CI workflows' >> "$GITHUB_OUTPUT"
           echo 'Please click the **Close pull request** button and then **Reopen pull request** to trigger running checks.' >> "$GITHUB_OUTPUT"
