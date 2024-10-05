@@ -23,7 +23,7 @@
 | [JUnit Jupiter (Aggregator)][15]           | [Eclipse Public License v2.0][16]         |
 | [mockito-core][17]                         | [MIT][18]                                 |
 | [mockito-junit-jupiter][17]                | [MIT][18]                                 |
-| [Hamcrest][19]                             | [BSD License 3][20]                       |
+| [Hamcrest][19]                             | [BSD-3-Clause][20]                        |
 | [scalatest][21]                            | [the Apache License, ASL Version 2.0][22] |
 | [EqualsVerifier \| release normal jar][23] | [Apache License, Version 2.0][5]          |
 
@@ -74,7 +74,7 @@
 [17]: https://github.com/mockito/mockito
 [18]: https://opensource.org/licenses/MIT
 [19]: http://hamcrest.org/JavaHamcrest/
-[20]: http://opensource.org/licenses/BSD-3-Clause
+[20]: https://raw.githubusercontent.com/hamcrest/JavaHamcrest/master/LICENSE
 [21]: http://www.scalatest.org
 [22]: http://www.apache.org/licenses/LICENSE-2.0
 [23]: https://www.jqno.nl/equalsverifier
