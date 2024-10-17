@@ -1,12 +1,15 @@
-# Parquet for Java 2.0.11, released 2024-??-??
+# Parquet for Java 2.0.11, released 2024-10-17
 
-Code name:
+Code name: Fix CVE-2024-47561 in dependency
 
 ## Summary
+
+This release fixes vulnerability CVE-2024-47561 by updating transitive dependency `org.apache.avro:avro` via `org.apache.hadoop:hadoop-client`.
 
 ## Security
 
 * #76: Fixed vulnerability CVE-2024-47561 in `org.apache.avro:avro`
+
 ## Dependency Updates
 
 ### Compile Dependency Updates
