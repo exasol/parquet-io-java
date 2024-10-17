@@ -14,27 +14,15 @@
         <relativePath>pk_generated_parent.pom</relativePath>
     </parent>
     <properties>
-        <scala.version>2.13.14</scala.version>
+        <scala.version>2.13.15</scala.version>
         <scala.compat.version>2.13</scala.compat.version>
-        <mockito.version>5.12.0</mockito.version>
+        <mockito.version>5.14.2</mockito.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.apache.parquet</groupId>
             <artifactId>parquet-hadoop</artifactId>
-            <version>1.14.1</version>
-        </dependency>
-        <!-- Update transitive dependency of org.apache.parquet:parquet-hadoop to fix CVE-2024-36114 -->
-        <dependency>
-            <groupId>io.airlift</groupId>
-            <artifactId>aircompressor</artifactId>
-            <version>0.27</version>
-        </dependency>
-        <dependency>
-            <!-- Update transitive dependency of org.apache.parquet:parquet-hadoop to fix CVE-2023-34453, CVE-2023-34454, CVE-2023-34455, CVE-2023-43642 -->
-            <groupId>org.xerial.snappy</groupId>
-            <artifactId>snappy-java</artifactId>
-            <version>1.1.10.5</version>
+            <version>1.14.3</version>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>
@@ -133,13 +121,7 @@
             <!-- Upgrade transitive dependency of org.apache.hadoop:hadoop-client to fix CVE-2023-39410 -->
             <groupId>org.apache.avro</groupId>
             <artifactId>avro</artifactId>
-            <version>1.11.3</version>
-        </dependency>
-        <dependency>
-            <!-- Upgrade transitive dependency of org.apache.avro:avro to fix CVE-2023-42503 -->
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-compress</artifactId>
-            <version>1.26.2</version>
+            <version>1.12.0</version>
         </dependency>
         <!-- Upgrade transitive dependency of org.apache.hadoop:hadoop-client to fix CVE-2024-29131 & CVE-2024-29133 -->
         <dependency>
@@ -151,7 +133,7 @@
         <dependency>
             <groupId>dnsjava</groupId>
             <artifactId>dnsjava</artifactId>
-            <version>3.6.0</version>
+            <version>3.6.2</version>
         </dependency>
         <dependency>
             <groupId>org.scala-lang</groupId>
@@ -167,7 +149,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.10.3</version>
+            <version>5.11.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -185,7 +167,7 @@
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest</artifactId>
-            <version>2.2</version>
+            <version>3.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -197,7 +179,7 @@
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
-            <version>3.16.1</version>
+            <version>3.17.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
