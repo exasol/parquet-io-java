@@ -1,24 +1,24 @@
 {
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": "explicit",
-    "source.generate.finalModifiers": "explicit",
-    "source.fixAll": "explicit"
-  },
-  "java.codeGeneration.useBlocks": true,
-  "java.saveActions.organizeImports": true,
-  "java.sources.organizeImports.starThreshold": 3,
-  "java.sources.organizeImports.staticStarThreshold": 3,
-  "java.test.config": {
-    "vmArgs": [
-      "-Djava.util.logging.config.file=src/test/resources/logging.properties"
-    ]
-  },
-  "sonarlint.connectedMode.project": {
-    "connectionId": "exasol",
-    "projectKey": "com.exasol:parquet-io-java"
-  },
-  "files.watcherExclude": {
-    "**/target": true
-}
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit",
+        "source.generate.finalModifiers": "explicit",
+        "source.fixAll": "explicit"
+    },
+    "java.codeGeneration.useBlocks": true,
+    "java.saveActions.organizeImports": true,
+    "java.sources.organizeImports.starThreshold": 3,
+    "java.sources.organizeImports.staticStarThreshold": 3,
+    "java.test.config": {
+        "vmArgs": [
+            "-Djava.util.logging.config.file=src/test/resources/logging.properties"
+        ]
+    },
+    "sonarlint.connectedMode.project": {
+        "connectionId": "exasol",
+        "projectKey": "com.exasol:parquet-io-java"
+    },
+    "files.watcherExclude": {
+        "**/target": true
+    }
 }
