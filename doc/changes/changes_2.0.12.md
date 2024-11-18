@@ -1,4 +1,4 @@
-# Parquet for Java 2.0.12, released 2024-??-??
+# Parquet for Java 2.0.12, released 2024-11-18
 
 Code name: Fixed vulnerability CVE-2024-47535 in io.netty:netty-common:jar:4.1.100.Final:compile
 
