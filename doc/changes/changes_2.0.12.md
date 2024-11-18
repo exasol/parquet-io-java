@@ -24,6 +24,10 @@ Netty is an asynchronous event-driven network application framework for rapid de
 * Updated `org.apache.hadoop:hadoop-client:3.4.0` to `3.4.1`
 * Updated `org.apache.parquet:parquet-hadoop:1.14.3` to `1.14.4`
 
+### Runtime Dependency Updates
+
+* Added `io.netty:netty-transport-native-epoll:4.1.115.Final`
+
 ### Test Dependency Updates
 
 * Updated `nl.jqno.equalsverifier:equalsverifier:3.17.1` to `3.17.3`
