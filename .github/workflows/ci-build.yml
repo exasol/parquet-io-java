@@ -9,7 +9,7 @@ on:
   pull_request: null
   workflow_dispatch: null
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     defaults:
       run: {
@@ -20,7 +20,7 @@ jobs:
       issues: read
     }
     concurrency: {
-      group: '${{ github.workflow }}-${{ github.ref }}',
+      group: '${{ github.workflow }}-build-and-test-${{ github.ref }}',
       cancel-in-progress: true
     }
     outputs: {
@@ -98,6 +98,89 @@ jobs:
           path: '${{ steps.build-pk-verify.outputs.release-artifacts }}',
           retention-days: 5
         }
+      - name: Configure link check
+        id: configure-link-check
+        run: |
+          mkdir -p ./target
+          echo '{"aliveStatusCodes": [429, 200], "ignorePatterns": [' \
+               '{"pattern": "^https?://(www|dev).mysql.com/"},' \
+               '{"pattern": "^https?://(www.)?opensource.org"}' \
+               '{"pattern": "^https?://(www.)?eclipse.org"}' \
+               '{"pattern": "^https?://projects.eclipse.org"}' \
+               ']}' > ./target/broken_links_checker.json
+      - uses: gaurav-nelson/github-action-markdown-link-check@v1
+        id: run-link-check
+        with: {
+          use-quiet-mode: yes,
+          use-verbose-mode: yes,
+          config-file: ./target/broken_links_checker.json
+        }
+  next-java-compatibility:
+    runs-on: ubuntu-latest
+    defaults:
+      run: {
+        shell: bash
+      }
+    permissions: {
+      contents: read
+    }
+    concurrency: {
+      group: '${{ github.workflow }}-next-java-${{ github.ref }}',
+      cancel-in-progress: true
+    }
+    steps:
+      - name: Checkout the repository
+        id: checkout
+        uses: actions/checkout@v4
+        with: {
+          fetch-depth: 0
+        }
+      - name: Set up JDK 17
+        id: setup-java
+        uses: actions/setup-java@v4
+        with: {
+          distribution: temurin,
+          java-version: '17',
+          cache: maven
+        }
+      - {
+        name: Run tests and build with Maven 17,
+        id: build-next-java,
+        run: mvn --batch-mode clean package -DtrimStackTrace=false -Djava.version=17
+      }
+  build:
+    needs: [
+      build-and-test,
+      next-java-compatibility
+    ]
+    runs-on: ubuntu-latest
+    defaults:
+      run: {
+        shell: bash
+      }
+    permissions: {
+      contents: read,
+      issues: read
+    }
+    outputs: {
+      release-required: '${{ steps.check-release.outputs.release-required }}'
+    }
+    steps:
+      - name: Checkout the repository
+        id: checkout
+        uses: actions/checkout@v4
+        with: {
+          fetch-depth: 0
+        }
+      - name: Set up JDKs
+        id: setup-java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: |-
+            11
+            17
+          cache: maven
       - name: Check if release is needed
         id: check-release
         if: ${{ github.ref == 'refs/heads/main' }}
@@ -106,7 +189,7 @@ jobs:
               echo "### ✅ Release preconditions met, start release" >> "$GITHUB_STEP_SUMMARY"
               echo "release-required=true" >> "$GITHUB_OUTPUT"
           else
-              echo "### 🛑 Release precondition not met, skipping release" >> "$GITHUB_STEP_SUMMARY"
+              echo "### 🛑 Not all release preconditions met, skipping release" >> "$GITHUB_STEP_SUMMARY"
               echo "See log output for details." >> "$GITHUB_STEP_SUMMARY"
               echo "release-required=false" >> "$GITHUB_OUTPUT"
           fi
