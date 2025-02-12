@@ -14,6 +14,7 @@ build:
       stepCustomizations:
         - action: INSERT_AFTER
           stepId: build-pk-verify
+          job: build-and-test
           content:
             name: Generate dummy error code report
             id: generate-dummy-error-code-report
