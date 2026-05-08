@@ -88,6 +88,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
+            <!-- Version 6 requires Java 17 -->
             <version>5.14.4</version>
             <scope>test</scope>
         </dependency>
@@ -118,6 +119,7 @@
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
+            <!-- Version 4 requires Java 17 -->
             <version>3.19.4</version>
             <scope>test</scope>
         </dependency>
