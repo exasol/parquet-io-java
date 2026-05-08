@@ -6,6 +6,7 @@ import org.apache.parquet.example.data.Group
 import org.apache.parquet.example.data.GroupWriter
 import org.apache.parquet.hadoop.ParquetWriter
 import org.apache.parquet.hadoop.api.WriteSupport
+import org.apache.parquet.hadoop.util.HadoopOutputFile
 import org.apache.parquet.io.api.RecordConsumer
 import org.apache.parquet.schema._
 
@@ -35,7 +36,9 @@ trait ParquetTestDataWriter {
   }
 
   private[this] case class BaseGroupWriterBuilder(path: HPath, schema: MessageType)
-      extends ParquetWriter.Builder[Group, BaseGroupWriterBuilder](path) {
+      extends ParquetWriter.Builder[Group, BaseGroupWriterBuilder](
+        HadoopOutputFile.fromPath(path, new Configuration())
+      ) {
     override def getWriteSupport(conf: Configuration): WriteSupport[Group] =
       BaseGroupWriteSupport(schema)
     override def self(): BaseGroupWriterBuilder = this
