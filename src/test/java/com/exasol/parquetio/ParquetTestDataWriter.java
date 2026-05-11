@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.parquet.conf.ParquetConfiguration;
 import org.apache.parquet.example.data.Group;
 import org.apache.parquet.example.data.GroupWriter;
 import org.apache.parquet.hadoop.ParquetWriter;
 import org.apache.parquet.hadoop.api.WriteSupport;
+import org.apache.parquet.hadoop.util.ConfigurationUtil;
 import org.apache.parquet.hadoop.util.HadoopOutputFile;
 import org.apache.parquet.io.api.RecordConsumer;
 import org.apache.parquet.schema.MessageType;
@@ -36,8 +38,14 @@ final class ParquetTestDataWriter {
         }
 
         @Override
+        @SuppressWarnings("deprecation") // Super class requires implementing this deprecated method
         public WriteContext init(final Configuration configuration) {
             return new WriteContext(this.schema, new HashMap<>());
+        }
+
+        @Override
+        public WriteContext init(final ParquetConfiguration configuration) {
+            return init(ConfigurationUtil.createHadoopConfiguration(configuration));
         }
 
         @Override
@@ -56,8 +64,14 @@ final class ParquetTestDataWriter {
         }
 
         @Override
+        @SuppressWarnings("deprecation") // Super class requires implementing this deprecated method
         protected WriteSupport<Group> getWriteSupport(final Configuration configuration) {
             return new BaseGroupWriteSupport(this.schema);
+        }
+
+        @Override
+        protected WriteSupport<Group> getWriteSupport(final ParquetConfiguration conf) {
+            return getWriteSupport(ConfigurationUtil.createHadoopConfiguration(conf));
         }
 
         @Override
