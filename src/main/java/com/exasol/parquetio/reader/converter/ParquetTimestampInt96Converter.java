@@ -11,7 +11,7 @@ import org.apache.parquet.io.api.PrimitiveConverter;
  * Converter for Parquet {@code INT96} type.
  */
 // [impl->dsn~converting-primitive-column-types~1]
-public final class ParquetTimestampInt96Converter extends PrimitiveConverter implements ParquetConverter {
+final class ParquetTimestampInt96Converter extends PrimitiveConverter implements ParquetConverter {
     private final int index;
     private final ValueHolder holder;
 
@@ -21,7 +21,7 @@ public final class ParquetTimestampInt96Converter extends PrimitiveConverter imp
      * @param index  field index
      * @param holder value holder
      */
-    public ParquetTimestampInt96Converter(final int index, final ValueHolder holder) {
+    ParquetTimestampInt96Converter(final int index, final ValueHolder holder) {
         this.index = index;
         this.holder = holder;
     }

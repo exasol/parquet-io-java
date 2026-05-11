@@ -58,4 +58,18 @@ class RowParquetReaderTest extends BaseParquetReaderTest {
                     () -> assertThat(row.getValue("col_str"), equalTo(Integer.toString(value))));
         }
     }
+
+    @Test
+    void readsRootRecordsWithoutParentValueHolder() throws IOException {
+        final var schema = parseSchema("message test {", "  required int32 col_int;", "}");
+        try (var writer = getParquetWriter(schema, false)) {
+            final var firstRow = new SimpleGroup(schema);
+            firstRow.append("col_int", 1);
+            writer.write(firstRow);
+            final var secondRow = new SimpleGroup(schema);
+            secondRow.append("col_int", 2);
+            writer.write(secondRow);
+        }
+        assertThat(getRecords(), contains(GenericRow.of(1), GenericRow.of(2)));
+    }
 }

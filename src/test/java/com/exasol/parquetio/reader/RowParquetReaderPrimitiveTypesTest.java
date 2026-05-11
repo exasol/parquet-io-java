@@ -11,6 +11,7 @@ import java.math.BigInteger;
 import java.math.MathContext;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
@@ -26,6 +27,8 @@ import com.exasol.parquetio.data.Row;
 // [utest->dsn~converting-primitive-column-types~1]
 // [utest->dsn~converting-logical-column-types~1]
 class RowParquetReaderPrimitiveTypesTest extends BaseParquetReaderTest {
+    private static final int JULIAN_DAY_OF_EPOCH = 2_440_588;
+
     @Test
     void readsInt64TimestampMillisAsTimestampValue() throws IOException {
         final var schema = parseSchema("message test {", "  required int64 col_long;",
@@ -51,6 +54,36 @@ class RowParquetReaderPrimitiveTypesTest extends BaseParquetReaderTest {
             writer.write(parquetRow);
         }
         assertThat(getRecords(), contains(GenericRow.of(timestamp)));
+    }
+
+    @Test
+    void readsInt96TimestampAsTimestampValue() throws IOException {
+        final var schema = parseSchema("message test {", "  required int96 col_timestamp;", "}");
+        try (var writer = getParquetWriter(schema, false)) {
+            final var parquetRow = new SimpleGroup(schema);
+            parquetRow.append("col_timestamp", getInt96Timestamp(JULIAN_DAY_OF_EPOCH + 1, 123_456_789L));
+            writer.write(parquetRow);
+        }
+        final Timestamp expected = new Timestamp(86_400_123L);
+        expected.setNanos(123_456_000);
+        assertThat(getRecords(), contains(GenericRow.of(expected)));
+    }
+
+    @Test
+    void readsInt32DateAsDateValue() throws IOException {
+        final var schema = parseSchema("message test {", "  required int32 col_date (DATE);", "}");
+        try (var writer = getParquetWriter(schema, false)) {
+            final var parquetRow = new SimpleGroup(schema);
+            parquetRow.append("col_date", 19_723);
+            writer.write(parquetRow);
+        }
+        assertThat(getRecords(), contains(GenericRow.of(Date.valueOf("2024-01-01"))));
+    }
+
+    private Binary getInt96Timestamp(final int julianDay, final long nanosSinceStartOfDay) {
+        final byte[] bytes = ByteBuffer.allocate(12).order(ByteOrder.LITTLE_ENDIAN).putLong(nanosSinceStartOfDay)
+                .putInt(julianDay).array();
+        return Binary.fromConstantByteArray(bytes);
     }
 
     @Test
