@@ -7,8 +7,6 @@ import java.sql.Timestamp;
 import org.apache.parquet.io.api.Binary;
 import org.apache.parquet.io.api.PrimitiveConverter;
 
-import com.exasol.parquetio.helper.DateTimeHelper;
-
 /**
  * Converter for Parquet {@code INT96} type.
  */
@@ -20,7 +18,7 @@ public final class ParquetTimestampInt96Converter extends PrimitiveConverter imp
     /**
      * Create a new INT96 timestamp converter.
      *
-     * @param index field index
+     * @param index  field index
      * @param holder value holder
      */
     public ParquetTimestampInt96Converter(final int index, final ValueHolder holder) {

@@ -2,8 +2,6 @@ package com.exasol.parquetio.reader.converter;
 
 import org.apache.parquet.io.api.PrimitiveConverter;
 
-import com.exasol.parquetio.helper.DateTimeHelper;
-
 /**
  * Converter for Parquet {@code INT64} with {@code TIMESTAMP_MILLIS} annotation.
  */
@@ -15,7 +13,7 @@ public final class ParquetTimestampMillisConverter extends PrimitiveConverter im
     /**
      * Create a new timestamp millis converter.
      *
-     * @param index field index
+     * @param index  field index
      * @param holder value holder
      */
     public ParquetTimestampMillisConverter(final int index, final ValueHolder holder) {

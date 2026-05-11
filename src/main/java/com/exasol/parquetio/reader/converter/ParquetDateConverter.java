@@ -2,8 +2,6 @@ package com.exasol.parquetio.reader.converter;
 
 import org.apache.parquet.io.api.PrimitiveConverter;
 
-import com.exasol.parquetio.helper.DateTimeHelper;
-
 /**
  * Converter for Parquet {@code INT32} with {@code DATE} annotation.
  */
@@ -15,7 +13,7 @@ public final class ParquetDateConverter extends PrimitiveConverter implements Pa
     /**
      * Create a new date converter.
      *
-     * @param index field index
+     * @param index  field index
      * @param holder value holder
      */
     public ParquetDateConverter(final int index, final ValueHolder holder) {

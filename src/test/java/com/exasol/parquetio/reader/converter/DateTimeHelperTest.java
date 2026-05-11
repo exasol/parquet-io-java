@@ -1,4 +1,4 @@
-package com.exasol.parquetio.helper;
+package com.exasol.parquetio.reader.converter;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -8,9 +8,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.TimeZone;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 class DateTimeHelperTest {
     private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
