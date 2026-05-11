@@ -13,7 +13,7 @@ import org.apache.parquet.schema.PrimitiveType;
 public final class SingleValueConverter extends GroupConverter {
     private final int index;
     private final ValueHolder parentDataHolder;
-    private final ParquetConverter singleValueConverter;
+    private final ParquetConverter converter;
     private Object currentValue;
 
     /**
@@ -26,7 +26,7 @@ public final class SingleValueConverter extends GroupConverter {
     public SingleValueConverter(final PrimitiveType valueType, final int index, final ValueHolder parentDataHolder) {
         this.index = index;
         this.parentDataHolder = parentDataHolder;
-        this.singleValueConverter = ParquetConverterFactory.create(valueType, index, new ValueHolder() {
+        this.converter = ParquetConverterFactory.create(valueType, index, new ValueHolder() {
             @Override
             public void put(final int index, final Object value) {
                 SingleValueConverter.this.currentValue = value;
@@ -46,7 +46,7 @@ public final class SingleValueConverter extends GroupConverter {
 
     @Override
     public Converter getConverter(final int fieldIndex) {
-        return this.singleValueConverter.asConverter();
+        return this.converter.asConverter();
     }
 
     @Override

@@ -17,7 +17,6 @@ public final class DateTimeHelper {
     private static final long MILLIS_PER_DAY = SECONDS_PER_DAY * MILLIS_PER_SECOND;
     private static final long MICROS_PER_MILLIS = 1000L;
     private static final long MICROS_PER_SECOND = MICROS_PER_MILLIS * MILLIS_PER_SECOND;
-    private static final long MICROS_PER_DAY = MICROS_PER_SECOND * SECONDS_PER_DAY;
 
     private DateTimeHelper() {
         // utility class

@@ -53,8 +53,8 @@ public final class MapConverter extends GroupConverter implements ParquetConvert
         final List<Object> keys = this.keysDataHolder.getValues();
         final List<Object> values = this.valuesDataHolder.getValues();
         final Map<Object, Object> map = new HashMap<>();
-        for (int index = 0; index < keys.size(); index++) {
-            map.put(keys.get(index), values.get(index));
+        for (int i = 0; i < keys.size(); i++) {
+            map.put(keys.get(i), values.get(i));
         }
         this.parentDataHolder.put(this.index, map);
     }

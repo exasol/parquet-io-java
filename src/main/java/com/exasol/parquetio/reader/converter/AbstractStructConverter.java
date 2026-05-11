@@ -59,17 +59,16 @@ abstract class AbstractStructConverter extends GroupConverter implements Parquet
     void putStructValuesToParent() {
         final List<Object> values = this.dataHolder.getValues();
         final Map<Object, Object> map = new HashMap<>();
-        for (int index = 0; index < values.size(); index++) {
-            map.put(this.groupType.getFieldName(index), values.get(index));
+        for (int i = 0; i < values.size(); i++) {
+            map.put(this.groupType.getFieldName(i), values.get(i));
         }
         this.parentDataHolder.put(this.index, map);
     }
 
     private ParquetConverter[] createFieldConverters() {
         final ParquetConverter[] fieldConverters = new ParquetConverter[this.size];
-        for (int index = 0; index < this.size; index++) {
-            fieldConverters[index] = ParquetConverterFactory.create(this.groupType.getType(index), index,
-                    this.dataHolder);
+        for (int i = 0; i < this.size; i++) {
+            fieldConverters[i] = ParquetConverterFactory.create(this.groupType.getType(i), i, this.dataHolder);
         }
         return fieldConverters;
     }
