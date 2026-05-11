@@ -2,10 +2,7 @@ package com.exasol.parquetio.reader.converter;
 
 import java.util.Objects;
 
-import org.apache.parquet.schema.LogicalTypeAnnotation;
-import org.apache.parquet.schema.OriginalType;
-import org.apache.parquet.schema.PrimitiveType;
-import org.apache.parquet.schema.Type;
+import org.apache.parquet.schema.*;
 import org.apache.parquet.schema.Type.Repetition;
 
 /**
@@ -20,8 +17,8 @@ public final class ParquetConverterFactory {
     /**
      * Creates a Parquet converter for a field type.
      *
-     * @param parquetType Parquet type
-     * @param fieldIndex field index in the Parquet schema
+     * @param parquetType      Parquet type
+     * @param fieldIndex       field index in the Parquet schema
      * @param parentDataHolder parent value holder
      * @return converter for the field type
      */
@@ -39,32 +36,31 @@ public final class ParquetConverterFactory {
     static ParquetConverter createPrimitiveConverter(final PrimitiveType parquetType, final int index,
             final ValueHolder parentHolder) {
         switch (parquetType.getPrimitiveTypeName()) {
-        case BOOLEAN:
-        case DOUBLE:
-        case FLOAT:
-            return new ParquetPrimitiveConverter(index, parentHolder);
-        case BINARY:
-            return createBinaryConverter(parquetType, index, parentHolder);
-        case FIXED_LEN_BYTE_ARRAY:
-            return createFixedByteArrayConverter(parquetType, index, parentHolder);
-        case INT32:
-            return createIntegerConverter(parquetType, index, parentHolder);
-        case INT64:
-            return createLongConverter(parquetType, index, parentHolder);
-        case INT96:
-            return new ParquetTimestampInt96Converter(index, parentHolder);
-        default:
-            throw new UnsupportedOperationException(
-                    "Unsupported primitive type: " + parquetType.getPrimitiveTypeName());
+            case BOOLEAN:
+            case DOUBLE:
+            case FLOAT:
+                return new ParquetPrimitiveConverter(index, parentHolder);
+            case BINARY:
+                return createBinaryConverter(parquetType, index, parentHolder);
+            case FIXED_LEN_BYTE_ARRAY:
+                return createFixedByteArrayConverter(parquetType, index, parentHolder);
+            case INT32:
+                return createIntegerConverter(parquetType, index, parentHolder);
+            case INT64:
+                return createLongConverter(parquetType, index, parentHolder);
+            case INT96:
+                return new ParquetTimestampInt96Converter(index, parentHolder);
+            default:
+                throw new UnsupportedOperationException(
+                        "Unsupported primitive type: " + parquetType.getPrimitiveTypeName());
         }
     }
 
     private static ParquetConverter createGroupConverter(final Type parquetType, final int index,
             final ValueHolder parentHolder) {
-        final GroupTypeWrapper group = new GroupTypeWrapper(parquetType);
         final OriginalType originalType = parquetType.getOriginalType();
         if (originalType == OriginalType.LIST) {
-            return createArrayConverter(group.getType(0), index, parentHolder);
+            return createArrayConverter(parquetType.asGroupType().getType(0), index, parentHolder);
         } else if (originalType == OriginalType.MAP) {
             return new MapConverter(parquetType.asGroupType(), index, parentHolder);
         } else if (parquetType.asGroupType().isRepetition(Repetition.REPEATED)) {
@@ -128,18 +124,6 @@ public final class ParquetConverterFactory {
             return new ArrayGroupConverter(repeatedType, index, holder);
         } else {
             return new ArrayGroupConverter(repeatedType.asGroupType().getType(0), index, holder);
-        }
-    }
-
-    private static final class GroupTypeWrapper {
-        private final Type type;
-
-        private GroupTypeWrapper(final Type type) {
-            this.type = type;
-        }
-
-        private Type getType(final int index) {
-            return this.type.asGroupType().getType(index);
         }
     }
 }
