@@ -10,7 +10,7 @@ import org.apache.parquet.schema.PrimitiveType;
 /**
  * Converter for a repeated group that contains a single primitive value.
  */
-public final class SingleValueConverter extends GroupConverter {
+ final class SingleValueConverter extends GroupConverter {
     private final int index;
     private final ValueHolder parentDataHolder;
     private final ParquetConverter converter;
@@ -23,7 +23,7 @@ public final class SingleValueConverter extends GroupConverter {
      * @param index field index
      * @param parentDataHolder parent value holder
      */
-    public SingleValueConverter(final PrimitiveType valueType, final int index, final ValueHolder parentDataHolder) {
+     SingleValueConverter(final PrimitiveType valueType, final int index, final ValueHolder parentDataHolder) {
         this.index = index;
         this.parentDataHolder = parentDataHolder;
         this.converter = ParquetConverterFactory.create(valueType, index, new ValueHolder() {

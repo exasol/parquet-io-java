@@ -1,8 +1,6 @@
 package com.exasol.parquetio.reader.converter;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.math.MathContext;
+import java.math.*;
 
 import org.apache.parquet.column.Dictionary;
 import org.apache.parquet.io.api.Binary;
@@ -15,7 +13,7 @@ import org.apache.parquet.schema.PrimitiveType.PrimitiveTypeName;
  * Converter for {@code DECIMAL} annotated Parquet types.
  */
 // [impl->dsn~converting-logical-column-types~1]
-public final class ParquetDecimalConverter extends PrimitiveConverter implements ParquetConverter {
+final class ParquetDecimalConverter extends PrimitiveConverter implements ParquetConverter {
     private final PrimitiveType primitiveType;
     private final int index;
     private final ValueHolder holder;
@@ -27,8 +25,8 @@ public final class ParquetDecimalConverter extends PrimitiveConverter implements
      * Create a new decimal converter.
      *
      * @param primitiveType Parquet primitive type
-     * @param index field index
-     * @param holder value holder
+     * @param index         field index
+     * @param holder        value holder
      */
     public ParquetDecimalConverter(final PrimitiveType primitiveType, final int index, final ValueHolder holder) {
         this.primitiveType = primitiveType;
@@ -56,16 +54,16 @@ public final class ParquetDecimalConverter extends PrimitiveConverter implements
     private BigDecimal getDecimalFromType(final Dictionary dictionary, final int id) {
         final PrimitiveTypeName primitiveTypeName = this.primitiveType.getPrimitiveTypeName();
         switch (primitiveTypeName) {
-        case INT32:
-            return getDecimalFromLong(dictionary.decodeToInt(id));
-        case INT64:
-            return getDecimalFromLong(dictionary.decodeToLong(id));
-        case BINARY:
-        case FIXED_LEN_BYTE_ARRAY:
-            return getDecimalFromBinary(dictionary.decodeToBinary(id));
-        default:
-            throw new UnsupportedOperationException("Cannot convert parquet type to decimal type. Please check that "
-                    + "Parquet decimal type is stored as INT32, INT64, BINARY or FIXED_LEN_BYTE_ARRAY.");
+            case INT32:
+                return getDecimalFromLong(dictionary.decodeToInt(id));
+            case INT64:
+                return getDecimalFromLong(dictionary.decodeToLong(id));
+            case BINARY:
+            case FIXED_LEN_BYTE_ARRAY:
+                return getDecimalFromBinary(dictionary.decodeToBinary(id));
+            default:
+                throw new UnsupportedOperationException("Cannot convert parquet type to decimal type. Please check that "
+                        + "Parquet decimal type is stored as INT32, INT64, BINARY or FIXED_LEN_BYTE_ARRAY.");
         }
     }
 

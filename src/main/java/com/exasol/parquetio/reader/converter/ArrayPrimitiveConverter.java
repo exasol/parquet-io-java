@@ -8,7 +8,7 @@ import org.apache.parquet.schema.PrimitiveType;
  * Converter for non-standard Parquet list annotated groups with a single repeated type.
  */
 // [impl->dsn~converting-nested-column-types~1]
-public final class ArrayPrimitiveConverter extends GroupConverter implements ParquetConverter {
+final class ArrayPrimitiveConverter extends GroupConverter implements ParquetConverter {
     private final int index;
     private final ValueHolder parentDataHolder;
     private final AppendedValueHolder dataHolder = new AppendedValueHolder();
@@ -17,8 +17,8 @@ public final class ArrayPrimitiveConverter extends GroupConverter implements Par
     /**
      * Create a new array primitive converter.
      *
-     * @param elementType element type
-     * @param index field index
+     * @param elementType      element type
+     * @param index            field index
      * @param parentDataHolder parent value holder
      */
     public ArrayPrimitiveConverter(final PrimitiveType elementType, final int index,

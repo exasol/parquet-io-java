@@ -8,7 +8,7 @@ import org.apache.parquet.io.api.PrimitiveConverter;
  * Converter for Parquet binary type with {@code STRING} or {@code UTF8} annotation.
  */
 // [impl->dsn~converting-primitive-column-types~1]
-public final class ParquetStringConverter extends PrimitiveConverter implements ParquetConverter {
+final class ParquetStringConverter extends PrimitiveConverter implements ParquetConverter {
     private final int index;
     private final ValueHolder holder;
     private String[] decodedDictionary;
@@ -16,7 +16,7 @@ public final class ParquetStringConverter extends PrimitiveConverter implements 
     /**
      * Create a new string converter.
      *
-     * @param index field index
+     * @param index  field index
      * @param holder value holder
      */
     public ParquetStringConverter(final int index, final ValueHolder holder) {

@@ -11,7 +11,7 @@ import org.apache.parquet.schema.GroupType;
  * Converter for a Parquet repeated group.
  */
 // [impl->dsn~converting-nested-column-types~1]
-public final class RepeatedGroupConverter extends GroupConverter implements ParquetConverter, ValueHolder {
+final class RepeatedGroupConverter extends GroupConverter implements ParquetConverter, ValueHolder {
     private final int index;
     private final ValueHolder parentDataHolder;
     private final AppendedValueHolder dataHolder = new AppendedValueHolder();
@@ -20,11 +20,11 @@ public final class RepeatedGroupConverter extends GroupConverter implements Parq
     /**
      * Create a new repeated group converter.
      *
-     * @param groupType group type
-     * @param index field index
+     * @param groupType        group type
+     * @param index            field index
      * @param parentDataHolder parent value holder
      */
-    public RepeatedGroupConverter(final GroupType groupType, final int index, final ValueHolder parentDataHolder) {
+    RepeatedGroupConverter(final GroupType groupType, final int index, final ValueHolder parentDataHolder) {
         this.index = index;
         this.parentDataHolder = parentDataHolder;
         if (groupType.getFieldCount() > 1) {

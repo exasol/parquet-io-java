@@ -9,14 +9,14 @@ import org.apache.parquet.io.api.PrimitiveConverter;
  * Default converter for Parquet primitive types.
  */
 // [impl->dsn~converting-primitive-column-types~1]
-public final class ParquetPrimitiveConverter extends PrimitiveConverter implements ParquetConverter {
+final class ParquetPrimitiveConverter extends PrimitiveConverter implements ParquetConverter {
     private final int index;
     private final ValueHolder holder;
 
     /**
      * Create a new primitive converter.
      *
-     * @param index field index
+     * @param index  field index
      * @param holder value holder
      */
     public ParquetPrimitiveConverter(final int index, final ValueHolder holder) {

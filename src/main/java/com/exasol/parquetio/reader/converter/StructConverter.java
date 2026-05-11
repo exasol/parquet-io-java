@@ -5,7 +5,7 @@ import org.apache.parquet.schema.GroupType;
 /**
  * Converter for Parquet nested groups.
  */
-public final class StructConverter extends AbstractStructConverter {
+ final class StructConverter extends AbstractStructConverter {
     /**
      * Create a new struct converter.
      *
@@ -13,7 +13,7 @@ public final class StructConverter extends AbstractStructConverter {
      * @param index field index
      * @param parentDataHolder parent value holder
      */
-    public StructConverter(final GroupType groupType, final int index, final ValueHolder parentDataHolder) {
+     StructConverter(final GroupType groupType, final int index, final ValueHolder parentDataHolder) {
         super(groupType, index, parentDataHolder);
     }
 

@@ -8,7 +8,7 @@ import org.apache.parquet.schema.Type;
  * Converter for standard three-level Parquet list annotated group type.
  */
 // [impl->dsn~converting-nested-column-types~1]
-public final class ArrayGroupConverter extends GroupConverter implements ParquetConverter {
+final class ArrayGroupConverter extends GroupConverter implements ParquetConverter {
     private final int index;
     private final ValueHolder parentDataHolder;
     private final AppendedValueHolder dataHolder = new AppendedValueHolder();
@@ -17,8 +17,8 @@ public final class ArrayGroupConverter extends GroupConverter implements Parquet
     /**
      * Create a new array group converter.
      *
-     * @param elementType element type
-     * @param index field index
+     * @param elementType      element type
+     * @param index            field index
      * @param parentDataHolder parent value holder
      */
     public ArrayGroupConverter(final Type elementType, final int index, final ValueHolder parentDataHolder) {

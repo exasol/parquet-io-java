@@ -12,7 +12,7 @@ import org.apache.parquet.schema.PrimitiveType;
  * Converter for a Parquet repeated primitive field.
  */
 // [impl->dsn~converting-nested-column-types~1]
-public final class RepeatedPrimitiveConverter extends PrimitiveConverter implements ParquetConverter, ValueHolder {
+final class RepeatedPrimitiveConverter extends PrimitiveConverter implements ParquetConverter, ValueHolder {
     private final int index;
     private final ValueHolder parentDataHolder;
     private final AppendedValueHolder dataHolder = new AppendedValueHolder();
@@ -21,11 +21,11 @@ public final class RepeatedPrimitiveConverter extends PrimitiveConverter impleme
     /**
      * Create a new repeated primitive converter.
      *
-     * @param elementType element type
-     * @param index field index
+     * @param elementType      element type
+     * @param index            field index
      * @param parentDataHolder parent value holder
      */
-    public RepeatedPrimitiveConverter(final PrimitiveType elementType, final int index,
+    RepeatedPrimitiveConverter(final PrimitiveType elementType, final int index,
             final ValueHolder parentDataHolder) {
         this.index = index;
         this.parentDataHolder = parentDataHolder;

@@ -1,8 +1,6 @@
 package com.exasol.parquetio.reader.converter;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.parquet.io.api.Converter;
 import org.apache.parquet.io.api.GroupConverter;
@@ -13,7 +11,7 @@ import org.apache.parquet.schema.Type;
  * Converter for Parquet {@code MAP} annotated type.
  */
 // [impl->dsn~converting-nested-column-types~1]
-public final class MapConverter extends GroupConverter implements ParquetConverter {
+final class MapConverter extends GroupConverter implements ParquetConverter {
     private final int index;
     private final ValueHolder parentDataHolder;
     private final AppendedValueHolder keysDataHolder = new AppendedValueHolder();
@@ -23,8 +21,8 @@ public final class MapConverter extends GroupConverter implements ParquetConvert
     /**
      * Create a new map converter.
      *
-     * @param groupType map group type
-     * @param index field index
+     * @param groupType        map group type
+     * @param index            field index
      * @param parentDataHolder parent value holder
      */
     public MapConverter(final GroupType groupType, final int index, final ValueHolder parentDataHolder) {

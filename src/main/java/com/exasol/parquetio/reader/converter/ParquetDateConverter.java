@@ -6,7 +6,7 @@ import org.apache.parquet.io.api.PrimitiveConverter;
  * Converter for Parquet {@code INT32} with {@code DATE} annotation.
  */
 // [impl->dsn~converting-logical-column-types~1]
-public final class ParquetDateConverter extends PrimitiveConverter implements ParquetConverter {
+final class ParquetDateConverter extends PrimitiveConverter implements ParquetConverter {
     private final int index;
     private final ValueHolder holder;
 

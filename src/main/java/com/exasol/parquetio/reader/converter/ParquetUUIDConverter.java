@@ -10,7 +10,7 @@ import org.apache.parquet.io.api.PrimitiveConverter;
  * Converter for {@code UUID} annotated Parquet type.
  */
 // [impl->dsn~converting-logical-column-types~1]
-public final class ParquetUUIDConverter extends PrimitiveConverter implements ParquetConverter {
+ final class ParquetUUIDConverter extends PrimitiveConverter implements ParquetConverter {
     private final int index;
     private final ValueHolder holder;
 
@@ -20,7 +20,7 @@ public final class ParquetUUIDConverter extends PrimitiveConverter implements Pa
      * @param index field index
      * @param holder value holder
      */
-    public ParquetUUIDConverter(final int index, final ValueHolder holder) {
+     ParquetUUIDConverter(final int index, final ValueHolder holder) {
         this.index = index;
         this.holder = holder;
     }

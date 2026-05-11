@@ -6,7 +6,7 @@ import org.apache.parquet.io.api.PrimitiveConverter;
  * Converter for Parquet {@code INT64} with {@code TIMESTAMP_MICROS} annotation.
  */
 // [impl->dsn~converting-logical-column-types~1]
-public final class ParquetTimestampMicrosConverter extends PrimitiveConverter implements ParquetConverter {
+final class ParquetTimestampMicrosConverter extends PrimitiveConverter implements ParquetConverter {
     private final int index;
     private final ValueHolder holder;
 
@@ -16,7 +16,7 @@ public final class ParquetTimestampMicrosConverter extends PrimitiveConverter im
      * @param index  field index
      * @param holder value holder
      */
-    public ParquetTimestampMicrosConverter(final int index, final ValueHolder holder) {
+     ParquetTimestampMicrosConverter(final int index, final ValueHolder holder) {
         this.index = index;
         this.holder = holder;
     }
