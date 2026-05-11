@@ -182,8 +182,12 @@ Out of scope:
 
 ## Version and Changelog Update
 
-- [ ] Raise the version to 0.3.0 (this is a feature release)
-- [ ] Write the changelog entry for 0.3.0
+- [ ] Check if the current version mentioned in the build scripts and code parameters is the same as the latest GitHub release.
+- [ ] Decide if and which part of the version needs to be incremented. Use semantic versioning rules (breaking change updates major, feature updates minor, documentation, fixes and refactoring update fix number)
+- [ ] Raise the version to <semantic-version> (this is a <type-of-release> release)
+- [ ] Write the changelog entry for <semantic-version>
+- [ ] Update release date to today
+- [ ] Ensure that issue list contains the GitHub issue number and title
 ```
 
 Keep verification items concrete. Do not leave them as generic "run tests" placeholders when the quality requirements demand more specific checks.
