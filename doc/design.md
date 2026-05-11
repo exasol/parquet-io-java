@@ -111,6 +111,6 @@ Covers:
 
 Needs: impl, utest
 
-# Quality Requirements
+## Quality Requirements
 
 See [Quality Requirements](design/quality_requirements.md).
