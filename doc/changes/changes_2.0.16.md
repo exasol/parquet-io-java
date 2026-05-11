@@ -27,4 +27,5 @@ This release migrates the project language from Scala to Java to simplify mainte
 ### Plugin Dependency Updates
 
 * Removed `net.alchim31.maven:scala-maven-plugin:4.9.10`
+* Removed `org.apache.maven.plugins:maven-failsafe-plugin:3.5.5`
 * Removed `org.scalatest:scalatest-maven-plugin:2.2.0`

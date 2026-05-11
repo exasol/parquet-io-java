@@ -345,31 +345,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.5.5</version>
-                <configuration>
-                    <argLine>${argLine}</argLine>
-                    <environmentVariables>
-                        <EXASOL_TELEMETRY_DISABLE>true</EXASOL_TELEMETRY_DISABLE>
-                    </environmentVariables>
-                    <systemPropertyVariables>
-                        <!-- Set the highest log level for coverage testing, so that we have a chance to reach branches in the logging lambdas too. -->
-                        <java.util.logging.config.file>src/test/resources/logging.properties</java.util.logging.config.file>
-                    </systemPropertyVariables>
-                    <excludedGroups>${test.excludeTags}</excludedGroups>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>verify</id>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.14</version>
