@@ -125,6 +125,8 @@ The PIOJ reads it into a list of person maps:
 
 ## Information for Users
 
+- [User Guide](doc/user_guide.md)
+- [JavaDoc API](https://exasol.github.io/parquet-io-java/latest/api/index.html)
 - [Changelog](doc/changes/changelog.md)
 - [Dependencies](dependencies.md)
 
