@@ -35,6 +35,7 @@ Runtime design requirements `dsn` can only cover on scenario at a time `scn`. Yo
 8. All objects that can be, are immutable.
 9. The implementation prefers static object allocation over dynamic allocation where possible.
 10. All method parameters are final. Output parameters are only allowed when they are used in external libraries.
+11. Do not use `var` in production or test code. Instead use concrete types.
 
 ### Test Code Guideline
 
