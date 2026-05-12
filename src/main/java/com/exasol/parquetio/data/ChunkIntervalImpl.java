@@ -59,5 +59,4 @@ public final class ChunkIntervalImpl implements ChunkInterval {
                 .append(")");
         return stringBuilder.toString();
     }
-
 }

@@ -8,7 +8,7 @@ import org.apache.parquet.schema.Type;
 /**
  * An implementation of {@link Row} that uses unmodifiable list for storing values.
  */
-public class GenericRow implements Row {
+public final class GenericRow implements Row {
     private final MessageType schema;
     private final List<Object> values;
 

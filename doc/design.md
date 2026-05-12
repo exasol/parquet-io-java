@@ -2,6 +2,10 @@
 
 ## Introduction
 
+## Acknowledgments
+
+This document's section structure is derived from the "[arc42](https://arc42.org/)" architectural template by Dr. Gernot Starke, Dr. Peter Hruschka.
+
 ### Terms and Abbreviations
 
 <dl>
@@ -105,8 +109,6 @@ Covers:
 
 Needs: impl, utest
 
-## Acknowledgments
+## Quality Requirements
 
-This document's section structure is derived from the
-"[arc42](https://arc42.org/)" architectural template by Dr. Gernot Starke, Dr.
-Peter Hruschka.
+See [Quality Requirements](design/quality_requirements.md).

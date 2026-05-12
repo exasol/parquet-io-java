@@ -1,0 +1,101 @@
+package com.exasol.parquetio.reader.converter;
+
+import java.util.List;
+
+import org.apache.parquet.column.Dictionary;
+import org.apache.parquet.io.api.Binary;
+import org.apache.parquet.io.api.PrimitiveConverter;
+import org.apache.parquet.schema.PrimitiveType;
+
+/**
+ * Converter for a Parquet repeated primitive field.
+ */
+// [impl->dsn~converting-nested-column-types~1]
+final class RepeatedPrimitiveConverter extends PrimitiveConverter implements ParquetConverter, ValueHolder {
+    private final RepeatedValuesCollector valuesCollector;
+    private final PrimitiveConverter primitiveConverter;
+
+    /**
+     * Create a new repeated primitive converter.
+     *
+     * @param elementType      element type
+     * @param index            field index
+     * @param parentDataHolder parent value holder
+     */
+    RepeatedPrimitiveConverter(final PrimitiveType elementType, final int index,
+            final ValueHolder parentDataHolder) {
+        this.valuesCollector = new RepeatedValuesCollector(index, parentDataHolder);
+        this.primitiveConverter = ParquetConverterFactory.createPrimitiveConverter(elementType, index, this)
+                .asConverter().asPrimitiveConverter();
+    }
+
+    @Override
+    public void addBinary(final Binary value) {
+        this.primitiveConverter.addBinary(value);
+    }
+
+    @Override
+    public void addBoolean(final boolean value) {
+        this.primitiveConverter.addBoolean(value);
+    }
+
+    @Override
+    public void addDouble(final double value) {
+        this.primitiveConverter.addDouble(value);
+    }
+
+    @Override
+    public void addFloat(final float value) {
+        this.primitiveConverter.addFloat(value);
+    }
+
+    @Override
+    public void addInt(final int value) {
+        this.primitiveConverter.addInt(value);
+    }
+
+    @Override
+    public void addLong(final long value) {
+        this.primitiveConverter.addLong(value);
+    }
+
+    @Override
+    public boolean hasDictionarySupport() {
+        return this.primitiveConverter.hasDictionarySupport();
+    }
+
+    @Override
+    public void setDictionary(final Dictionary dictionary) {
+        this.primitiveConverter.setDictionary(dictionary);
+    }
+
+    @Override
+    public void addValueFromDictionary(final int dictionaryId) {
+        this.primitiveConverter.addValueFromDictionary(dictionaryId);
+    }
+
+    @Override
+    public void parentStart() {
+        this.valuesCollector.parentStart();
+    }
+
+    @Override
+    public void parentEnd() {
+        this.valuesCollector.parentEnd();
+    }
+
+    @Override
+    public void reset() {
+        this.valuesCollector.reset();
+    }
+
+    @Override
+    public List<Object> getValues() {
+        return this.valuesCollector.getValues();
+    }
+
+    @Override
+    public void put(final int index, final Object value) {
+        this.valuesCollector.put(index, value);
+    }
+}

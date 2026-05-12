@@ -1,19 +1,19 @@
 package com.exasol.parquetio.data;
 
-import org.apache.parquet.io.InvalidRecordException;
-import org.apache.parquet.schema.*;
-
 import static org.apache.parquet.schema.PrimitiveType.PrimitiveTypeName.INT32;
 import static org.apache.parquet.schema.PrimitiveType.PrimitiveTypeName.INT64;
-
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.apache.parquet.io.InvalidRecordException;
+import org.apache.parquet.schema.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import nl.jqno.equalsverifier.EqualsVerifier;
 
 class GenericRowTest {
 
@@ -81,4 +81,12 @@ class GenericRowTest {
                 () -> assertThat(row.hasFieldName("dummy"), equalTo(false)));
     }
 
+    @Test
+    void verifyEqualsContract() {
+        EqualsVerifier.forClass(GenericRow.class)
+                .withNonnullFields("values")
+                // MessageType does not implement equals and hashCode, but it is not relevant for equality of GenericRow
+                .withIgnoredFields("schema")
+                .verify();
+    }
 }
