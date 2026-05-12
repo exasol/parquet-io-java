@@ -4,13 +4,14 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.TimeZone;
 
 /**
  * Helper functions to convert date time values.
  */
 final class DateTimeHelper {
-    private static final LocalDateTime UNIX_EPOCH_DATE_TIME = LocalDateTime.of(1970, 1, 1, 0, 0, 0);
+    private static final LocalDateTime UNIX_EPOCH_DATE_TIME = LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC);
     private static final long JULIAN_DAY_OF_EPOCH = 2440588L;
     private static final long SECONDS_PER_DAY = 60L * 60L * 24L;
     private static final long MILLIS_PER_SECOND = 1000L;

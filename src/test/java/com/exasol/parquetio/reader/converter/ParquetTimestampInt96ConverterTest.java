@@ -7,10 +7,14 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TimeZone;
 
 import org.apache.parquet.io.api.Binary;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class ParquetTimestampInt96ConverterTest {
     private static final int JULIAN_DAY_OF_EPOCH = 2_440_588;
@@ -29,7 +33,7 @@ class ParquetTimestampInt96ConverterTest {
     }
 
     @Test
-    void convertsEpochStart() {
+    void testConvertsEpochStart() {
         final RecordingValueHolder holder = convert(JULIAN_DAY_OF_EPOCH, 0L);
 
         assertAll(() -> assertThat(holder.index, equalTo(3)),
@@ -37,9 +41,8 @@ class ParquetTimestampInt96ConverterTest {
     }
 
     @Test
-    void convertsTimestampAfterEpoch() {
-        final long nanosSinceStartOfDay = ((12L * 60L * 60L) + (34L * 60L) + 56L) * 1_000_000_000L
-                + 123_456_789L;
+    void testConvertsTimestampAfterEpoch() {
+        final long nanosSinceStartOfDay = 45_296_123_456_789L;
 
         final RecordingValueHolder holder = convert(2_460_311, nanosSinceStartOfDay);
 
@@ -48,7 +51,7 @@ class ParquetTimestampInt96ConverterTest {
     }
 
     @Test
-    void convertsTimestampBeforeEpoch() {
+    void testConvertsTimestampBeforeEpoch() {
         final RecordingValueHolder holder = convert(JULIAN_DAY_OF_EPOCH - 1, 86_399_999_999_000L);
 
         assertAll(() -> assertThat(holder.index, equalTo(3)),

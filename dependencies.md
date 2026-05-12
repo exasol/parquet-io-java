@@ -25,9 +25,9 @@
 
 | Dependency                          | License                          |
 | ----------------------------------- | -------------------------------- |
+| [JCL 1.2 implemented over SLF4J][0] | [Apache License, Version 2.0][3] |
 | [aircompressor][13]                 | [Apache License 2.0][14]         |
 | Apache Hadoop Client Runtime        | [Apache-2.0][3]                  |
-| [JCL 1.2 implemented over SLF4J][0] | [Apache License, Version 2.0][3] |
 
 ## Plugin Dependencies
 

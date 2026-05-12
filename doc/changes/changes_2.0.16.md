@@ -6,6 +6,8 @@ Code name: Migrate Scala to Java
 
 This release migrates the project language from Scala to Java to simplify maintenance and reduce dependencies.
 
+We removed the Maven Failsafe plugin, since this project does not feature any integration tests.
+
 ## Refactoring
 
 * #87: Converted production and test code from Scala to Java.

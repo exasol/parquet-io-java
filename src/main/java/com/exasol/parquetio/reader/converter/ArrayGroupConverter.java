@@ -24,7 +24,7 @@ final class ArrayGroupConverter extends GroupConverter implements ParquetConvert
     public ArrayGroupConverter(final Type elementType, final int index, final ValueHolder parentDataHolder) {
         this.index = index;
         this.parentDataHolder = parentDataHolder;
-        this.elementConverter = new ElementGroupConverter(elementType, index, this.dataHolder);
+        this.elementConverter = new RepeatedListGroupConverter(elementType, index, this.dataHolder);
     }
 
     @Override
@@ -48,10 +48,13 @@ final class ArrayGroupConverter extends GroupConverter implements ParquetConvert
         this.parentDataHolder.put(this.index, this.dataHolder.getValues());
     }
 
-    private static final class ElementGroupConverter extends GroupConverter implements ParquetConverter {
+    /**
+     * Represents the repeated {@code list} wrapper group and stores only the actual element value.
+     */
+    private static final class RepeatedListGroupConverter extends GroupConverter implements ParquetConverter {
         private final ParquetConverter innerConverter;
 
-        private ElementGroupConverter(final Type elementType, final int index, final ValueHolder dataHolder) {
+        private RepeatedListGroupConverter(final Type elementType, final int index, final ValueHolder dataHolder) {
             this.innerConverter = ParquetConverterFactory.create(elementType, index, dataHolder);
         }
 

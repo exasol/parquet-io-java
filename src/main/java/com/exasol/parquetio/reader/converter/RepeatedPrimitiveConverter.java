@@ -95,6 +95,7 @@ final class RepeatedPrimitiveConverter extends PrimitiveConverter implements Par
 
     @Override
     public List<Object> getValues() {
+        // Repeated primitive values are accumulated in dataHolder and flushed to the parent in parentEnd().
         return Collections.emptyList();
     }
 

@@ -14,15 +14,16 @@ import com.exasol.parquetio.reader.converter.ParquetRootConverter;
 /**
  * Materializes Parquet records into internal {@link Row} values.
  */
-@SuppressWarnings("deprecation")
 final class RowReadSupport extends ReadSupport<Row> {
     @Override
+    @SuppressWarnings("deprecation")
     public RecordMaterializer<Row> prepareForRead(final Configuration configuration,
             final Map<String, String> metadata, final MessageType messageType, final ReadContext readContext) {
         return new RowRecordMaterializer(messageType);
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public ReadContext init(final Configuration configuration, final Map<String, String> metadata,
             final MessageType messageType) {
         final String projection = configuration.get(ReadSupport.PARQUET_READ_SCHEMA);
@@ -46,6 +47,7 @@ final class RowReadSupport extends ReadSupport<Row> {
 
         @Override
         public void skipCurrentRecord() {
+            // Starting the root converter clears the partially materialized values for the skipped record.
             getRootConverter().start();
         }
 

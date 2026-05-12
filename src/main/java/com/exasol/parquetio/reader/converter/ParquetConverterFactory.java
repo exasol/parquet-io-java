@@ -2,13 +2,15 @@ package com.exasol.parquetio.reader.converter;
 
 import java.util.Objects;
 
-import org.apache.parquet.schema.*;
+import org.apache.parquet.schema.LogicalTypeAnnotation;
+import org.apache.parquet.schema.OriginalType;
+import org.apache.parquet.schema.PrimitiveType;
+import org.apache.parquet.schema.Type;
 import org.apache.parquet.schema.Type.Repetition;
 
 /**
  * Factory for Parquet field data type converters.
  */
-@SuppressWarnings("deprecation")
 public final class ParquetConverterFactory {
     private ParquetConverterFactory() {
         // utility class
@@ -17,8 +19,8 @@ public final class ParquetConverterFactory {
     /**
      * Creates a Parquet converter for a field type.
      *
-     * @param parquetType      Parquet type
-     * @param fieldIndex       field index in the Parquet schema
+     * @param parquetType Parquet type
+     * @param fieldIndex field index in the Parquet schema
      * @param parentDataHolder parent value holder
      * @return converter for the field type
      */
@@ -33,29 +35,30 @@ public final class ParquetConverterFactory {
         return createGroupConverter(parquetType, fieldIndex, parentDataHolder);
     }
 
-    static ParquetConverter createPrimitiveConverter(final PrimitiveType parquetType, final int index,
+    static ParquetConverter createPrimitiveConverter(final PrimitiveType primitiveType, final int index,
             final ValueHolder parentHolder) {
-        switch (parquetType.getPrimitiveTypeName()) {
-            case BOOLEAN:
-            case DOUBLE:
-            case FLOAT:
-                return new ParquetPrimitiveConverter(index, parentHolder);
-            case BINARY:
-                return createBinaryConverter(parquetType, index, parentHolder);
-            case FIXED_LEN_BYTE_ARRAY:
-                return createFixedByteArrayConverter(parquetType, index, parentHolder);
-            case INT32:
-                return createIntegerConverter(parquetType, index, parentHolder);
-            case INT64:
-                return createLongConverter(parquetType, index, parentHolder);
-            case INT96:
-                return new ParquetTimestampInt96Converter(index, parentHolder);
-            default:
-                throw new UnsupportedOperationException(
-                        "Unsupported primitive type: " + parquetType.getPrimitiveTypeName());
+        switch (primitiveType.getPrimitiveTypeName()) {
+        case BOOLEAN:
+        case DOUBLE:
+        case FLOAT:
+            return new ParquetPrimitiveConverter(index, parentHolder);
+        case BINARY:
+            return createBinaryConverter(primitiveType, index, parentHolder);
+        case FIXED_LEN_BYTE_ARRAY:
+            return createFixedByteArrayConverter(primitiveType, index, parentHolder);
+        case INT32:
+            return createIntegerConverter(primitiveType, index, parentHolder);
+        case INT64:
+            return createLongConverter(primitiveType, index, parentHolder);
+        case INT96:
+            return new ParquetTimestampInt96Converter(index, parentHolder);
+        default:
+            throw new UnsupportedOperationException(
+                    "Unsupported primitive type: " + primitiveType.getPrimitiveTypeName());
         }
     }
 
+    @SuppressWarnings("deprecation")
     private static ParquetConverter createGroupConverter(final Type parquetType, final int index,
             final ValueHolder parentHolder) {
         final OriginalType originalType = parquetType.getOriginalType();
@@ -70,6 +73,7 @@ public final class ParquetConverterFactory {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private static ParquetConverter createBinaryConverter(final PrimitiveType primitiveType, final int index,
             final ValueHolder holder) {
         final OriginalType originalType = primitiveType.getOriginalType();
@@ -81,8 +85,9 @@ public final class ParquetConverterFactory {
         return new ParquetPrimitiveConverter(index, holder);
     }
 
-    private static ParquetConverter createFixedByteArrayConverter(final PrimitiveType primitiveType, final int index,
-            final ValueHolder holder) {
+    @SuppressWarnings("deprecation")
+    private static ParquetConverter createFixedByteArrayConverter(final PrimitiveType primitiveType,
+            final int index, final ValueHolder holder) {
         if (Objects.equals(primitiveType.getLogicalTypeAnnotation(), LogicalTypeAnnotation.uuidType())) {
             return new ParquetUUIDConverter(index, holder);
         }
@@ -92,6 +97,7 @@ public final class ParquetConverterFactory {
         return new ParquetPrimitiveConverter(index, holder);
     }
 
+    @SuppressWarnings("deprecation")
     private static ParquetConverter createIntegerConverter(final PrimitiveType primitiveType, final int index,
             final ValueHolder holder) {
         final OriginalType originalType = primitiveType.getOriginalType();
@@ -103,6 +109,7 @@ public final class ParquetConverterFactory {
         return new ParquetPrimitiveConverter(index, holder);
     }
 
+    @SuppressWarnings("deprecation")
     private static ParquetConverter createLongConverter(final PrimitiveType primitiveType, final int index,
             final ValueHolder holder) {
         final OriginalType originalType = primitiveType.getOriginalType();
