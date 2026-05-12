@@ -1,0 +1,86 @@
+name: Publish JavaDoc
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+  pull_request:
+
+
+jobs:
+  build-javadoc:
+    permissions:
+       contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Java (11 + 17)
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: |
+            11
+            17
+          cache: maven
+
+      - name: Build JavaDoc
+        run: |
+          mvn --batch-mode javadoc:javadoc \
+              -DossindexSkip=true \
+              -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+              -DtrimStackTrace=false
+
+      - name: Prepare Pages artifact
+        run: |
+          mkdir -p ./target/pages/latest
+          cp -R ./target/reports/apidocs ./target/pages/latest/api
+          cat > ./target/pages/index.html <<'HTML'
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <meta http-equiv="refresh" content="0; url=./latest/api/index.html" />
+            <title>Parquet IO Java JavaDoc</title>
+          </head>
+          <body>
+            <p>Redirecting to <a href="./latest/api/index.html">latest JavaDoc</a>...</p>
+          </body>
+          </html>
+          HTML
+
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./target/pages
+
+      - name: "Report Status"
+        if: always()
+        uses: ravsamhq/notify-slack-action@be814b201e233b2dc673608aa46e5447c8ab13f2
+        with:
+          status: ${{ job.status }}
+          notify_when: "failure"
+          notification_title: "Parquet IO Java: {workflow} has {status_message}"
+          message_format: "{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>"
+          footer: "Linked to Repo <{repo_url}|{repo}>"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.INTEGRATION_TEAM_SLACK_NOTIFICATION_WEBHOOK }}
+
+  deploy-pages:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: build-javadoc
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
