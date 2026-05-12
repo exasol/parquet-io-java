@@ -10,7 +10,7 @@ Add Parquet IO Java to your Maven dependencies.
 <dependency>
     <groupId>com.exasol</groupId>
     <artifactId>parquet-io-java</artifactId>
-    <version>$version</version>
+    <version>&lt;latest-version&gt;</version>
 </dependency>
 ```
 

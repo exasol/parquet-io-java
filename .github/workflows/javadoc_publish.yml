@@ -6,11 +6,11 @@ on:
   workflow_dispatch:
   pull_request:
 
-permissions:
-  contents: read
 
 jobs:
   build-javadoc:
+    permissions:
+       contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -27,7 +27,6 @@ jobs:
             17
           cache: maven
 
-      # [impl->dsn~publishing-javadoc-api-documentation~1]
       - name: Build JavaDoc
         run: |
           mvn --batch-mode javadoc:javadoc \
@@ -35,7 +34,6 @@ jobs:
               -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
               -DtrimStackTrace=false
 
-      # [itest->dsn~publishing-javadoc-api-documentation~1]
       - name: Prepare Pages artifact
         run: |
           mkdir -p ./target/pages/latest
