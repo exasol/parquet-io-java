@@ -67,6 +67,7 @@ final class RepeatedGroupConverter extends GroupConverter implements ParquetConv
 
     @Override
     public List<Object> getValues() {
+        // Repeated group values are accumulated in dataHolder and flushed to the parent in parentEnd().
         return Collections.emptyList();
     }
 

@@ -39,6 +39,7 @@ import org.apache.parquet.schema.PrimitiveType;
 
             @Override
             public List<Object> getValues() {
+                // The anonymous holder passes each value directly through put(); it never exposes a value list.
                 return Collections.emptyList();
             }
         });

@@ -12,14 +12,15 @@ import org.apache.parquet.hadoop.ParquetReader;
 import org.apache.parquet.hadoop.ParquetWriter;
 import org.apache.parquet.hadoop.util.HadoopInputFile;
 import org.apache.parquet.schema.MessageType;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.io.TempDir;
 
 import com.exasol.parquetio.data.Row;
 import com.exasol.parquetio.reader.RowParquetReader;
 
 public abstract class BaseParquetReaderTest {
     private Configuration configuration;
+    @TempDir
     private Path outputDirectory;
     private org.apache.hadoop.fs.Path path;
 
@@ -27,13 +28,7 @@ public abstract class BaseParquetReaderTest {
     protected final void beforeEach() throws IOException {
         this.configuration = new Configuration();
         FileSystem.get(this.configuration);
-        this.outputDirectory = TestFileManager.createTemporaryFolder("parquetRowReaderTest");
         this.path = new org.apache.hadoop.fs.Path(this.outputDirectory.toUri().toString(), "part-00000.parquet");
-    }
-
-    @AfterEach
-    protected final void afterEach() throws IOException {
-        TestFileManager.deletePathFiles(this.outputDirectory);
     }
 
     protected final List<Row> getRecords() throws IOException {

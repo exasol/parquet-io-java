@@ -16,6 +16,7 @@
     <properties>
         <!-- Hadoop 3.5 requires Java 17 -->
         <hadoop.version>3.4.3</hadoop.version>
+        <maven.javadoc.disableNoFonts>true</maven.javadoc.disableNoFonts>
         <slf4j.version>1.7.36</slf4j.version>
         <mockito.version>5.23.0</mockito.version>
     </properties>
@@ -24,6 +25,12 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.parquet</groupId>
@@ -49,18 +56,12 @@
             <version>${hadoop.version}</version>
             <scope>runtime</scope>
             <exclusions>
-                <!-- We use jcl-over-sl4j to allow centralized logging -->
+                <!-- We use jcl-over-slf4j to allow centralized logging -->
                 <exclusion>
                     <groupId>commons-logging</groupId>
                     <artifactId>commons-logging</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>${slf4j.version}</version>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>com.exasol</groupId>

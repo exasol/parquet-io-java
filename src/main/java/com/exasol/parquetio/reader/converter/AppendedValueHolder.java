@@ -17,6 +17,7 @@ final class AppendedValueHolder implements ValueHolder {
 
     @Override
     public void put(final int index, final Object value) {
+        // The Parquet callback index is ignored because repeated values arrive in order and are appended.
         this.array.add(value);
     }
 }

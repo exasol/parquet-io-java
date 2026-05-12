@@ -4,9 +4,7 @@
 
 ## Acknowledgments
 
-This document's section structure is derived from the
-"[arc42](https://arc42.org/)" architectural template by Dr. Gernot Starke, Dr.
-Peter Hruschka.
+This document's section structure is derived from the "[arc42](https://arc42.org/)" architectural template by Dr. Gernot Starke, Dr. Peter Hruschka.
 
 ### Terms and Abbreviations
 

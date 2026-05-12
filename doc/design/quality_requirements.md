@@ -1,27 +1,22 @@
 # Quality Requirements
 
-This chapter documents architecture-relevant quality requirements and technical
-quality goals.
+This chapter documents architecture-relevant quality requirements and technical quality goals.
 
 User-facing acceptance scenarios are defined in [System Requirements](../system_requirements.md).
 
-Terms such as `Parquet`, `Row`, `Row Group`, `OpenFastTrace`, and `OFT` use the
-definitions from [System Requirements](../system_requirements.md).
+Terms such as `Parquet`, `Row`, `Row Group`, `OpenFastTrace`, and `OFT` use the definitions from [System Requirements](../system_requirements.md).
 
 ## Requirement Quality
 
-We have the following requirement hierachy in this project:
+We have the following requirement hierarchy in this project:
 
 1. `feat`: Top level feature as you would find on a product sheet (limited number)
 2. `req`: High level requirement
-3. `scn`: Given-when-then scenario
-4. `dsn`: Design requirement
+3. `dsn`: Design requirement
    `constr`: Technical constraint
-5. `impl`: Implementation
+4. `impl`: Implementation
    `utest`: Unit test
    `itest`: Integration test
-
-Runtime design requirements `dsn` can only cover on scenario at a time `scn`. You can use OFT's forwarding notation if a technical requirement does not add new information to a user scenario.
 
 ## Code Quality
 
@@ -38,7 +33,7 @@ Runtime design requirements `dsn` can only cover on scenario at a time `scn`. Yo
 
 ### Test Code Guideline
 
-1. Test method names follow the given-when-then naming principle.
+1. Test method names have descriptive names starting with `test`.
 2. Method parameters are final.
 3. The project uses Hamcrest matchers.
 4. If possible each test method has only a single assert.
@@ -56,19 +51,15 @@ Parquet IO Java uses the minimum set of dependencies required for:
 * converting Parquet rows to Java objects
 * running automated tests and build quality gates
 
-Additional libraries are not allowed by default. Any new third-party dependency
-requires an explicit design decision and approval before it is added to the
-build.
+Additional libraries are not allowed by default. Any new third-party dependency requires an explicit design decision and approval before it is added to the build.
 
 ## Static Analysis And Security Gates
 
-Static code analysis runs in SonarQube Cloud and acts as a build breaker. A failing quality gate blocks integration until the reported issues are resolved or an approved exception exists.
+Static code analysis runs in SonarQube Cloud and acts as a CI build breaker. A failing quality gate blocks integration until the reported issues are resolved or an approved exception exists.
 
 OpenFastTrace tracing runs as a build breaker for the specification artifacts in scope. The trace stays clean for the requirement and design artifact types used by the project.
 
-The Maven build applies the latest OpenFastTrace Maven plugin version approved
-for the project and executes requirement tracing locally and in CI through the
-standard `verify` lifecycle.
+The Maven build applies the latest OpenFastTrace Maven plugin version approved for the project and executes requirement tracing locally and in CI through the standard `verify` lifecycle.
 
 ## Testability And Coverage
 
@@ -78,11 +69,6 @@ Path coverage across the code base stays at or above 80%. Coverage below that th
 
 The architecture favors testable units with clear boundaries so the coverage target can be met without relying mainly on brittle UI-level tests.
 
-Reader behavior is verified with generated Parquet files that exercise the
-supported primitive, logical, nested, and row group interval scenarios.
-
 ## Platform Compatibility
 
-The required Java version follows the Java version configured in the Maven
-build. The project does not introduce a language level or bytecode target that
-exceeds that build configuration.
+The required Java version follows the Java version configured in the Maven build. The project does not introduce a language level or bytecode target that exceeds that build configuration.

@@ -16,7 +16,7 @@ final class IndexedValueHolder implements ValueHolder {
 
     @Override
     public List<Object> getValues() {
-        return Collections.unmodifiableList(new ArrayList<>(Arrays.asList(this.array)));
+        return Collections.unmodifiableList(Arrays.asList(this.array.clone()));
     }
 
     @Override
