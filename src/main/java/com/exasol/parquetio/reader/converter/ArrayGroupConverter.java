@@ -8,11 +8,7 @@ import org.apache.parquet.schema.Type;
  * Converter for standard three-level Parquet list annotated group type.
  */
 // [impl->dsn~converting-nested-column-types~1]
-final class ArrayGroupConverter extends GroupConverter implements ParquetConverter {
-    private final int index;
-    private final ValueHolder parentDataHolder;
-    private final AppendedValueHolder dataHolder = new AppendedValueHolder();
-    private final ParquetConverter elementConverter;
+final class ArrayGroupConverter extends AbstractArrayConverter {
 
     /**
      * Create a new array group converter.
@@ -22,30 +18,7 @@ final class ArrayGroupConverter extends GroupConverter implements ParquetConvert
      * @param parentDataHolder parent value holder
      */
     public ArrayGroupConverter(final Type elementType, final int index, final ValueHolder parentDataHolder) {
-        this.index = index;
-        this.parentDataHolder = parentDataHolder;
-        this.elementConverter = new RepeatedListGroupConverter(elementType, index, this.dataHolder);
-    }
-
-    @Override
-    public Converter getConverter(final int fieldIndex) {
-        if (fieldIndex != 0) {
-            throw new IllegalArgumentException(
-                    "Illegal index '" + fieldIndex + "' to array converter. It should be only '0'.");
-        }
-        return this.elementConverter.asConverter();
-    }
-
-    @Override
-    public void start() {
-        this.dataHolder.reset();
-        this.elementConverter.parentStart();
-    }
-
-    @Override
-    public void end() {
-        this.elementConverter.parentEnd();
-        this.parentDataHolder.put(this.index, this.dataHolder.getValues());
+        super(index, parentDataHolder, dataHolder -> new RepeatedListGroupConverter(elementType, index, dataHolder));
     }
 
     /**

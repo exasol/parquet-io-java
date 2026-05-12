@@ -1,6 +1,5 @@
 package com.exasol.parquetio.reader.converter;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.parquet.io.api.Converter;
@@ -12,9 +11,7 @@ import org.apache.parquet.schema.GroupType;
  */
 // [impl->dsn~converting-nested-column-types~1]
 final class RepeatedGroupConverter extends GroupConverter implements ParquetConverter, ValueHolder {
-    private final int index;
-    private final ValueHolder parentDataHolder;
-    private final AppendedValueHolder dataHolder = new AppendedValueHolder();
+    private final RepeatedValuesCollector valuesCollector;
     private final GroupConverter groupConverter;
 
     /**
@@ -25,13 +22,12 @@ final class RepeatedGroupConverter extends GroupConverter implements ParquetConv
      * @param parentDataHolder parent value holder
      */
     RepeatedGroupConverter(final GroupType groupType, final int index, final ValueHolder parentDataHolder) {
-        this.index = index;
-        this.parentDataHolder = parentDataHolder;
+        this.valuesCollector = new RepeatedValuesCollector(index, parentDataHolder);
         if (groupType.getFieldCount() > 1) {
             this.groupConverter = new StructConverter(groupType, index, this);
         } else {
             this.groupConverter = new SingleValueConverter(groupType.getType(0).asPrimitiveType(), index,
-                    this.dataHolder);
+                    this.valuesCollector);
         }
     }
 
@@ -52,27 +48,26 @@ final class RepeatedGroupConverter extends GroupConverter implements ParquetConv
 
     @Override
     public void parentStart() {
-        this.dataHolder.reset();
+        this.valuesCollector.parentStart();
     }
 
     @Override
     public void parentEnd() {
-        this.parentDataHolder.put(this.index, this.dataHolder.getValues());
+        this.valuesCollector.parentEnd();
     }
 
     @Override
     public void reset() {
-        // values are managed by parentStart()
+        this.valuesCollector.reset();
     }
 
     @Override
     public List<Object> getValues() {
-        // Repeated group values are accumulated in dataHolder and flushed to the parent in parentEnd().
-        return Collections.emptyList();
+        return this.valuesCollector.getValues();
     }
 
     @Override
     public void put(final int index, final Object value) {
-        this.dataHolder.put(index, value);
+        this.valuesCollector.put(index, value);
     }
 }
