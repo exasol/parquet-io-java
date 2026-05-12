@@ -1,4 +1,4 @@
-# Parquet for Java 2.0.16, released 2026-05-??
+# Parquet for Java 2.0.16, released 2026-05-12
 
 Code name: Migrate Scala to Java
 

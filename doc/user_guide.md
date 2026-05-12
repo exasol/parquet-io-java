@@ -65,3 +65,70 @@ try (final RowParquetChunkReader reader = RowParquetChunkReader
     }
 }
 ```
+
+## Data Type Mapping
+
+The following table shows how each Parquet data type is mapped into Java data types.
+
+| Parquet Data Type    | Parquet Logical Type | Java Data Type |
+|:---------------------|:---------------------|:---------------|
+| boolean              |                      | Boolean        |
+| int32                |                      | Integer        |
+| int32                | date                 | Date           |
+| int32                | decimal(p, s)        | BigDecimal     |
+| int64                |                      | Long           |
+| int64                | timestamp_millis     | Timestamp      |
+| int64                | timestamp_micros     | Timestamp      |
+| int64                | decimal(p, s)        | BigDecimal     |
+| float                |                      | Float          |
+| double               |                      | Double         |
+| binary               |                      | String         |
+| binary               | utf8                 | String         |
+| binary               | decimal(p, s)        | BigDecimal     |
+| fixed_len_byte_array |                      | String         |
+| fixed_len_byte_array | decimal(p, s)        | BigDecimal     |
+| fixed_len_byte_array | uuid                 | UUID           |
+| int96                |                      | Timestamp      |
+| group                |                      | Map            |
+| group                | LIST                 | List           |
+| group                | MAP                  | Map            |
+| group                | REPEATED             | List           |
+
+## Parquet Repeated Types
+
+Parquet data types can repeat a single field or a group of fields. Parquet IO Java reads these repeated types into Java `List` types.
+
+For example, given the following Parquet schemas:
+
+```
+message parquet_schema {
+  repeated binary name (UTF8);
+}
+```
+
+```
+message parquet_schema {
+  repeated group person {
+    required binary name (UTF8);
+  }
+}
+```
+
+Parquet IO Java reads both of these Parquet types into a Java list such as `["John", "Jane"]`.
+
+On the other hand, you can import a repeated group with multiple fields as a list of maps.
+
+```
+message parquet_schema {
+  repeated group person {
+    required binary name (UTF8);
+    optional int32 age;
+  }
+}
+```
+
+Parquet IO Java reads it into a list of person maps:
+
+```
+[ Map("name" -> "John", "age" -> 24), Map("name" -> "Jane", "age" -> 22) ]
+```
