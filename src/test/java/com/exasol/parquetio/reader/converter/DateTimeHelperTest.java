@@ -73,6 +73,18 @@ class DateTimeHelperTest {
     }
 
     @Test
+    void testGetLocalTimestampFromMicrosWithValueOutsideNanosecondRange() {
+        assertThat(DateTimeHelper.getLocalTimestampFromMicros(10_000_000_000_000_000L),
+                equalTo(Timestamp.valueOf("2286-11-20 17:46:40")));
+    }
+
+    @Test
+    void testGetLocalTimestampFromMillisWithValueOutsideNanosecondRange() {
+        assertThat(DateTimeHelper.getLocalTimestampFromMillis(10_000_000_000_000L),
+                equalTo(Timestamp.valueOf("2286-11-20 17:46:40")));
+    }
+
+    @Test
     void testGetMicrosFromTimestampReturnsZeroForNull() {
         assertThat(DateTimeHelper.getMicrosFromTimestamp(null), equalTo(0L));
     }

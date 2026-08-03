@@ -49,7 +49,7 @@ final class DateTimeHelper {
      * @return timestamp
      */
     static Timestamp getLocalTimestampFromMicros(final long microseconds) {
-        return getLocalTimestampFromNanos(microseconds * NANOS_PER_MICROS);
+        return getLocalTimestamp(microseconds / MICROS_PER_SECOND, microseconds % MICROS_PER_SECOND * NANOS_PER_MICROS);
     }
 
     /**
@@ -81,6 +81,10 @@ final class DateTimeHelper {
         return Timestamp.valueOf(UNIX_EPOCH_DATE_TIME.plusNanos(nanoseconds));
     }
 
+    private static Timestamp getLocalTimestamp(final long seconds, final long nanos) {
+        return Timestamp.valueOf(UNIX_EPOCH_DATE_TIME.plusSeconds(seconds).plusNanos(nanos));
+    }
+
     /**
      * Returns a timestamp from number of milliseconds since epoch.
      *
@@ -98,7 +102,7 @@ final class DateTimeHelper {
      * @return timestamp
      */
     static Timestamp getLocalTimestampFromMillis(final long millis) {
-        return getLocalTimestampFromNanos(millis * NANOS_PER_MILLIS);
+        return getLocalTimestamp(millis / MILLIS_PER_SECOND, millis % MILLIS_PER_SECOND * NANOS_PER_MILLIS);
     }
 
     /**

@@ -34,12 +34,12 @@ abstract class AbstractParquetTimestampConverterTest {
     }
 
     protected final void withTimeZone(final TimeZone timeZone, final Runnable action) {
-        final TimeZone originalTimeZone = TimeZone.getDefault();
+        final TimeZone timeZoneBeforeAction = TimeZone.getDefault();
         try {
             TimeZone.setDefault(timeZone);
             action.run();
         } finally {
-            TimeZone.setDefault(originalTimeZone);
+            TimeZone.setDefault(timeZoneBeforeAction);
         }
     }
 
