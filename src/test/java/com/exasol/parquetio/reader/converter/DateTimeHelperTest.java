@@ -8,9 +8,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.TimeZone;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 class DateTimeHelperTest {
     private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
@@ -68,15 +66,10 @@ class DateTimeHelperTest {
 
     @Test
     void testGetLocalTimestampFromNanosUsesLocalEpoch() {
-        final TimeZone originalTimeZone = TimeZone.getDefault();
-        try {
-            TimeZone.setDefault(TimeZone.getTimeZone("GMT+01:00"));
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+01:00"));
 
-            assertThat(DateTimeHelper.getLocalTimestampFromNanos(1_234_567_890L),
-                    equalTo(Timestamp.valueOf("1970-01-01 00:00:01.23456789")));
-        } finally {
-            TimeZone.setDefault(originalTimeZone);
-        }
+        assertThat(DateTimeHelper.getLocalTimestampFromNanos(1_234_567_890L),
+                equalTo(Timestamp.valueOf("1970-01-01 00:00:01.23456789")));
     }
 
     @Test
