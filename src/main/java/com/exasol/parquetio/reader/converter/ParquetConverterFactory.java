@@ -2,13 +2,12 @@ package com.exasol.parquetio.reader.converter;
 
 import java.util.Objects;
 
-import org.apache.parquet.schema.LogicalTypeAnnotation;
-import org.apache.parquet.schema.LogicalTypeAnnotation.TimestampLogicalTypeAnnotation;
+import org.apache.parquet.schema.*;
 import org.apache.parquet.schema.LogicalTypeAnnotation.TimeUnit;
-import org.apache.parquet.schema.OriginalType;
-import org.apache.parquet.schema.PrimitiveType;
-import org.apache.parquet.schema.Type;
+import org.apache.parquet.schema.LogicalTypeAnnotation.TimestampLogicalTypeAnnotation;
 import org.apache.parquet.schema.Type.Repetition;
+
+import com.exasol.errorreporting.ExaError;
 
 /**
  * Factory for Parquet field data type converters.
@@ -21,8 +20,8 @@ public final class ParquetConverterFactory {
     /**
      * Creates a Parquet converter for a field type.
      *
-     * @param parquetType Parquet type
-     * @param fieldIndex field index in the Parquet schema
+     * @param parquetType      Parquet type
+     * @param fieldIndex       field index in the Parquet schema
      * @param parentDataHolder parent value holder
      * @return converter for the field type
      */
@@ -40,23 +39,23 @@ public final class ParquetConverterFactory {
     static ParquetConverter createPrimitiveConverter(final PrimitiveType primitiveType, final int index,
             final ValueHolder parentHolder) {
         switch (primitiveType.getPrimitiveTypeName()) {
-        case BOOLEAN:
-        case DOUBLE:
-        case FLOAT:
-            return new ParquetPrimitiveConverter(index, parentHolder);
-        case BINARY:
-            return createBinaryConverter(primitiveType, index, parentHolder);
-        case FIXED_LEN_BYTE_ARRAY:
-            return createFixedByteArrayConverter(primitiveType, index, parentHolder);
-        case INT32:
-            return createIntegerConverter(primitiveType, index, parentHolder);
-        case INT64:
-            return createLongConverter(primitiveType, index, parentHolder);
-        case INT96:
-            return new ParquetTimestampInt96Converter(index, parentHolder);
-        default:
-            throw new UnsupportedOperationException(
-                    "Unsupported primitive type: " + primitiveType.getPrimitiveTypeName());
+            case BOOLEAN:
+            case DOUBLE:
+            case FLOAT:
+                return new ParquetPrimitiveConverter(index, parentHolder);
+            case BINARY:
+                return createBinaryConverter(primitiveType, index, parentHolder);
+            case FIXED_LEN_BYTE_ARRAY:
+                return createFixedByteArrayConverter(primitiveType, index, parentHolder);
+            case INT32:
+                return createIntegerConverter(primitiveType, index, parentHolder);
+            case INT64:
+                return createLongConverter(primitiveType, index, parentHolder);
+            case INT96:
+                return new ParquetTimestampInt96Converter(index, parentHolder);
+            default:
+                throw new UnsupportedOperationException(
+                        "Unsupported primitive type: " + primitiveType.getPrimitiveTypeName());
         }
     }
 
@@ -133,14 +132,15 @@ public final class ParquetConverterFactory {
     private static ParquetConverter createTimestampConverter(final TimeUnit timeUnit, final int index,
             final ValueHolder holder) {
         switch (timeUnit) {
-        case MILLIS:
-            return new ParquetTimestampMillisConverter(index, holder);
-        case MICROS:
-            return new ParquetTimestampMicrosConverter(index, holder);
-        case NANOS:
-            return new ParquetTimestampNanosConverter(index, holder);
-        default:
-            throw new UnsupportedOperationException("Unsupported timestamp unit: " + timeUnit);
+            case MILLIS:
+                return new ParquetTimestampMillisConverter(index, holder);
+            case MICROS:
+                return new ParquetTimestampMicrosConverter(index, holder);
+            case NANOS:
+                return new ParquetTimestampNanosConverter(index, holder);
+            default:
+                throw new UnsupportedOperationException(
+                        ExaError.messageBuilder("E-PIOJ-7").message("Unsupported timestamp unit: {{unit}}", timeUnit).ticketMitigation().toString());
         }
     }
 
