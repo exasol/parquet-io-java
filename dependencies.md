@@ -5,67 +5,66 @@
 
 | Dependency                 | License                                       |
 | -------------------------- | --------------------------------------------- |
-| [SLF4J API Module][0]      | [MIT License][1]                              |
-| [Apache Parquet Hadoop][2] | [The Apache Software License, Version 2.0][3] |
-| Apache Hadoop Client API   | [Apache-2.0][3]                               |
-| [error-reporting-java][4]  | [MIT License][5]                              |
+| [Apache Parquet Hadoop][0] | [The Apache Software License, Version 2.0][1] |
+| Apache Hadoop Client API   | [Apache-2.0][1]                               |
+| [error-reporting-java][2]  | [MIT License][3]                              |
 
 ## Test Dependencies
 
 | Dependency                                 | License                          |
 | ------------------------------------------ | -------------------------------- |
-| [SLF4J JDK14 Binding][0]                   | [MIT License][1]                 |
+| [SLF4J JDK14 Provider][4]                  | [MIT][5]                         |
 | [JUnit Jupiter (Aggregator)][6]            | [Eclipse Public License v2.0][7] |
 | [mockito-core][8]                          | [MIT][9]                         |
 | [mockito-junit-jupiter][8]                 | [MIT][9]                         |
 | [Hamcrest][10]                             | [BSD-3-Clause][11]               |
-| [EqualsVerifier \| release normal jar][12] | [Apache License, Version 2.0][3] |
+| [EqualsVerifier \| release normal jar][12] | [Apache License, Version 2.0][1] |
 
 ## Runtime Dependencies
 
-| Dependency                          | License                          |
-| ----------------------------------- | -------------------------------- |
-| [JCL 1.2 implemented over SLF4J][0] | [Apache License, Version 2.0][3] |
-| [aircompressor][13]                 | [Apache License 2.0][14]         |
-| Apache Hadoop Client Runtime        | [Apache-2.0][3]                  |
+| Dependency                          | License                  |
+| ----------------------------------- | ------------------------ |
+| [aircompressor][13]                 | [Apache License 2.0][14] |
+| Apache Hadoop Client Runtime        | [Apache-2.0][1]          |
+| [JCL 1.2 implemented over SLF4J][4] | [Apache-2.0][1]          |
 
 ## Plugin Dependencies
 
 | Dependency                                              | License                                        |
 | ------------------------------------------------------- | ---------------------------------------------- |
 | [SonarQube Scanner for Maven][15]                       | [GNU LGPL 3][16]                               |
-| [Apache Maven Toolchains Plugin][17]                    | [Apache-2.0][3]                                |
-| [Apache Maven Compiler Plugin][18]                      | [Apache-2.0][3]                                |
-| [Apache Maven Enforcer Plugin][19]                      | [Apache-2.0][3]                                |
-| [Maven Flatten Plugin][20]                              | [Apache Software License][3]                   |
+| [Apache Maven Toolchains Plugin][17]                    | [Apache-2.0][1]                                |
+| [Apache Maven Compiler Plugin][18]                      | [Apache-2.0][1]                                |
+| [Apache Maven Enforcer Plugin][19]                      | [Apache-2.0][1]                                |
+| [Maven Flatten Plugin][20]                              | [Apache Software License][1]                   |
 | [org.sonatype.ossindex.maven:ossindex-maven-plugin][21] | [ASL2][22]                                     |
-| [Maven Surefire Plugin][23]                             | [Apache-2.0][3]                                |
-| [Versions Maven Plugin][24]                             | [Apache License, Version 2.0][3]               |
+| [Maven Surefire Plugin][23]                             | [Apache-2.0][1]                                |
+| [Versions Maven Plugin][24]                             | [Apache License, Version 2.0][1]               |
 | [OpenFastTrace Maven Plugin][25]                        | [GNU General Public License v3.0][26]          |
 | [Project Keeper Maven plugin][27]                       | [The MIT License][28]                          |
 | [duplicate-finder-maven-plugin Maven Mojo][29]          | [Apache License 2.0][30]                       |
-| [Apache Maven Artifact Plugin][31]                      | [Apache-2.0][3]                                |
-| [Apache Maven Deploy Plugin][32]                        | [Apache-2.0][3]                                |
-| [Apache Maven Source Plugin][33]                        | [Apache-2.0][3]                                |
-| [Apache Maven Javadoc Plugin][34]                       | [Apache-2.0][3]                                |
+| [Apache Maven Artifact Plugin][31]                      | [Apache-2.0][1]                                |
+| [Apache Maven Deploy Plugin][32]                        | [Apache-2.0][1]                                |
+| [Apache Maven Source Plugin][33]                        | [Apache-2.0][1]                                |
+| [Apache Maven Javadoc Plugin][34]                       | [Apache-2.0][1]                                |
 | [spdx-maven-plugin Maven Plugin][35]                    | [The Apache Software License, Version 2.0][22] |
 | [Build Helper Maven Plugin][36]                         | [The MIT License][37]                          |
-| [Apache Maven GPG Plugin][38]                           | [Apache-2.0][3]                                |
-| [Central Publishing Maven Plugin][39]                   | [The Apache License, Version 2.0][3]           |
+| [Apache Maven GPG Plugin][38]                           | [Apache-2.0][1]                                |
+| [Central Publishing Maven Plugin][39]                   | [The Apache License, Version 2.0][1]           |
 | [JaCoCo :: Maven Plugin][40]                            | [EPL-2.0][41]                                  |
 | [error-code-crawler-maven-plugin][42]                   | [MIT License][43]                              |
 | [Git Commit Id Maven Plugin][44]                        | [GNU Lesser General Public License 3.0][45]    |
-| [Apache Maven Clean Plugin][46]                         | [Apache-2.0][3]                                |
-| [Apache Maven Resources Plugin][47]                     | [Apache-2.0][3]                                |
-| [Apache Maven Install Plugin][48]                       | [Apache-2.0][3]                                |
-| [Apache Maven Site Plugin][49]                          | [Apache-2.0][3]                                |
+| [Apache Maven Clean Plugin][46]                         | [Apache-2.0][1]                                |
+| [Apache Maven Resources Plugin][47]                     | [Apache-2.0][1]                                |
+| [Apache Maven Install Plugin][48]                       | [Apache-2.0][1]                                |
+| [Apache Maven Site Plugin][49]                          | [Apache-2.0][1]                                |
 
-[0]: http://www.slf4j.org
-[1]: http://www.opensource.org/licenses/mit-license.php
-[2]: https://parquet.apache.org
-[3]: https://www.apache.org/licenses/LICENSE-2.0.txt
-[4]: https://github.com/exasol/error-reporting-java/
-[5]: https://github.com/exasol/error-reporting-java/blob/main/LICENSE
+[0]: https://parquet.apache.org
+[1]: https://www.apache.org/licenses/LICENSE-2.0.txt
+[2]: https://github.com/exasol/error-reporting-java/
+[3]: https://github.com/exasol/error-reporting-java/blob/main/LICENSE
+[4]: http://www.slf4j.org
+[5]: https://opensource.org/license/mit
 [6]: https://junit.org/
 [7]: https://www.eclipse.org/legal/epl-v20.html
 [8]: https://github.com/mockito/mockito

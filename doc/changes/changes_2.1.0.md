@@ -15,6 +15,15 @@ This release adds support for reading timestamps with nanosecond precision.
 ### Compile Dependency Updates
 
 * Updated `org.apache.parquet:parquet-hadoop:1.17.0` to `1.17.1`
+* Removed `org.slf4j:slf4j-api:1.7.36`
+
+### Runtime Dependency Updates
+
+* Updated `org.slf4j:jcl-over-slf4j:1.7.36` to `2.0.18`
+
+### Test Dependency Updates
+
+* Updated `org.slf4j:slf4j-jdk14:1.7.36` to `2.0.18`
 
 ### Plugin Dependency Updates
 
