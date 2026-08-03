@@ -51,7 +51,7 @@ final class DateTimeHelper {
      * @return timestamp
      */
     static Timestamp getLocalTimestampFromMicros(final long microseconds) {
-        return getLocalTimestamp(microseconds / MICROS_PER_SECOND, microseconds % MICROS_PER_SECOND * NANOS_PER_MICROS);
+        return getTimestampFromLocalDateTime(getLocalDateTimeFromEpoch(microseconds, MICROS_PER_SECOND, NANOS_PER_MICROS));
     }
 
     /**
@@ -80,11 +80,14 @@ final class DateTimeHelper {
      * @return timestamp
      */
     static Timestamp getLocalTimestampFromNanos(final long nanoseconds) {
-        return getTimestampFromLocalDateTime(UNIX_EPOCH_DATE_TIME.plusNanos(nanoseconds));
+        return getTimestampFromLocalDateTime(getLocalDateTimeFromEpoch(nanoseconds, NANOS_PER_SECOND, 1));
     }
 
-    private static Timestamp getLocalTimestamp(final long seconds, final long nanos) {
-        return getTimestampFromLocalDateTime(UNIX_EPOCH_DATE_TIME.plusSeconds(seconds).plusNanos(nanos));
+    private static LocalDateTime getLocalDateTimeFromEpoch(final long value, final long unitsPerSecond,
+            final long nanosPerUnit) {
+        final long seconds = Math.floorDiv(value, unitsPerSecond);
+        final long nanos = Math.floorMod(value, unitsPerSecond) * nanosPerUnit;
+        return UNIX_EPOCH_DATE_TIME.plusSeconds(seconds).plusNanos(nanos);
     }
 
     private static Timestamp getTimestampFromLocalDateTime(final LocalDateTime localDateTime) {
@@ -115,7 +118,7 @@ final class DateTimeHelper {
      * @return timestamp
      */
     static Timestamp getLocalTimestampFromMillis(final long millis) {
-        return getLocalTimestamp(millis / MILLIS_PER_SECOND, millis % MILLIS_PER_SECOND * NANOS_PER_MILLIS);
+        return getTimestampFromLocalDateTime(getLocalDateTimeFromEpoch(millis, MILLIS_PER_SECOND, NANOS_PER_MILLIS));
     }
 
     /**

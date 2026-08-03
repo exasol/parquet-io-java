@@ -110,12 +110,14 @@ public final class ParquetConverterFactory {
         return new ParquetPrimitiveConverter(index, holder);
     }
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings("deprecation") // org.apache.parquet.schema.OriginalType is deprecated, but we need to support legacy timestamp annotations
     private static ParquetConverter createLongConverter(final PrimitiveType primitiveType, final int index,
             final ValueHolder holder) {
         final LogicalTypeAnnotation logicalType = primitiveType.getLogicalTypeAnnotation();
         if (logicalType instanceof TimestampLogicalTypeAnnotation) {
             final TimestampLogicalTypeAnnotation timestampLogicalType = (TimestampLogicalTypeAnnotation) logicalType;
+            // Parquet Java exposes legacy types as normalized logical annotations, so the original
+            // annotation source is unavailable here. Convert the effective logical annotation.
             return createTimestampConverter(timestampLogicalType.getUnit(), timestampLogicalType.isAdjustedToUTC(), index, holder);
         }
         final OriginalType originalType = primitiveType.getOriginalType();
@@ -139,10 +141,13 @@ public final class ParquetConverterFactory {
                 return new ParquetTimestampMicrosConverter(index, holder, adjustedToUTC);
             case NANOS:
                 return new ParquetTimestampNanosConverter(index, holder, adjustedToUTC);
-            default:
-                throw new UnsupportedOperationException(
-                        ExaError.messageBuilder("E-PIOJ-7").message("Unsupported timestamp unit: {{unit}}", timeUnit).ticketMitigation().toString());
         }
+        throw unsupportedTimestampUnit(timeUnit);
+    }
+
+    private static UnsupportedOperationException unsupportedTimestampUnit(final TimeUnit timeUnit) {
+        return new UnsupportedOperationException(ExaError.messageBuilder("E-PIOJ-7")
+                .message("Unsupported timestamp unit: {{unit}}", timeUnit).ticketMitigation().toString());
     }
 
     private static ParquetConverter createArrayConverter(final Type repeatedType, final int index,
