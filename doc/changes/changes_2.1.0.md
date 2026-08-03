@@ -1,31 +1,20 @@
-# Parquet for Java 2.1.0, released 2026-??-??
+# Parquet for Java 2.1.0, released 2026-08-03
 
-Code name:
+Code name: Nanosecond Support for TIMESTAMP type
 
 ## Summary
 
+This release adds support for reading timestamps with nanosecond precision.
+
 ## Features
 
-* ISSUE_NUMBER: description
+* #95: Added support for reading Parquet `TIMESTAMP(NANOS, ...)` values as Java timestamps.
 
 ## Dependency Updates
 
 ### Compile Dependency Updates
 
-* Updated `org.apache.hadoop:hadoop-client-api:3.4.3` to `3.5.0`
 * Updated `org.apache.parquet:parquet-hadoop:1.17.0` to `1.17.1`
-* Updated `org.slf4j:slf4j-api:1.7.36` to `2.0.18`
-
-### Runtime Dependency Updates
-
-* Updated `org.apache.hadoop:hadoop-client-runtime:3.4.3` to `3.5.0`
-* Updated `org.slf4j:jcl-over-slf4j:1.7.36` to `2.0.18`
-
-### Test Dependency Updates
-
-* Updated `nl.jqno.equalsverifier:equalsverifier:3.19.4` to `4.5`
-* Updated `org.junit.jupiter:junit-jupiter:5.14.4` to `6.1.2`
-* Updated `org.slf4j:slf4j-jdk14:1.7.36` to `2.0.18`
 
 ### Plugin Dependency Updates
 

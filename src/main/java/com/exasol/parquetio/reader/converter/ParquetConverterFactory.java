@@ -3,6 +3,8 @@ package com.exasol.parquetio.reader.converter;
 import java.util.Objects;
 
 import org.apache.parquet.schema.LogicalTypeAnnotation;
+import org.apache.parquet.schema.LogicalTypeAnnotation.TimestampLogicalTypeAnnotation;
+import org.apache.parquet.schema.LogicalTypeAnnotation.TimeUnit;
 import org.apache.parquet.schema.OriginalType;
 import org.apache.parquet.schema.PrimitiveType;
 import org.apache.parquet.schema.Type;
@@ -112,6 +114,10 @@ public final class ParquetConverterFactory {
     @SuppressWarnings("deprecation")
     private static ParquetConverter createLongConverter(final PrimitiveType primitiveType, final int index,
             final ValueHolder holder) {
+        final LogicalTypeAnnotation logicalType = primitiveType.getLogicalTypeAnnotation();
+        if (logicalType instanceof TimestampLogicalTypeAnnotation) {
+            return createTimestampConverter(((TimestampLogicalTypeAnnotation) logicalType).getUnit(), index, holder);
+        }
         final OriginalType originalType = primitiveType.getOriginalType();
         if (originalType == OriginalType.TIMESTAMP_MILLIS) {
             return new ParquetTimestampMillisConverter(index, holder);
@@ -121,6 +127,20 @@ public final class ParquetConverterFactory {
             return new ParquetDecimalConverter(primitiveType, index, holder);
         }
         return new ParquetPrimitiveConverter(index, holder);
+    }
+
+    private static ParquetConverter createTimestampConverter(final TimeUnit timeUnit, final int index,
+            final ValueHolder holder) {
+        switch (timeUnit) {
+        case MILLIS:
+            return new ParquetTimestampMillisConverter(index, holder);
+        case MICROS:
+            return new ParquetTimestampMicrosConverter(index, holder);
+        case NANOS:
+            return new ParquetTimestampNanosConverter(index, holder);
+        default:
+            throw new UnsupportedOperationException("Unsupported timestamp unit: " + timeUnit);
+        }
     }
 
     private static ParquetConverter createArrayConverter(final Type repeatedType, final int index,

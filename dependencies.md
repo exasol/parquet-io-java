@@ -5,7 +5,7 @@
 
 | Dependency                 | License                                       |
 | -------------------------- | --------------------------------------------- |
-| [SLF4J API Module][0]      | [MIT][1]                                      |
+| [SLF4J API Module][0]      | [MIT License][1]                              |
 | [Apache Parquet Hadoop][2] | [The Apache Software License, Version 2.0][3] |
 | Apache Hadoop Client API   | [Apache-2.0][3]                               |
 | [error-reporting-java][4]  | [MIT License][5]                              |
@@ -14,7 +14,7 @@
 
 | Dependency                                 | License                          |
 | ------------------------------------------ | -------------------------------- |
-| [SLF4J JDK14 Provider][0]                  | [MIT][1]                         |
+| [SLF4J JDK14 Binding][0]                   | [MIT License][1]                 |
 | [JUnit Jupiter (Aggregator)][6]            | [Eclipse Public License v2.0][7] |
 | [mockito-core][8]                          | [MIT][9]                         |
 | [mockito-junit-jupiter][8]                 | [MIT][9]                         |
@@ -23,11 +23,11 @@
 
 ## Runtime Dependencies
 
-| Dependency                          | License                  |
-| ----------------------------------- | ------------------------ |
-| [JCL 1.2 implemented over SLF4J][0] | [Apache-2.0][3]          |
-| [aircompressor][13]                 | [Apache License 2.0][14] |
-| Apache Hadoop Client Runtime        | [Apache-2.0][3]          |
+| Dependency                          | License                          |
+| ----------------------------------- | -------------------------------- |
+| [JCL 1.2 implemented over SLF4J][0] | [Apache License, Version 2.0][3] |
+| [aircompressor][13]                 | [Apache License 2.0][14]         |
+| Apache Hadoop Client Runtime        | [Apache-2.0][3]                  |
 
 ## Plugin Dependencies
 
@@ -61,7 +61,7 @@
 | [Apache Maven Site Plugin][49]                          | [Apache-2.0][3]                                |
 
 [0]: http://www.slf4j.org
-[1]: https://opensource.org/license/mit
+[1]: http://www.opensource.org/licenses/mit-license.php
 [2]: https://parquet.apache.org
 [3]: https://www.apache.org/licenses/LICENSE-2.0.txt
 [4]: https://github.com/exasol/error-reporting-java/

@@ -44,6 +44,22 @@ class DateTimeHelperTest {
     }
 
     @Test
+    void testGetTimestampFromNanosWithPositiveValue() {
+        final Timestamp timestamp = DateTimeHelper.getTimestampFromNanos(1_234_567_890L);
+
+        assertAll(() -> assertThat(timestamp.getTime(), equalTo(1_234L)),
+                () -> assertThat(timestamp.getNanos(), equalTo(234_567_890)));
+    }
+
+    @Test
+    void testGetTimestampFromNanosWithNegativeValue() {
+        final Timestamp timestamp = DateTimeHelper.getTimestampFromNanos(-1L);
+
+        assertAll(() -> assertThat(timestamp.getTime(), equalTo(-1L)),
+                () -> assertThat(timestamp.getNanos(), equalTo(999_999_999)));
+    }
+
+    @Test
     void testGetTimestampFromMillis() {
         assertThat(DateTimeHelper.getTimestampFromMillis(1_234L), equalTo(new Timestamp(1_234L)));
     }

@@ -18,6 +18,7 @@ final class DateTimeHelper {
     private static final long MILLIS_PER_DAY = SECONDS_PER_DAY * MILLIS_PER_SECOND;
     private static final long MICROS_PER_MILLIS = 1000L;
     private static final long MICROS_PER_SECOND = MICROS_PER_MILLIS * MILLIS_PER_SECOND;
+    private static final long NANOS_PER_SECOND = 1_000_000_000L;
 
     private DateTimeHelper() {
         // utility class
@@ -38,6 +39,24 @@ final class DateTimeHelper {
         }
         final Timestamp timestamp = new Timestamp(seconds * MILLIS_PER_SECOND);
         timestamp.setNanos((int) micros * (int) MICROS_PER_MILLIS);
+        return timestamp;
+    }
+
+    /**
+     * Returns a timestamp from number of nanoseconds since epoch.
+     *
+     * @param nanoseconds nanoseconds since epoch
+     * @return timestamp
+     */
+    static Timestamp getTimestampFromNanos(final long nanoseconds) {
+        long seconds = nanoseconds / NANOS_PER_SECOND;
+        long nanos = nanoseconds % NANOS_PER_SECOND;
+        if (nanos < 0) {
+            nanos += NANOS_PER_SECOND;
+            seconds -= 1;
+        }
+        final Timestamp timestamp = new Timestamp(seconds * MILLIS_PER_SECOND);
+        timestamp.setNanos((int) nanos);
         return timestamp;
     }
 

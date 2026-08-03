@@ -19,6 +19,10 @@ import org.apache.parquet.example.data.simple.SimpleGroup;
 import org.apache.parquet.hadoop.ParquetWriter;
 import org.apache.parquet.io.api.Binary;
 import org.apache.parquet.schema.MessageType;
+import org.apache.parquet.schema.LogicalTypeAnnotation;
+import org.apache.parquet.schema.LogicalTypeAnnotation.TimeUnit;
+import org.apache.parquet.schema.PrimitiveType.PrimitiveTypeName;
+import org.apache.parquet.schema.Types;
 import org.junit.jupiter.api.Test;
 
 import com.exasol.parquetio.BaseParquetReaderTest;
@@ -57,6 +61,65 @@ class RowParquetReaderPrimitiveTypesTest extends BaseParquetReaderTest {
             writer.write(parquetRow);
         }
         assertThat(getRecords(), contains(GenericRow.of(timestamp)));
+    }
+
+    @Test
+    void testReadsInt64ModernTimestampMillisAsTimestampValue() throws IOException {
+        final MessageType schema = getModernTimestampSchema(TimeUnit.MILLIS);
+        final long millisSinceEpoch = 1_712_297_228_009L;
+        final Timestamp timestamp = Timestamp.from(Instant.parse("2024-04-05T06:07:08.009Z"));
+        try (ParquetWriter<Group> writer = getParquetWriter(schema, false)) {
+            final SimpleGroup parquetRow = new SimpleGroup(schema);
+            parquetRow.append("col_timestamp", millisSinceEpoch);
+            writer.write(parquetRow);
+        }
+        assertThat(getRecords(), contains(GenericRow.of(timestamp)));
+    }
+
+    @Test
+    void testReadsInt64ModernTimestampMicrosAsTimestampValue() throws IOException {
+        final MessageType schema = getModernTimestampSchema(TimeUnit.MICROS);
+        final long microsSinceEpoch = 1_641_988_373_123_456L;
+        final Timestamp timestamp = Timestamp.from(Instant.parse("2022-01-12T11:52:53.123456Z"));
+        try (ParquetWriter<Group> writer = getParquetWriter(schema, false)) {
+            final SimpleGroup parquetRow = new SimpleGroup(schema);
+            parquetRow.append("col_timestamp", microsSinceEpoch);
+            writer.write(parquetRow);
+        }
+        assertThat(getRecords(), contains(GenericRow.of(timestamp)));
+    }
+
+    @Test
+    void testReadsInt64TimestampNanosAsTimestampValue() throws IOException {
+        final MessageType schema = getModernTimestampSchema(TimeUnit.NANOS);
+        final long nanosSinceEpoch = 1_641_988_373_123_456_789L;
+        final Timestamp timestamp = Timestamp.from(Instant.parse("2022-01-12T11:52:53.123456789Z"));
+        try (ParquetWriter<Group> writer = getParquetWriter(schema, false)) {
+            final SimpleGroup parquetRow = new SimpleGroup(schema);
+            parquetRow.append("col_timestamp", nanosSinceEpoch);
+            writer.write(parquetRow);
+        }
+        assertThat(getRecords(), contains(GenericRow.of(timestamp)));
+    }
+
+    @Test
+    void testReadsInt64TimestampNanosBeforeEpochAsTimestampValue() throws IOException {
+        final MessageType schema = getModernTimestampSchema(TimeUnit.NANOS);
+        try (ParquetWriter<Group> writer = getParquetWriter(schema, false)) {
+            final SimpleGroup parquetRow = new SimpleGroup(schema);
+            parquetRow.append("col_timestamp", -1L);
+            writer.write(parquetRow);
+        }
+        final Timestamp timestamp = Timestamp.from(Instant.parse("1969-12-31T23:59:59.999999999Z"));
+        assertThat(getRecords(), contains(GenericRow.of(timestamp)));
+    }
+
+    private MessageType getModernTimestampSchema(final TimeUnit timeUnit) {
+        return Types.buildMessage()
+                .required(PrimitiveTypeName.INT64)
+                .as(LogicalTypeAnnotation.timestampType(true, timeUnit))
+                .named("col_timestamp")
+                .named("test");
     }
 
     @Test
