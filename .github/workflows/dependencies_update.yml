@@ -34,7 +34,7 @@ jobs:
       cancel-in-progress: false
     }
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         id: checkout
         with: {
           fetch-depth: 0,
@@ -47,7 +47,7 @@ jobs:
           distribution: temurin
           java-version: |-
             11
-            17
+            21
           cache: maven
       - name: Print issues
         id: debug-print-issues

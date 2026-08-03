@@ -43,7 +43,7 @@ jobs:
           sudo rm -rf /usr/share/dotnet
       - name: Checkout the repository
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with: {
           fetch-depth: 0,
           persist-credentials: false
@@ -55,11 +55,11 @@ jobs:
           distribution: temurin
           java-version: |-
             11
-            17
+            21
           cache: maven
       - name: Cache SonarCloud packages
         id: cache-sonar
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with: {
           path: ~/.sonar/cache,
           key: '${{ runner.os }}-sonar',
@@ -92,7 +92,35 @@ jobs:
         }
       - name: Verify Release Artifacts
         id: verify-release-artifacts
-        run: "print_message() {\n    local -r message=$1\n    echo \"$message\"\n    echo \"$message\" >> \"$GITHUB_STEP_SUMMARY\"\n}\n\nprint_message \"### Release Artifacts\"\n\nIFS=$'\\n' artifacts_array=($ARTIFACTS)\nmissing_files=()\nfor file in \"${artifacts_array[@]}\";\ndo  \n    echo \"Checking if file $file exists...\"\n    if ! [[ -f \"$file\" ]]; then\n        print_message \"* ⚠️ \\`$file\\` does not exist ⚠️\"\n        echo \"Content of directory $(dirname \"$file\"):\"\n        ls \"$(dirname \"$file\")\"\n        missing_files+=(\"$file\")\n    else\n        print_message \"* \\`$file\\` ✅\" \n    fi\ndone\nprint_message \"\"\nnumber_of_missing_files=${#missing_files[@]}\nif [[ $number_of_missing_files -gt 0 ]]; then\n    print_message \"⚠️ $number_of_missing_files release artifact(s) missing ⚠️\"\n    exit 1\nfi\n"
+        run: |
+          print_message() {
+              local -r message=$1
+              echo "$message"
+              echo "$message" >> "$GITHUB_STEP_SUMMARY"
+          }
+
+          print_message "### Release Artifacts"
+
+          IFS=$'\n' artifacts_array=($ARTIFACTS)
+          missing_files=()
+          for file in "${artifacts_array[@]}";
+          do
+              echo "Checking if file $file exists..."
+              if ! [[ -f "$file" ]]; then
+                  print_message "* ⚠️ \`$file\` does not exist ⚠️"
+                  echo "Content of directory $(dirname "$file"):"
+                  ls "$(dirname "$file")"
+                  missing_files+=("$file")
+              else
+                  print_message "* \`$file\` ✅"
+              fi
+          done
+          print_message ""
+          number_of_missing_files=${#missing_files[@]}
+          if [[ $number_of_missing_files -gt 0 ]]; then
+              print_message "⚠️ $number_of_missing_files release artifact(s) missing ⚠️"
+              exit 1
+          fi
         env: {
           ARTIFACTS: '${{ steps.build-pk-verify.outputs.release-artifacts }}'
         }
@@ -137,7 +165,7 @@ jobs:
     steps:
       - name: Checkout the repository
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with: {
           fetch-depth: 0,
           persist-credentials: false
@@ -172,7 +200,7 @@ jobs:
     steps:
       - name: Checkout the repository
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with: {
           persist-credentials: false
         }
@@ -183,7 +211,7 @@ jobs:
           distribution: temurin
           java-version: |-
             11
-            17
+            21
           cache: maven
           server-id: ossindex
           server-username: OSSINDEX_USERNAME
@@ -217,13 +245,13 @@ jobs:
     steps:
       - name: Checkout the repository
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with: {
           persist-credentials: false
         }
       - name: Lint GitHub actions with Zizmore
         id: lint-github-actions
-        uses: zizmorcore/zizmor-action@b1d7e1fb5de872772f31590499237e7cce841e8e
+        uses: zizmorcore/zizmor-action@192e21d79ab29983730a13d1382995c2307fbcaa
         with: {
           advanced-security: false
         }
@@ -249,7 +277,7 @@ jobs:
     steps:
       - name: Checkout the repository
         id: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with: {
           fetch-depth: 0,
           persist-credentials: false
@@ -261,7 +289,7 @@ jobs:
           distribution: temurin
           java-version: |-
             11
-            17
+            21
           cache: maven
       - name: Check if release is needed
         id: check-release

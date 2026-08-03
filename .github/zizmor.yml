@@ -20,6 +20,7 @@ rules:
   obfuscation:
     ignore:
       # Generated workflows use boolean conditions like ${{ false }}
+      # Note: We cannot exclude this using inline comments because GitHubWorkflowIO does not preserve comments in the workflow YAML files.
       - ci-build.yml
       - release.yml
       - project-keeper-verify.yml

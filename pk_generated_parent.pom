@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.exasol</groupId>
     <artifactId>parquet-io-java-generated-parent</artifactId>
-    <version>2.0.16</version>
+    <version>2.1.0</version>
     <packaging>pom</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -62,7 +62,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.21.0</version>
+                    <version>3.22.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -80,7 +80,7 @@
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>5.5.0.6356</version>
+                <version>5.7.0.6970</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -106,8 +106,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.15.0</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <release>${java.version}</release>
                     <showWarnings>true</showWarnings>
                     <compilerArgs>
                         <arg>-Xlint:all</arg>
@@ -118,7 +117,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
-                <version>3.6.2</version>
+                <version>3.6.3</version>
                 <executions>
                     <execution>
                         <id>enforce-maven</id>
@@ -185,7 +184,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.5</version>
+                <version>3.5.6</version>
                 <configuration>
                     <argLine>${argLine}</argLine>
                     <environmentVariables>
@@ -277,26 +276,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>3.2.8</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                        <configuration>
-                            <gpgArguments>
-                                <arg>--pinentry-mode</arg>
-                                <arg>loopback</arg>
-                            </gpgArguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>3.4.0</version>
                 <executions>
@@ -322,18 +301,93 @@
                 </executions>
                 <configuration>
                     <charset>UTF-8</charset>
+                    <locale>en</locale>
                     <doclint/>
                     <serialwarn>true</serialwarn>
                     <failOnError>true</failOnError>
                     <failOnWarnings>true</failOnWarnings>
                     <quiet>true</quiet>
-                    <source>${java.version}</source>
+                    <release>${java.version}</release>
+                    <disableNoFonts>true</disableNoFonts>
                 </configuration>
+            </plugin>
+            <plugin>
+                <!-- [impl->dsn~release-workflow.publish-release-sboms~0] -->
+                <groupId>org.spdx</groupId>
+                <artifactId>spdx-maven-plugin</artifactId>
+                <version>1.0.4</version>
+                <executions>
+                    <execution>
+                        <id>build-spdx</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>createSPDX</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sbomType>build</sbomType>
+                    <!-- Exclude source code files -->
+                    <useArtifactID>true</useArtifactID>
+                    <includeCompileScope>true</includeCompileScope>
+                    <includeRuntimeScope>true</includeRuntimeScope>
+                    <includeProvidedScope>true</includeProvidedScope>
+                    <includeSystemScope>false</includeSystemScope>
+                    <includeTestScope>false</includeTestScope>
+                    <copyrightText>Copyright (c) Exasol</copyrightText>
+                    <createExternalRefs>false</createExternalRefs>
+                    <outputFormat>JSON-LD</outputFormat>
+                    <spdxFile>${project.build.directory}/site/${project.groupId}.${project.artifactId}-${project.version}.spdx3.json</spdxFile>
+                </configuration>
+            </plugin>
+            <plugin>
+                <!-- [impl->dsn~release-workflow.publish-release-sboms~0] -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.6.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-spdx-sbom</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>${project.build.directory}/site/${project.groupId}.${project.artifactId}-${project.version}.spdx3.json</file>
+                                    <type>spdx</type>
+                                    <classifier>sbom</classifier>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.2.8</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                        <configuration>
+                            <gpgArguments>
+                                <arg>--pinentry-mode</arg>
+                                <arg>loopback</arg>
+                            </gpgArguments>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.10.0</version>
+                <version>0.11.0</version>
                 <extensions>true</extensions>
                 <configuration>
                     <publishingServerId>maven-central-portal</publishingServerId>
@@ -347,7 +401,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.14</version>
+                <version>0.8.15</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -387,21 +441,8 @@
             </plugin>
             <plugin>
                 <groupId>com.exasol</groupId>
-                <artifactId>quality-summarizer-maven-plugin</artifactId>
-                <version>0.2.1</version>
-                <executions>
-                    <execution>
-                        <id>summarize-metrics</id>
-                        <goals>
-                            <goal>summarize</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.exasol</groupId>
                 <artifactId>error-code-crawler-maven-plugin</artifactId>
-                <version>2.0.7</version>
+                <version>2.1.0</version>
                 <executions>
                     <execution>
                         <id>verify</id>
