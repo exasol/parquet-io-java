@@ -2,14 +2,13 @@ package com.exasol.parquetio.reader.converter;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
+import java.time.*;
 import java.util.TimeZone;
 
 /**
  * Helper functions to convert date time values.
  */
+@SuppressWarnings("java:S2143") // we need to use java.sql.Date and java.sql.Timestamp here instead of java.time API
 final class DateTimeHelper {
     private static final LocalDateTime UNIX_EPOCH_DATE_TIME = LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC);
     private static final long JULIAN_DAY_OF_EPOCH = 2440588L;
