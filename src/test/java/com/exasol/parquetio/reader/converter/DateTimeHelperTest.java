@@ -3,14 +3,13 @@ package com.exasol.parquetio.reader.converter;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.TimeZone;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 class DateTimeHelperTest {
     private static final TimeZone UTC = TimeZone.getTimeZone("UTC");
@@ -44,8 +43,62 @@ class DateTimeHelperTest {
     }
 
     @Test
+    // [utest->dsn~converting-nanosecond-timestamp-values~1]
+    void testGetTimestampFromNanosWithPositiveValue() {
+        final Timestamp timestamp = DateTimeHelper.getTimestampFromNanos(1_234_567_890L);
+
+        assertAll(() -> assertThat(timestamp.getTime(), equalTo(1_234L)),
+                () -> assertThat(timestamp.getNanos(), equalTo(234_567_890)));
+    }
+
+    @Test
+    // [utest->dsn~converting-nanosecond-timestamp-values~1]
+    void testGetTimestampFromNanosWithNegativeValue() {
+        final Timestamp timestamp = DateTimeHelper.getTimestampFromNanos(-1L);
+
+        assertAll(() -> assertThat(timestamp.getTime(), equalTo(-1L)),
+                () -> assertThat(timestamp.getNanos(), equalTo(999_999_999)));
+    }
+
+    @Test
     void testGetTimestampFromMillis() {
         assertThat(DateTimeHelper.getTimestampFromMillis(1_234L), equalTo(new Timestamp(1_234L)));
+    }
+
+    @Test
+    void testGetLocalTimestampFromNanosUsesLocalEpoch() {
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+01:00"));
+
+        assertThat(DateTimeHelper.getLocalTimestampFromNanos(1_234_567_890L),
+                equalTo(Timestamp.valueOf("1970-01-01 00:00:01.23456789")));
+    }
+
+    @Test
+    void testGetLocalTimestampFromMicrosWithValueOutsideNanosecondRange() {
+        assertThat(DateTimeHelper.getLocalTimestampFromMicros(10_000_000_000_000_000L),
+                equalTo(Timestamp.valueOf("2286-11-20 17:46:40")));
+    }
+
+    @Test
+    void testGetLocalTimestampFromMillisWithValueOutsideNanosecondRange() {
+        assertThat(DateTimeHelper.getLocalTimestampFromMillis(10_000_000_000_000L),
+                equalTo(Timestamp.valueOf("2286-11-20 17:46:40")));
+    }
+
+    @Test
+    void testGetLocalTimestampFromMicrosRejectsYearZero() {
+        final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> DateTimeHelper.getLocalTimestampFromMicros(-62_167_219_200_000_000L));
+        assertThat(exception.getMessage(),
+                equalTo("E-PIOJ-8: Local timestamps before year 1 are not supported. Please use UTC timestamps instead of local timestamps."));
+    }
+
+    @Test
+    void testGetLocalTimestampFromMillisRejectsYearZero() {
+        final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> DateTimeHelper.getLocalTimestampFromMillis(-62_167_219_200_000L));
+        assertThat(exception.getMessage(),
+                equalTo("E-PIOJ-8: Local timestamps before year 1 are not supported. Please use UTC timestamps instead of local timestamps."));
     }
 
     @Test

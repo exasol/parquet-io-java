@@ -97,6 +97,19 @@ Covers:
 
 Needs: impl, utest
 
+### Converting Nanosecond Timestamp Values
+`dsn~converting-nanosecond-timestamp-values~1`
+
+The `ParquetConverterFactory` recognizes modern Parquet timestamp logical
+annotations and converts `INT64` values with the `NANOS` unit into
+`java.sql.Timestamp` values, including values before the Unix epoch.
+
+Covers:
+
+* `req~reading-nanosecond-timestamps~1`
+
+Needs: impl, utest
+
 ### Converting Nested Column Types
 `dsn~converting-nested-column-types~1`
 

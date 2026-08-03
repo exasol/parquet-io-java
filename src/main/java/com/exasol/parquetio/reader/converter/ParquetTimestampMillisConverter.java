@@ -9,6 +9,7 @@ import org.apache.parquet.io.api.PrimitiveConverter;
 final class ParquetTimestampMillisConverter extends PrimitiveConverter implements ParquetConverter {
     private final int index;
     private final ValueHolder holder;
+    private final boolean adjustedToUTC;
 
     /**
      * Create a new timestamp millis converter.
@@ -16,13 +17,15 @@ final class ParquetTimestampMillisConverter extends PrimitiveConverter implement
      * @param index  field index
      * @param holder value holder
      */
-    ParquetTimestampMillisConverter(final int index, final ValueHolder holder) {
+    ParquetTimestampMillisConverter(final int index, final ValueHolder holder, final boolean adjustedToUTC) {
         this.index = index;
         this.holder = holder;
+        this.adjustedToUTC = adjustedToUTC;
     }
 
     @Override
     public void addLong(final long value) {
-        this.holder.put(this.index, DateTimeHelper.getTimestampFromMillis(value));
+        this.holder.put(this.index, this.adjustedToUTC ? DateTimeHelper.getTimestampFromMillis(value)
+                : DateTimeHelper.getLocalTimestampFromMillis(value));
     }
 }
