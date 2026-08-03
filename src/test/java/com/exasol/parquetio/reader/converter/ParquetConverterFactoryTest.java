@@ -10,6 +10,7 @@ import org.apache.parquet.schema.PrimitiveType.PrimitiveTypeName;
 import org.apache.parquet.schema.Types;
 import org.junit.jupiter.api.Test;
 
+// [utest->dsn~converting-nanosecond-timestamp-values~1]
 class ParquetConverterFactoryTest {
     @Test
     void testCreatesMillisConverterForModernTimestampAnnotation() {

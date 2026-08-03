@@ -48,6 +48,7 @@ final class DateTimeHelper {
      * @param nanoseconds nanoseconds since epoch
      * @return timestamp
      */
+    // [impl->dsn~converting-nanosecond-timestamp-values~1]
     static Timestamp getTimestampFromNanos(final long nanoseconds) {
         long seconds = nanoseconds / NANOS_PER_SECOND;
         long nanos = nanoseconds % NANOS_PER_SECOND;

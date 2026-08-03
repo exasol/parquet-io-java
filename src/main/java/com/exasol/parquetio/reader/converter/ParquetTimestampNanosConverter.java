@@ -5,7 +5,7 @@ import org.apache.parquet.io.api.PrimitiveConverter;
 /**
  * Converter for Parquet {@code INT64} with {@code TIMESTAMP(NANOS, ...)} annotation.
  */
-// [impl->dsn~converting-logical-column-types~1]
+// [impl->dsn~converting-nanosecond-timestamp-values~1]
 final class ParquetTimestampNanosConverter extends PrimitiveConverter implements ParquetConverter {
     private final int index;
     private final ValueHolder holder;

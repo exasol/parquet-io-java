@@ -129,6 +129,7 @@ public final class ParquetConverterFactory {
         return new ParquetPrimitiveConverter(index, holder);
     }
 
+    // [impl->dsn~converting-nanosecond-timestamp-values~1]
     private static ParquetConverter createTimestampConverter(final TimeUnit timeUnit, final int index,
             final ValueHolder holder) {
         switch (timeUnit) {

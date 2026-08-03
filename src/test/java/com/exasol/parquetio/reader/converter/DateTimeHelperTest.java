@@ -44,6 +44,7 @@ class DateTimeHelperTest {
     }
 
     @Test
+    // [utest->dsn~converting-nanosecond-timestamp-values~1]
     void testGetTimestampFromNanosWithPositiveValue() {
         final Timestamp timestamp = DateTimeHelper.getTimestampFromNanos(1_234_567_890L);
 
@@ -52,6 +53,7 @@ class DateTimeHelperTest {
     }
 
     @Test
+    // [utest->dsn~converting-nanosecond-timestamp-values~1]
     void testGetTimestampFromNanosWithNegativeValue() {
         final Timestamp timestamp = DateTimeHelper.getTimestampFromNanos(-1L);
 

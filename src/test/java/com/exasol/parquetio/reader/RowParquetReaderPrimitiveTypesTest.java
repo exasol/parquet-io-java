@@ -31,6 +31,7 @@ import com.exasol.parquetio.data.Row;
 
 // [utest->dsn~converting-primitive-column-types~1]
 // [utest->dsn~converting-logical-column-types~1]
+// [utest->dsn~converting-nanosecond-timestamp-values~1]
 class RowParquetReaderPrimitiveTypesTest extends BaseParquetReaderTest {
     private static final int JULIAN_DAY_OF_EPOCH = 2_440_588;
 

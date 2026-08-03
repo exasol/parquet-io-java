@@ -114,6 +114,18 @@ Covers:
 
 Needs: dsn
 
+### Reading Nanosecond Timestamps
+`req~reading-nanosecond-timestamps~1`
+
+PIOJ reads Parquet `INT64` values annotated as `TIMESTAMP(NANOS, ...)` into
+Java `Timestamp` values while preserving nanosecond precision.
+
+Covers:
+
+- [`feat~column-data-reading~1`](#column-data-reading)
+
+Needs: dsn
+
 ### Reading Nested Types
 `req~reading-nested-types~1`
 
