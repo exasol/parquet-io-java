@@ -79,7 +79,7 @@ The following table shows how each Parquet data type is mapped into Java data ty
 | int64                |                      | Long           |
 | int64                | timestamp_millis     | Timestamp      |
 | int64                | timestamp_micros     | Timestamp      |
-| int64                | timestamp_nanos      | Timestamp      |
+| int64                | timestamp (nanos)    | Timestamp      |
 | int64                | decimal(p, s)        | BigDecimal     |
 | float                |                      | Float          |
 | double               |                      | Double         |

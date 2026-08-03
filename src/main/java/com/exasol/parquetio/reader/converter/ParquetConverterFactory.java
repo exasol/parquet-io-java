@@ -115,13 +115,14 @@ public final class ParquetConverterFactory {
             final ValueHolder holder) {
         final LogicalTypeAnnotation logicalType = primitiveType.getLogicalTypeAnnotation();
         if (logicalType instanceof TimestampLogicalTypeAnnotation) {
-            return createTimestampConverter(((TimestampLogicalTypeAnnotation) logicalType).getUnit(), index, holder);
+            final TimestampLogicalTypeAnnotation timestampLogicalType = (TimestampLogicalTypeAnnotation) logicalType;
+            return createTimestampConverter(timestampLogicalType.getUnit(), timestampLogicalType.isAdjustedToUTC(), index, holder);
         }
         final OriginalType originalType = primitiveType.getOriginalType();
         if (originalType == OriginalType.TIMESTAMP_MILLIS) {
-            return new ParquetTimestampMillisConverter(index, holder);
+            return new ParquetTimestampMillisConverter(index, holder, true);
         } else if (originalType == OriginalType.TIMESTAMP_MICROS) {
-            return new ParquetTimestampMicrosConverter(index, holder);
+            return new ParquetTimestampMicrosConverter(index, holder, true);
         } else if (originalType == OriginalType.DECIMAL) {
             return new ParquetDecimalConverter(primitiveType, index, holder);
         }
@@ -129,15 +130,15 @@ public final class ParquetConverterFactory {
     }
 
     // [impl->dsn~converting-nanosecond-timestamp-values~1]
-    private static ParquetConverter createTimestampConverter(final TimeUnit timeUnit, final int index,
-            final ValueHolder holder) {
+    private static ParquetConverter createTimestampConverter(final TimeUnit timeUnit, final boolean adjustedToUTC,
+            final int index, final ValueHolder holder) {
         switch (timeUnit) {
             case MILLIS:
-                return new ParquetTimestampMillisConverter(index, holder);
+                return new ParquetTimestampMillisConverter(index, holder, adjustedToUTC);
             case MICROS:
-                return new ParquetTimestampMicrosConverter(index, holder);
+                return new ParquetTimestampMicrosConverter(index, holder, adjustedToUTC);
             case NANOS:
-                return new ParquetTimestampNanosConverter(index, holder);
+                return new ParquetTimestampNanosConverter(index, holder, adjustedToUTC);
             default:
                 throw new UnsupportedOperationException(
                         ExaError.messageBuilder("E-PIOJ-7").message("Unsupported timestamp unit: {{unit}}", timeUnit).ticketMitigation().toString());

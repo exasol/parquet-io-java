@@ -67,6 +67,19 @@ class DateTimeHelperTest {
     }
 
     @Test
+    void testGetLocalTimestampFromNanosUsesLocalEpoch() {
+        final TimeZone originalTimeZone = TimeZone.getDefault();
+        try {
+            TimeZone.setDefault(TimeZone.getTimeZone("GMT+01:00"));
+
+            assertThat(DateTimeHelper.getLocalTimestampFromNanos(1_234_567_890L),
+                    equalTo(Timestamp.valueOf("1970-01-01 00:00:01.23456789")));
+        } finally {
+            TimeZone.setDefault(originalTimeZone);
+        }
+    }
+
+    @Test
     void testGetMicrosFromTimestampReturnsZeroForNull() {
         assertThat(DateTimeHelper.getMicrosFromTimestamp(null), equalTo(0L));
     }
