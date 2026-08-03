@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import java.time.*;
 import java.util.TimeZone;
 
+import com.exasol.errorreporting.ExaError;
+
 /**
  * Helper functions to convert date time values.
  */
@@ -78,11 +80,22 @@ final class DateTimeHelper {
      * @return timestamp
      */
     static Timestamp getLocalTimestampFromNanos(final long nanoseconds) {
-        return Timestamp.valueOf(UNIX_EPOCH_DATE_TIME.plusNanos(nanoseconds));
+        return getTimestampFromLocalDateTime(UNIX_EPOCH_DATE_TIME.plusNanos(nanoseconds));
     }
 
     private static Timestamp getLocalTimestamp(final long seconds, final long nanos) {
-        return Timestamp.valueOf(UNIX_EPOCH_DATE_TIME.plusSeconds(seconds).plusNanos(nanos));
+        return getTimestampFromLocalDateTime(UNIX_EPOCH_DATE_TIME.plusSeconds(seconds).plusNanos(nanos));
+    }
+
+    private static Timestamp getTimestampFromLocalDateTime(final LocalDateTime localDateTime) {
+        if (localDateTime.getYear() < 1) {
+            throw new IllegalArgumentException(
+                    ExaError.messageBuilder("E-PIOJ-8")
+                            .message("Local timestamps before year 1 are not supported.")
+                            .mitigation("Please use UTC timestamps instead of local timestamps.")
+                            .toString());
+        }
+        return Timestamp.valueOf(localDateTime);
     }
 
     /**

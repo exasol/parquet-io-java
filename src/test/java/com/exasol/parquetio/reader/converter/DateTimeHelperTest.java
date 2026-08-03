@@ -3,6 +3,7 @@ package com.exasol.parquetio.reader.converter;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -82,6 +83,22 @@ class DateTimeHelperTest {
     void testGetLocalTimestampFromMillisWithValueOutsideNanosecondRange() {
         assertThat(DateTimeHelper.getLocalTimestampFromMillis(10_000_000_000_000L),
                 equalTo(Timestamp.valueOf("2286-11-20 17:46:40")));
+    }
+
+    @Test
+    void testGetLocalTimestampFromMicrosRejectsYearZero() {
+        final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> DateTimeHelper.getLocalTimestampFromMicros(-62_167_219_200_000_000L));
+        assertThat(exception.getMessage(),
+                equalTo("E-PIOJ-8: Local timestamps before year 1 are not supported. Please use UTC timestamps instead of local timestamps."));
+    }
+
+    @Test
+    void testGetLocalTimestampFromMillisRejectsYearZero() {
+        final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> DateTimeHelper.getLocalTimestampFromMillis(-62_167_219_200_000L));
+        assertThat(exception.getMessage(),
+                equalTo("E-PIOJ-8: Local timestamps before year 1 are not supported. Please use UTC timestamps instead of local timestamps."));
     }
 
     @Test
