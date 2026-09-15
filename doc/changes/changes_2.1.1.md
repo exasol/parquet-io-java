@@ -81,3 +81,4 @@ zstd-jni versions 1.4.8-4 through 1.5.7-13 fail to validate negative length para
 * Updated `io.github.git-commit-id:git-commit-id-maven-plugin:10.0.0` to `10.0.1`
 * Updated `org.apache.maven.plugins:maven-toolchains-plugin:3.2.0` to `3.3.0`
 * Updated `org.codehaus.mojo:flatten-maven-plugin:1.7.3` to `1.8.0`
+* Updated `org.itsallcode:openfasttrace-maven-plugin:2.3.0` to `3.0.0`
