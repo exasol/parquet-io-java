@@ -6,6 +6,13 @@ Code name: Fixed vulnerabilities CVE-2026-73334, CVE-2026-87795, CVE-2026-87823,
 
 This release fixes the following 4 vulnerabilities:
 
+### Warning: CVE-2026-90559 in `org.xerial.snappy:snappy-java:1.1.10.8`
+
+Snappy remains supported for compatibility, but the transitive Snappy-Java dependency has an unresolved native out-of-bounds write vulnerability. A malicious Snappy-compressed Parquet file can terminate the JVM. Process only trusted Snappy files or isolate their processing until an upstream fix is available.
+
+* https://github.com/advisories/GHSA-mrhq-xxpp-qf7j
+* https://github.com/xerial/snappy-java/issues/728
+
 ### CVE-2026-73334 (CWE-20) in dependency `org.apache.parquet:parquet-hadoop:jar:1.17.1:compile`
 Potential problem for users of theÂ org.apache.parquet.crypto.keytools package in Apache Parquet, versions 1.12 to 1.18.
 This package enables users to encrypt Parquet files via an envelope encryption mechanism that wraps (encrypts) data keys via a Key Management Service (KMS).Â 

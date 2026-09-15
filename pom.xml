@@ -160,6 +160,17 @@
                     </ignoredResourcePatterns>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.sonatype.ossindex.maven</groupId>
+                <artifactId>ossindex-maven-plugin</artifactId>
+                <configuration>
+                    <excludeVulnerabilityIds>
+                        <!-- org.xerial.snappy:snappy-java:jar:1.1.10.8 is vulnerable, but no fix is available.
+                           Snappy compatibility is retained; reassess after https://github.com/xerial/snappy-java/issues/728 is fixed. -->
+                        <exclude>CVE-2026-90559</exclude>
+                    </excludeVulnerabilityIds>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
