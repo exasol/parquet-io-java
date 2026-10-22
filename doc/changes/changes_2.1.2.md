@@ -20,12 +20,10 @@ Fixed the following vulnerabilities by dependency update:
 
 ### Compile Dependency Updates
 
-* Updated `org.apache.hadoop:hadoop-client-api:3.4.3` to `3.5.0`
 * Added `org.xerial.snappy:snappy-java:1.1.10.12`
 
 ### Runtime Dependency Updates
 
-* Updated `org.apache.hadoop:hadoop-client-runtime:3.4.3` to `3.5.0`
 * Updated `org.slf4j:jcl-over-slf4j:2.0.19` to `2.0.20`
 
 ### Test Dependency Updates
