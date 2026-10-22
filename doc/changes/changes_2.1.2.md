@@ -1,12 +1,20 @@
-# Parquet for Java 2.1.2, released 2026-??-??
+# Parquet for Java 2.1.2, released 2026-10-22
 
-Code name:
+Code name: Fixed CVE-2026-108106,CVE-2026-108104, CVE-2026-93452, CVE-2026-93451, CVE-2026-90559
 
 ## Summary
 
-## Features
+Fixed the following vulnerabilities by dependency update:
 
-* ISSUE_NUMBER: description
+* In `org.xerial.snappy:snappy-java:jar:1.1.10.`: CVE-2026-108106,CVE-2026-108104, CVE-2026-93452, CVE-2026-93451, CVE-2026-90559
+
+## Security
+
+* #102: CVE-2026-90559: org.xerial.snappy:snappy-java:jar:1.1.10.8:compile
+* #103: CVE-2026-93451: org.xerial.snappy:snappy-java:jar:1.1.10.8:compile
+* #104: CVE-2026-93452: org.xerial.snappy:snappy-java:jar:1.1.10.8:compile
+* #106: CVE-2026-108104: org.xerial.snappy:snappy-java:jar:1.1.10.8:compile
+* #107: CVE-2026-108106: org.xerial.snappy:snappy-java:jar:1.1.10.8:compile
 
 ## Dependency Updates
 
