@@ -6,7 +6,7 @@ Code name: Fixed CVE-2026-108106,CVE-2026-108104, CVE-2026-93452, CVE-2026-93451
 
 Fixed the following vulnerabilities by dependency update:
 
-* In `org.xerial.snappy:snappy-java:jar:1.1.10.`: CVE-2026-108106,CVE-2026-108104, CVE-2026-93452, CVE-2026-93451, CVE-2026-90559
+* In `org.xerial.snappy:snappy-java:jar:1.1.10.`: CVE-2026-108106, CVE-2026-108104, CVE-2026-93452, CVE-2026-93451, CVE-2026-90559
 
 ## Security
 
