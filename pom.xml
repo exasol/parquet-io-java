@@ -16,7 +16,7 @@
     <properties>
         <java.version>17</java.version>
         <!-- Hadoop 3.5 requires Java 17 -->
-        <hadoop.version>3.5.0</hadoop.version>
+        <hadoop.version>3.4.3</hadoop.version>
         <mockito.version>5.24.0</mockito.version>
     </properties>
     <dependencyManagement>
