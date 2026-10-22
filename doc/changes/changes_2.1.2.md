@@ -47,5 +47,6 @@ Fixed the following vulnerabilities by dependency update:
 * Updated `org.apache.maven.plugins:maven-surefire-plugin:3.5.6` to `3.6.0`
 * Updated `org.codehaus.mojo:build-helper-maven-plugin:3.6.1` to `3.6.2`
 * Updated `org.codehaus.mojo:versions-maven-plugin:2.21.0` to `2.23.0`
+* Updated `org.itsallcode:openfasttrace-maven-plugin:3.0.0` to `3.1.0`
 * Updated `org.sonarsource.scanner.maven:sonar-maven-plugin:5.7.0.6970` to `5.8.0.7211`
 * Updated `org.sonatype.central:central-publishing-maven-plugin:0.11.0` to `0.12.0`
