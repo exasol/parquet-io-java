@@ -33,20 +33,25 @@ jobs:
         }
       - name: Set up JDKs
         id: setup-jdks
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: |-
-            11
+            17
             21
           cache: maven
           server-id: ossindex
-          server-username: OSSINDEX_USERNAME
-          server-password: OSSINDEX_API_TOKEN
+          server-username-env-var: OSSINDEX_USERNAME
+          server-password-env-var: OSSINDEX_API_TOKEN
+      - {
+        name: Prepare Maven Wrapper,
+        id: prepare-maven-wrapper,
+        run: MVNW_VERBOSE=true ./mvnw -version
+      }
       - name: Generate ossindex report
         id: ossindex-report
         run: |
-          mvn --batch-mode org.sonatype.ossindex.maven:ossindex-maven-plugin:audit \
+          ./mvnw --batch-mode org.sonatype.ossindex.maven:ossindex-maven-plugin:audit \
               org.sonatype.ossindex.maven:ossindex-maven-plugin:audit-aggregate \
               -Dossindex.reportFile=$(pwd)/ossindex-report.json \
               -Dossindex.fail=false
@@ -56,7 +61,7 @@ jobs:
         }
       - name: Create GitHub Issues
         id: create-security-issues
-        uses: exasol/python-toolbox/.github/actions/security-issues@10.1.0
+        uses: exasol/python-toolbox/.github/actions/security-issues@11.0.0
         with: {
           format: maven,
           command: cat ossindex-report.json,
@@ -82,7 +87,7 @@ jobs:
       contents: write,
       pull-requests: write
     }
-    uses: ./.github/workflows/dependencies_update.yml
+    uses: $/.github/workflows/dependencies_update.yml
     with: {
       vulnerability_issues: '${{ needs.report_security_issues.outputs.created-issues }}'
     }

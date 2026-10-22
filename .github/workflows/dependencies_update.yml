@@ -42,13 +42,18 @@ jobs:
         }
       - name: Set up JDKs
         id: setup-jdks
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: |-
-            11
+            17
             21
           cache: maven
+      - {
+        name: Prepare Maven Wrapper,
+        id: prepare-maven-wrapper,
+        run: MVNW_VERBOSE=true ./mvnw -version
+      }
       - name: Print issues
         id: debug-print-issues
         run: |
@@ -70,7 +75,7 @@ jobs:
       - name: Update dependencies
         id: update-dependencies
         run: |
-          mvn --batch-mode com.exasol:project-keeper-maven-plugin:update-dependencies --projects . \
+          ./mvnw --batch-mode com.exasol:project-keeper-maven-plugin:update-dependencies --projects . \
               -Dproject-keeper:vulnerabilities="$CREATED_ISSUES"
         env: {
           CREATED_ISSUES: '${{ inputs.vulnerability_issues }}'
@@ -90,7 +95,7 @@ jobs:
           echo '# ⚠️ Notes ⚠️' >> "$GITHUB_OUTPUT"
           echo '## Run PK fix manually' >> "$GITHUB_OUTPUT"
           echo 'Due to restrictions workflow `dependencies_update.yml` cannot update other workflows, see https://github.com/exasol/project-keeper/issues/578 for details.' >> "$GITHUB_OUTPUT"
-          echo 'Please checkout this PR locally and run `mvn com.exasol:project-keeper-maven-plugin:fix --projects .`' >> "$GITHUB_OUTPUT"
+          echo 'Please checkout this PR locally and run `./mvnw com.exasol:project-keeper-maven-plugin:fix --projects .`' >> "$GITHUB_OUTPUT"
           echo '## This PR does not trigger CI workflows' >> "$GITHUB_OUTPUT"
           echo 'Please click the **Close pull request** button and then **Reopen pull request** to trigger running checks.' >> "$GITHUB_OUTPUT"
           echo 'See https://github.com/exasol/project-keeper/issues/534 for details.' >> "$GITHUB_OUTPUT"

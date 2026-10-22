@@ -83,27 +83,60 @@ jobs:
       - name: Set up Maven Central Repository
         id: configure-maven-central-credentials
         if: ${{ true }}
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: |-
-            11
+            17
             21
           server-id: maven-central-portal
-          server-username: MAVEN_USERNAME
-          server-password: MAVEN_PASSWORD
+          server-username-env-var: MAVEN_USERNAME
+          server-password-env-var: MAVEN_PASSWORD
           gpg-private-key: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
-          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+          gpg-passphrase-env-var: MAVEN_GPG_PASSPHRASE
+      - name: Validate Maven Central GPG signing key
+        id: validate-gpg-signing-key
+        if: ${{ true }}
+        run: |
+          gpg_keys="$(gpg --list-secret-keys)"
+          echo "$gpg_keys"
+          if ! grep -q '^sec ' <<< "$gpg_keys"; then
+            echo "The Maven Central GPG signing key is missing." >&2
+            echo "Please update OSSRH_GPG_SECRET_KEY." >&2
+            exit 1
+          fi
+          if grep -Eq '^sec .*\[expired:' <<< "$gpg_keys" || \
+              grep -Eq '^ssb .*\[[^]]*S[^]]*\].*\[expired:' <<< "$gpg_keys"; then
+            echo "The Maven Central GPG signing key is expired." >&2
+            echo "Please update OSSRH_GPG_SECRET_KEY." >&2
+            exit 1
+          fi
+          if ! printf '%s' 'Project Keeper GPG signing key validation' | \
+              gpg --batch --yes --pinentry-mode loopback --passphrase "$MAVEN_GPG_PASSPHRASE" \
+                  --armor --detach-sign --output /dev/null; then
+            echo "The Maven Central GPG signing key failed to sign an artifact." >&2
+            echo "Please update OSSRH_GPG_SECRET_KEY and OSSRH_GPG_SECRET_KEY_PASSWORD." >&2
+            exit 1
+          fi
+          echo "The Maven Central GPG signing key was validated successfully."
+        env: {
+          MAVEN_GPG_PASSPHRASE: '${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}'
+        }
       - name: Set up JDKs
         id: setup-jdks
         if: ${{ ! true }}
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: |-
-            11
+            17
             21
           cache: maven
+      - {
+        name: Prepare Maven Wrapper,
+        id: prepare-maven-wrapper,
+        run: MVNW_VERBOSE=true ./mvnw -version
+      }
       - name: Fail if not running on main or release branch
         id: check-main-or-release-branch
         if: ${{ github.ref != 'refs/heads/main' && !startsWith(github.ref, 'refs/heads/release/') }}
@@ -138,7 +171,7 @@ jobs:
       - name: Verify release preconditions
         id: verify-release
         run: |
-          mvn --batch-mode com.exasol:project-keeper-maven-plugin:verify-release --projects .
+          ./mvnw --batch-mode com.exasol:project-keeper-maven-plugin:verify-release --projects .
           echo "$GITHUB_OUTPUT"
         env: {
           GITHUB_TOKEN: '${{ github.token }}'
@@ -146,20 +179,14 @@ jobs:
       - {
         name: Build project,
         id: build,
-        run: mvn --batch-mode -DskipTests -DossindexSkip=true clean verify
-      }
-      - {
-        name: List secret GPG keys,
-        id: list-secret-gpg-keys,
-        if: '${{ true && (! inputs.skip-maven-central) }}',
-        run: gpg --list-secret-keys
+        run: ./mvnw --batch-mode -DskipTests -DskipITs -DossindexSkip=true clean verify
       }
       - name: Publish to Central Repository
         id: deploy-maven-central
         if: ${{ true && (! inputs.skip-maven-central) }}
         run: |
           echo "#### Maven Central Release" >> "$GITHUB_STEP_SUMMARY"
-          mvn --batch-mode -Dgpg.skip=false -DskipTests -DossindexSkip=true deploy \
+          ./mvnw --batch-mode -Dgpg.skip=false -DskipTests -DskipITs -DossindexSkip=true deploy \
               -Dcentral-publishing.deploymentName="Auto release of repo ${{ github.repository }} using PK release.yml" \
               -Dcentral-publishing.autoPublish=${{ inputs.maven-central-auto-publish }}
           if [[ "${{ inputs.maven-central-auto-publish }}" == "true" ]]; then

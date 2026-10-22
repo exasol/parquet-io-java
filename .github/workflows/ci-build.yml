@@ -50,13 +50,18 @@ jobs:
         }
       - name: Set up JDKs
         id: setup-java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: |-
-            11
+            17
             21
           cache: maven
+      - {
+        name: Prepare Maven Wrapper,
+        id: prepare-maven-wrapper,
+        run: MVNW_VERBOSE=true ./mvnw -version
+      }
       - name: Cache SonarCloud packages
         id: cache-sonar
         uses: actions/cache@v6
@@ -73,17 +78,17 @@ jobs:
       - name: Run tests and build with Maven
         id: build-pk-verify
         run: |
-          mvn --batch-mode clean verify \
+          ./mvnw --batch-mode clean verify \
               -DossindexSkip=true \
-              -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+              --no-transfer-progress \
               -DtrimStackTrace=false
       - name: Sonar analysis
         id: sonar-analysis
         if: ${{ env.SONAR_TOKEN != null }}
         run: |
-          mvn --batch-mode org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          ./mvnw --batch-mode org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
               -DossindexSkip=true \
-              -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+              --no-transfer-progress \
               -DtrimStackTrace=false \
               -Dsonar.token=$SONAR_TOKEN
         env: {
@@ -170,19 +175,19 @@ jobs:
           fetch-depth: 0,
           persist-credentials: false
         }
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         id: setup-java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with: {
           distribution: temurin,
-          java-version: '17',
+          java-version: '21',
           cache: maven
         }
-      - name: Run tests and build with Maven 17
+      - name: Run tests and build with Maven 21
         id: build-next-java
         run: |
-          mvn --batch-mode clean package -DtrimStackTrace=false -Djava.version=17 \
-              -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn \
+          ./mvnw --batch-mode clean package -DtrimStackTrace=false -Djava.version=21 \
+              --no-transfer-progress \
               -DossindexSkip=true \
   ossindex:
     runs-on: ubuntu-latest
@@ -206,23 +211,23 @@ jobs:
         }
       - name: Set up JDKs
         id: setup-java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: |-
-            11
+            17
             21
           cache: maven
           server-id: ossindex
-          server-username: OSSINDEX_USERNAME
-          server-password: OSSINDEX_API_TOKEN
+          server-username-env-var: OSSINDEX_USERNAME
+          server-password-env-var: OSSINDEX_API_TOKEN
       - name: Run Ossindex
         id: ossindex
         run: |
-          mvn --batch-mode test-compile \
+          ./mvnw --batch-mode test-compile \
               org.sonatype.ossindex.maven:ossindex-maven-plugin:audit \
               org.sonatype.ossindex.maven:ossindex-maven-plugin:audit-aggregate \
-              -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+              --no-transfer-progress
         env: {
           OSSINDEX_USERNAME: '${{ secrets.OSSINDEX_USERNAME }}',
           OSSINDEX_API_TOKEN: '${{ secrets.OSSINDEX_API_TOKEN }}'
@@ -234,9 +239,7 @@ jobs:
         shell: bash
       }
     permissions: {
-      security-events: write,
-      contents: read,
-      actions: read
+      contents: read
     }
     concurrency: {
       group: '${{ github.workflow }}-github-actions-linter-${{ github.ref }}',
@@ -249,9 +252,9 @@ jobs:
         with: {
           persist-credentials: false
         }
-      - name: Lint GitHub actions with Zizmore
+      - name: Lint GitHub actions with Zizmor
         id: lint-github-actions
-        uses: zizmorcore/zizmor-action@192e21d79ab29983730a13d1382995c2307fbcaa
+        uses: zizmorcore/zizmor-action@cc914d7f3750a2d13d75c7f184a1060aa0e9d482
         with: {
           advanced-security: false
         }
@@ -284,18 +287,18 @@ jobs:
         }
       - name: Set up JDKs
         id: setup-java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: |-
-            11
+            17
             21
           cache: maven
       - name: Check if release is needed
         id: check-release
         if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/') }}
         run: |
-          if mvn --batch-mode com.exasol:project-keeper-maven-plugin:verify-release --projects .; then
+          if ./mvnw --batch-mode com.exasol:project-keeper-maven-plugin:verify-release --projects .; then
               echo "### ✅ Release preconditions met, start release" >> "$GITHUB_STEP_SUMMARY"
               echo "release-required=true" >> "$GITHUB_OUTPUT"
           else
@@ -319,7 +322,7 @@ jobs:
       actions: read,
       issues: read
     }
-    uses: ./.github/workflows/release.yml
+    uses: $/.github/workflows/release.yml
     with: {
       started-from-ci: true,
       maven-central-auto-publish: true

@@ -1,7 +1,7 @@
 package com.exasol.parquetio.merger;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.exasol.parquetio.data.ChunkInterval;
@@ -11,6 +11,12 @@ import com.exasol.parquetio.data.ChunkIntervalImpl;
  * A class that sorts and merges list of {@link ChunkInterval}s.
  */
 public class ChunkIntervalMerger {
+    /**
+     * Create a new {@link ChunkIntervalMerger}.
+     */
+    public ChunkIntervalMerger() {
+        // Intentionally empty to enable JavaDoc.
+    }
 
     /**
      * Sorts and merges overlapping chunks.
@@ -28,7 +34,7 @@ public class ChunkIntervalMerger {
     }
 
     private void sortByStartPosition(final List<ChunkInterval> chunks) {
-        Collections.sort(chunks, (a, b) -> Long.compare(a.getStartPosition(), b.getStartPosition()));
+        chunks.sort(Comparator.comparingLong(ChunkInterval::getStartPosition));
     }
 
     private List<ChunkInterval> mergeOverlaps(final List<ChunkInterval> chunks) {
